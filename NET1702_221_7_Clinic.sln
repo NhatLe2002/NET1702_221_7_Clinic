@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicData", "ClinicData\Cl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicRazorWebApp", "ClinicRazorWebApp\ClinicRazorWebApp.csproj", "{1E22BD5B-4A97-4E61-89E4-D771DC430DD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test1", "Test1\Test1.csproj", "{6F5DC794-2CFA-4570-90CC-C3CE6EAB4F46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{1E2762A3-B6B5-4C6D-AB9D-19B495ABDD23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{1E22BD5B-4A97-4E61-89E4-D771DC430DD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E22BD5B-4A97-4E61-89E4-D771DC430DD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E22BD5B-4A97-4E61-89E4-D771DC430DD9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F5DC794-2CFA-4570-90CC-C3CE6EAB4F46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F5DC794-2CFA-4570-90CC-C3CE6EAB4F46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F5DC794-2CFA-4570-90CC-C3CE6EAB4F46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F5DC794-2CFA-4570-90CC-C3CE6EAB4F46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E2762A3-B6B5-4C6D-AB9D-19B495ABDD23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E2762A3-B6B5-4C6D-AB9D-19B495ABDD23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E2762A3-B6B5-4C6D-AB9D-19B495ABDD23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E2762A3-B6B5-4C6D-AB9D-19B495ABDD23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
