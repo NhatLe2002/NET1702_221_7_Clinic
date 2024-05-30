@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicData.DAO
+namespace ClinicData.Repository
 {
-    public class ClinicDAO : GenericRepository<Clinic>
+    public class ClinicRepository: GenericRepository<Clinic>
     {
-        public ClinicDAO()
+        public ClinicRepository()
         {
             
         }

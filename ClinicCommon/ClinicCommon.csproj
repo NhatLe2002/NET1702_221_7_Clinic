@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ClinicCommon\ClinicCommon.csproj" />
-    <ProjectReference Include="..\ClinicData\ClinicData.csproj" />
-  </ItemGroup>
-
 </Project>

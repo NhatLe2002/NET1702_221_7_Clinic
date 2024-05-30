@@ -1,28 +1,69 @@
 ﻿using ClinicBusiness.Base;
+using ClinicCommon;
+using ClinicData;
 using ClinicData.DAO;
+using ClinicData.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ClinicBusiness
 {
-    public class ClinicBusinessClass
+    public interface IClinicBusinessClass
     {
-        private readonly ClinicDAO _clinicDAO;
+        Task<IBusinessResult> GetAll();
+        Task<IBusinessResult> GetById(string code);
+        Task<IBusinessResult> Save(Clinic clinic);
+        Task<IBusinessResult> Update(Clinic clinic);
+        Task<IBusinessResult> DeleteById(string code);
+    }
+    public class ClinicBusinessClass : IClinicBusinessClass
+    {
+        private readonly UnitOfWork _unitOfWork;
 
 
         public ClinicBusinessClass()
         {
-            _clinicDAO = new ClinicDAO();
+            _unitOfWork = new UnitOfWork();
+        }
+
+        
+
+        public async Task<IBusinessResult> GetAll()
+        {
+            try
+            {
+                #region Business rule
+                #endregion
+
+                //var currencies = _DAO.GetAll();
+                //var currencies = await _currencyRepository.GetAllAsync();
+                var currencies = await _unitOfWork.ClinicRepository.GetAllAsync();
+
+
+                if (currencies == null)
+                {
+                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
+                }
+                else
+                {
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, currencies);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
+            }
         }
 
         public async Task<List<IBusinessResult>> GetAllAsync()
         {
             try
             {
-                var clinics = await _clinicDAO.GetAllAsync();
+                var clinics = await _unitOfWork.ClinicRepository.GetAllAsync();
                 if (clinics != null && clinics.Count > 0)
                 {
                     List<IBusinessResult> results = new List<IBusinessResult>();
@@ -51,5 +92,105 @@ namespace ClinicBusiness
                 } };
             }
         }
+
+        public async Task<IBusinessResult> GetById(string code)
+        {
+            try
+            {
+                #region Business rule
+                #endregion
+
+                //var currency = await _currencyRepository.GetByIdAsync(code);
+                var currency = await _unitOfWork.ClinicRepository.GetByIdAsync(code);
+
+                if (currency == null)
+                {
+                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
+                }
+                else
+                {
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, currency);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
+            }
+        }
+
+        public async Task<IBusinessResult> Save(Clinic currency)
+        {
+            try
+            {
+                //int result = await _currencyRepository.CreateAsync(currency);
+                int result = await _unitOfWork.ClinicRepository.CreateAsync(currency);
+                if (result > 0)
+                {
+                    return new BusinessResult(Const.SUCCESS_CREATE_CODE, Const.SUCCESS_CREATE_MSG);
+                }
+                else
+                {
+                    return new BusinessResult(Const.FAIL_CREATE_CODE, Const.FAIL_CREATE_MSG);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.ToString());
+            }
+        }
+
+        public async Task<IBusinessResult> Update(Clinic currency)
+        {
+            try
+            {
+                //int result = await _currencyRepository.UpdateAsync(currency);
+                int result = await _unitOfWork.ClinicRepository.UpdateAsync(currency);
+
+                if (result > 0)
+                {
+                    return new BusinessResult(Const.SUCCESS_UPDATE_CODE, Const.SUCCESS_UPDATE_MSG);
+                }
+                else
+                {
+                    return new BusinessResult(Const.FAIL_UPDATE_CODE, Const.FAIL_UPDATE_MSG);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(-4, ex.ToString());
+            }
+        }
+        public async Task<IBusinessResult> DeleteById(string code)
+        {
+            try
+            {
+                //var currency = await _currencyRepository.GetByIdAsync(code);
+                var currency = await _unitOfWork.ClinicRepository.GetByIdAsync(code);
+                if (currency != null)
+                {
+                    //var result = await _currencyRepository.RemoveAsync(currency);
+                    var result = await _unitOfWork.ClinicRepository.RemoveAsync(currency);
+                    if (result)
+                    {
+                        return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG);
+                    }
+                    else
+                    {
+                        return new BusinessResult(Const.FAIL_DELETE_CODE, Const.FAIL_DELETE_MSG);
+                    }
+                }
+                else
+                {
+                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(-4, ex.ToString());
+            }
+        }
+
+
     }
 }
+

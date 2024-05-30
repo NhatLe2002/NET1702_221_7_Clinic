@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ClinicBusiness\ClinicBusiness.csproj" />
+    <ProjectReference Include="..\ClinicData\ClinicData.csproj" />
+  </ItemGroup>
+
 </Project>

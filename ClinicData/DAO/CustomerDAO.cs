@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClinicData.DAO
 {
-    public class CustomerDAO : BaseDAO<Customer>
+    public class CustomerDAO : GenericRepository<Customer>
     {
     }
 }

@@ -9,9 +9,9 @@ namespace Test
         {
             Console.WriteLine("Hello, World!");
             var check = new ClinicBusinessClass();
-            var list = await check.GetAllAsync();
+            var list = await check.GetAll();
 
-            foreach (var item in list)
+            /*foreach (var item in list)
             {
                 if (item.Data is Clinic clinic)
                 {
@@ -27,7 +27,7 @@ namespace Test
                 {
                     Console.WriteLine($"Status: {item.Status}, Message: {item.Message}");
                 }
-            }
+            }*/
 
 
             Console.WriteLine("----------");
