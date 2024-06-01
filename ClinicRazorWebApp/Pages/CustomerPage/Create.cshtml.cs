@@ -6,38 +6,39 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ClinicData.Models;
-using ClinicBusiness;
 
-namespace ClinicRazorWebApp.Pages.ClinicPage
+namespace ClinicRazorWebApp.Pages.CustomerPage
 {
     public class CreateModel : PageModel
     {
+        private readonly ClinicData.Models.NET1702_PRN221_ClinicContext _context;
 
-        private readonly IClinicBusinessClass _ClinicBusiness;
-
-        public CreateModel(IClinicBusinessClass clinicBusinessClass)
+        public CreateModel(ClinicData.Models.NET1702_PRN221_ClinicContext context)
         {
-            _ClinicBusiness = clinicBusinessClass;
+            _context = context;
         }
 
         public IActionResult OnGet()
         {
+        ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Password");
             return Page();
         }
 
         [BindProperty]
-        public Clinic Clinic { get; set; } = default!;
-
+        public Customer Customer { get; set; } = default!;
+        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid )
+          if (!ModelState.IsValid || _context.Customers == null || Customer == null)
             {
                 return Page();
             }
 
-            var clinicResult = _ClinicBusiness.Save(Clinic);
+            _context.Customers.Add(Customer);
+            await _context.SaveChangesAsync();
+
             return RedirectToPage("./Index");
         }
     }

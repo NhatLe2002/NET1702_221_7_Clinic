@@ -42,9 +42,7 @@ namespace ClinicData.Models
                 entity.HasKey(e => e.AppoimnetDetailId)
                     .HasName("PK__Appoimen__90CC0291F5045DA4");
 
-                entity.Property(e => e.AppoimnetDetailId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("AppoimnetDetailID");
+                entity.Property(e => e.AppoimnetDetailId).HasColumnName("AppoimnetDetailID");
 
                 entity.Property(e => e.AppointmentId).HasColumnName("AppointmentID");
 
@@ -92,9 +90,7 @@ namespace ClinicData.Models
 
             modelBuilder.Entity<Appointment>(entity =>
             {
-                entity.Property(e => e.AppointmentId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("AppointmentID");
+                entity.Property(e => e.AppointmentId).HasColumnName("AppointmentID");
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
@@ -113,9 +109,7 @@ namespace ClinicData.Models
 
             modelBuilder.Entity<Clinic>(entity =>
             {
-                entity.Property(e => e.ClinicId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ClinicID");
+                entity.Property(e => e.ClinicId).HasColumnName("ClinicID");
 
                 entity.Property(e => e.Address).HasMaxLength(255);
 
@@ -132,9 +126,7 @@ namespace ClinicData.Models
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.Property(e => e.CustomerId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("CustomerID");
+                entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
                 entity.Property(e => e.Address).HasMaxLength(255);
 
@@ -162,9 +154,7 @@ namespace ClinicData.Models
 
             modelBuilder.Entity<Dentist>(entity =>
             {
-                entity.Property(e => e.DentistId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("DentistID");
+                entity.Property(e => e.DentistId).HasColumnName("DentistID");
 
                 entity.Property(e => e.ClinicId).HasColumnName("ClinicID");
 
@@ -201,9 +191,7 @@ namespace ClinicData.Models
 
             modelBuilder.Entity<ExaminationResult>(entity =>
             {
-                entity.Property(e => e.ExaminationResultId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ExaminationResultID");
+                entity.Property(e => e.ExaminationResultId).HasColumnName("ExaminationResultID");
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
@@ -212,9 +200,7 @@ namespace ClinicData.Models
 
             modelBuilder.Entity<Role>(entity =>
             {
-                entity.Property(e => e.RoleId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("RoleID");
+                entity.Property(e => e.RoleId).HasColumnName("RoleID");
 
                 entity.Property(e => e.Description).HasMaxLength(255);
 
@@ -223,9 +209,7 @@ namespace ClinicData.Models
 
             modelBuilder.Entity<Service>(entity =>
             {
-                entity.Property(e => e.ServiceId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ServiceID");
+                entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
 
                 entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
 
@@ -234,9 +218,7 @@ namespace ClinicData.Models
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.UserId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("UserID");
+                entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.Property(e => e.Password).HasMaxLength(255);
 

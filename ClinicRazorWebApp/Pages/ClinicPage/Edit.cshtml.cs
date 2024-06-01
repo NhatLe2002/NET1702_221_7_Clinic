@@ -7,16 +7,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
+using ClinicBusiness;
 
 namespace ClinicRazorWebApp.Pages.ClinicPage
 {
     public class EditModel : PageModel
     {
-        private readonly ClinicData.Models.NET1702_PRN221_ClinicContext _context;
 
-        public EditModel(ClinicData.Models.NET1702_PRN221_ClinicContext context)
+        private readonly IClinicBusinessClass _ClinicBusiness;
+
+        public EditModel(IClinicBusinessClass clinicBusinessClass)
         {
-            _context = context;
+            _ClinicBusiness = clinicBusinessClass;
         }
 
         [BindProperty]
@@ -24,18 +26,22 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Clinics == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var clinic =  await _context.Clinics.FirstOrDefaultAsync(m => m.ClinicId == id);
-            if (clinic == null)
+            var clinic = await _ClinicBusiness.GetById(id.ToString());
+            if (clinic != null && clinic.Data is Clinic clinicReturn)
+            {
+                Clinic = clinicReturn;
+                return Page();
+            }
+            else
             {
                 return NotFound();
             }
-            Clinic = clinic;
-            return Page();
+
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -47,30 +53,10 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
                 return Page();
             }
 
-            _context.Attach(Clinic).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClinicExists(Clinic.ClinicId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _ClinicBusiness.Update(Clinic);
 
             return RedirectToPage("./Index");
         }
 
-        private bool ClinicExists(int id)
-        {
-          return (_context.Clinics?.Any(e => e.ClinicId == id)).GetValueOrDefault();
-        }
     }
 }

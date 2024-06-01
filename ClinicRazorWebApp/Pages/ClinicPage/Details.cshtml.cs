@@ -6,37 +6,40 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
+using ClinicBusiness;
 
 namespace ClinicRazorWebApp.Pages.ClinicPage
 {
     public class DetailsModel : PageModel
     {
-        private readonly ClinicData.Models.NET1702_PRN221_ClinicContext _context;
+        private readonly IClinicBusinessClass _ClinicBusiness;
 
-        public DetailsModel(ClinicData.Models.NET1702_PRN221_ClinicContext context)
+        public DetailsModel(IClinicBusinessClass clinicBusinessClass)
         {
-            _context = context;
+            _ClinicBusiness = clinicBusinessClass;
         }
 
       public Clinic Clinic { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Clinics == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var clinic = await _context.Clinics.FirstOrDefaultAsync(m => m.ClinicId == id);
-            if (clinic == null)
+            var Clinic = await _ClinicBusiness.GetById(id.ToString());
+            return Page();
+        }
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            if (id == null )
             {
                 return NotFound();
             }
-            else 
-            {
-                Clinic = clinic;
-            }
-            return Page();
+            await _ClinicBusiness.DeleteById(id.ToString());
+            TempData["Message"] = "Delete successfully";
+            return RedirectToPage("./Index");
         }
     }
 }
