@@ -31,7 +31,7 @@ namespace ClinicData.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=(local);Uid=sa;Pwd=Nh@t123456;Database=NET1702_PRN221_Clinic;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=NET1702_PRN221_Clinic;Uid=sa; Pwd=Nh@t123456;TrustServerCertificate=True");
             }
         }
 
@@ -63,16 +63,19 @@ namespace ClinicData.Models
                 entity.HasOne(d => d.Appointment)
                     .WithMany(p => p.AppoimentDetails)
                     .HasForeignKey(d => d.AppointmentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Appoiment__Appoi__3B75D760");
 
                 entity.HasOne(d => d.Clinic)
                     .WithMany(p => p.AppoimentDetails)
                     .HasForeignKey(d => d.ClinicId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Appoiment__Clini__38996AB5");
 
                 entity.HasOne(d => d.Dentist)
                     .WithMany(p => p.AppoimentDetails)
                     .HasForeignKey(d => d.DentistId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Appoiment__Denti__398D8EEE");
 
                 entity.HasOne(d => d.ExaminationResult)
@@ -83,6 +86,7 @@ namespace ClinicData.Models
                 entity.HasOne(d => d.Service)
                     .WithMany(p => p.AppoimentDetails)
                     .HasForeignKey(d => d.ServiceId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Appoiment__Servi__3A81B327");
             });
 
@@ -103,6 +107,7 @@ namespace ClinicData.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Appointments)
                     .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Appointme__Custo__31EC6D26");
             });
 
@@ -113,6 +118,10 @@ namespace ClinicData.Models
                     .HasColumnName("ClinicID");
 
                 entity.Property(e => e.Address).HasMaxLength(255);
+
+                entity.Property(e => e.ClinicImage)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ClinicName).HasMaxLength(255);
 
@@ -136,6 +145,10 @@ namespace ClinicData.Models
                 entity.Property(e => e.Email).HasMaxLength(255);
 
                 entity.Property(e => e.Gender).HasMaxLength(10);
+
+                entity.Property(e => e.Image)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Phone).HasMaxLength(20);
 
@@ -163,6 +176,10 @@ namespace ClinicData.Models
 
                 entity.Property(e => e.Gender).HasMaxLength(10);
 
+                entity.Property(e => e.Image)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Phone).HasMaxLength(20);
 
                 entity.Property(e => e.ProfessionalQualifications).HasMaxLength(255);
@@ -172,11 +189,13 @@ namespace ClinicData.Models
                 entity.HasOne(d => d.Clinic)
                     .WithMany(p => p.Dentists)
                     .HasForeignKey(d => d.ClinicId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Dentists__Clinic__2C3393D0");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Dentists)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Dentists__UserID__2B3F6F97");
             });
 
@@ -228,6 +247,7 @@ namespace ClinicData.Models
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Users__RoleID__267ABA7A");
             });
 

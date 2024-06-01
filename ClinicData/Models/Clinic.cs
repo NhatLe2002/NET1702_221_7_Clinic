@@ -12,11 +12,11 @@ namespace ClinicData.Models
         }
 
         public int ClinicId { get; set; }
-        public string? ClinicName { get; set; }
-        public string? Address { get; set; }
-        public string? Phone { get; set; }
-        public string? Email { get; set; }
-        public byte[]? ClinicImage { get; set; }
+        public string ClinicName { get; set; } = null!;
+        public string Address { get; set; } = null!;
+        public string Phone { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string? ClinicImage { get; set; }
         public string? ClinicDescription { get; set; }
 
         public virtual ICollection<AppoimentDetail> AppoimentDetails { get; set; }

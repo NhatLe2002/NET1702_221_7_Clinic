@@ -11,18 +11,18 @@ namespace ClinicData.Models
         }
 
         public int DentistId { get; set; }
-        public int? UserId { get; set; }
-        public int? ClinicId { get; set; }
-        public string? DentistName { get; set; }
-        public DateTime? DateOfBirth { get; set; }
-        public string? Gender { get; set; }
-        public string? ProfessionalQualifications { get; set; }
-        public string? Phone { get; set; }
-        public string? Email { get; set; }
-        public byte[]? Image { get; set; }
+        public int UserId { get; set; }
+        public int ClinicId { get; set; }
+        public string DentistName { get; set; } = null!;
+        public DateTime DateOfBirth { get; set; }
+        public string Gender { get; set; } = null!;
+        public string ProfessionalQualifications { get; set; } = null!;
+        public string Phone { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string? Image { get; set; }
 
-        public virtual Clinic? Clinic { get; set; }
-        public virtual User? User { get; set; }
+        public virtual Clinic Clinic { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
         public virtual ICollection<AppoimentDetail> AppoimentDetails { get; set; }
     }
 }

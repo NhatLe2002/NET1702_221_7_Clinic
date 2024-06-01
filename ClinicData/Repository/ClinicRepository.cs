@@ -19,7 +19,7 @@ namespace ClinicData.Repository
         }
         public ClinicRepository(NET1702_PRN221_ClinicContext context) => _context = context;
 
-        ////TO-DO CODE HERE/////////////////
+        
         public async Task<Clinic> GetByIdOkeAsync(int id)
         {
             return await _context.Clinics

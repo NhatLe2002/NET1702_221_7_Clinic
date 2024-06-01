@@ -12,12 +12,12 @@ namespace ClinicData.Models
         }
 
         public int UserId { get; set; }
-        public int? RoleId { get; set; }
-        public string? Username { get; set; }
-        public string? Password { get; set; }
-        public bool? IsActive { get; set; }
+        public int RoleId { get; set; }
+        public string Username { get; set; } = null!;
+        public string Password { get; set; } = null!;
+        public bool IsActive { get; set; }
 
-        public virtual Role? Role { get; set; }
+        public virtual Role Role { get; set; } = null!;
         public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<Dentist> Dentists { get; set; }
     }
