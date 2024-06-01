@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class GenericRepository<T> where T : class
 {
-    protected readonly NET1702_PRN221_ClinicContext _context;
+    protected  NET1702_PRN221_ClinicContext _context;
     protected readonly DbSet<T> _dbSet;
 
     public GenericRepository()
@@ -112,6 +112,6 @@ public class GenericRepository<T> where T : class
 
     public async Task<T> GetByIdAsync(string code)
     {
-        return await _dbSet.FindAsync(code);
+        return await _dbSet.FindAsync(int.Parse(code));
     }
 }

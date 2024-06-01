@@ -1,4 +1,5 @@
 ﻿using ClinicBusiness;
+using ClinicCommon;
 using ClinicData.Models;
 
 namespace Test
@@ -9,7 +10,19 @@ namespace Test
         {
             Console.WriteLine("Hello, World!");
             var check = new ClinicBusinessClass();
-            var list = await check.GetAll();
+            var data = await check.GetById("1");
+            if (data.Status == 1 && data.Data is Clinic clinic)
+            {
+                Console.WriteLine(clinic.ClinicId);
+                Console.WriteLine(clinic.Address);
+            }
+
+
+            var delte = await check.DeleteById("13");
+            Console.WriteLine(delte.Data);
+
+
+
 
             /*foreach (var item in list)
             {

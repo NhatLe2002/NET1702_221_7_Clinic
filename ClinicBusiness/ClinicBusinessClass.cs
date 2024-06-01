@@ -101,15 +101,15 @@ namespace ClinicBusiness
                 #endregion
 
                 //var currency = await _currencyRepository.GetByIdAsync(code);
-                var currency = await _unitOfWork.ClinicRepository.GetByIdAsync(code);
+                var clinic = await _unitOfWork.ClinicRepository.GetByIdAsync(code);
 
-                if (currency == null)
+                if (clinic == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, currency);
+                        return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, clinic);
                 }
             }
             catch (Exception ex)
@@ -172,7 +172,7 @@ namespace ClinicBusiness
                     var result = await _unitOfWork.ClinicRepository.RemoveAsync(currency);
                     if (result)
                     {
-                        return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG);
+                        return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG, currency);
                     }
                     else
                     {

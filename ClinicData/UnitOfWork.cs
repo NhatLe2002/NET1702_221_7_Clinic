@@ -1,4 +1,6 @@
-﻿using ClinicData.Repository;
+﻿using ClinicData.Models;
+using ClinicData.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +11,18 @@ namespace ClinicData
 {
     public class UnitOfWork
     {
+        private NET1702_PRN221_ClinicContext _context;
         private ClinicRepository _clinic;
-        public UnitOfWork() { }
+
+        public UnitOfWork()
+        {
+            _context = new NET1702_PRN221_ClinicContext();
+        }
         public ClinicRepository ClinicRepository
         {
             get
             {
-                return _clinic ??= new ClinicRepository();
+                return _clinic ??= new ClinicRepository(_context);
             }
         }
     }
