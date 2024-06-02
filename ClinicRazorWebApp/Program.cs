@@ -11,7 +11,7 @@ namespace ClinicRazorWebApp
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<IClinicBusinessClass, ClinicBusinessClass>();
-
+            builder.Services.AddScoped<IUserBusiness, UserBusiness>();
 
 
             var app = builder.Build();
