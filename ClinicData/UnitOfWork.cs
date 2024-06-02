@@ -13,6 +13,7 @@ namespace ClinicData
     {
         private NET1702_PRN221_ClinicContext _context;
         private ClinicRepository _clinic;
+        private CustomerRepository _customer;
 
         public UnitOfWork()
         {
@@ -23,6 +24,14 @@ namespace ClinicData
             get
             {
                 return _clinic ??= new ClinicRepository(_context);
+            }
+        }
+
+        public CustomerRepository CustomerRepository
+        {
+            get
+            {
+                return _customer ??= new CustomerRepository(_context);
             }
         }
     }

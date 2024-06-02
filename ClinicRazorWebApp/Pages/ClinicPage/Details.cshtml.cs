@@ -28,7 +28,12 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
                 return NotFound();
             }
 
-            var Clinic = await _ClinicBusiness.GetById(id.ToString());
+            var clinic = await _ClinicBusiness.GetById(id.ToString());
+            if(clinic.Status!=-1)
+            {
+                Clinic = (Clinic)clinic.Data;
+            }
+            
             return Page();
         }
         public async Task<IActionResult> OnPostAsync(int id)

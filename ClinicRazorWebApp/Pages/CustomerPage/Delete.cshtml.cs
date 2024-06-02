@@ -6,55 +6,59 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
+using ClinicBusiness;
 
 namespace ClinicRazorWebApp.Pages.CustomerPage
 {
     public class DeleteModel : PageModel
     {
-        private readonly ClinicData.Models.NET1702_PRN221_ClinicContext _context;
+        private readonly ICustomerBusinessClass _customerBusiness;
 
-        public DeleteModel(ClinicData.Models.NET1702_PRN221_ClinicContext context)
+        public DeleteModel(ICustomerBusinessClass customerBusiness)
         {
-            _context = context;
+            _customerBusiness = customerBusiness;
         }
-
         [BindProperty]
-      public Customer Customer { get; set; } = default!;
+        public Customer Customer { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Customers == null)
+            if (id == null)
+
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerId == id);
+            var customer = await _customerBusiness.GetById(id.ToString());
 
             if (customer == null)
             {
                 return NotFound();
             }
-            else 
+            else
             {
-                Customer = customer;
+                if (customer.Data is Customer customerResult)
+                {
+
+                    Customer = customerResult;
+                }
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Customers == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var customer = await _context.Customers.FindAsync(id);
+            _customerBusiness.DeleteById(id.ToString());
+            /*var clinic = await _ClinicBusiness.GetById(id.ToString());
 
-            if (customer != null)
+            if (clinic != null)
             {
-                Customer = customer;
-                _context.Customers.Remove(Customer);
-                await _context.SaveChangesAsync();
-            }
+                _ClinicBusiness.DeleteById(id.ToString());
+            }*/
 
             return RedirectToPage("./Index");
         }

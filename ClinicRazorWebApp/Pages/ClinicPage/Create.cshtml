@@ -17,7 +17,7 @@
                 @ViewData["Message"]
             </div>
         }
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label asp-for="Clinic.ClinicName" class="control-label"></label>
                 <input asp-for="Clinic.ClinicName" class="form-control" />
@@ -39,26 +39,27 @@
                 <span asp-validation-for="Clinic.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Clinic.ClinicImage" class="control-label"></label>
-                <input asp-for="Clinic.ClinicImage" class="form-control" />
-                <span asp-validation-for="Clinic.ClinicImage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Clinic.ClinicDescription" class="control-label"></label>
                 <input asp-for="Clinic.ClinicDescription" class="form-control" />
                 <span asp-validation-for="Clinic.ClinicDescription" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label for="clinicImageFile" class="control-label">Clinic Image</label>
+                <input id="clinicImageFile" type="file" name="clinicImageFile" class="form-control" />
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
 <div>
     <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

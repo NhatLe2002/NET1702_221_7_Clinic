@@ -6,39 +6,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ClinicData.Models;
+using ClinicBusiness;
+using ClinicCommon;
 
 namespace ClinicRazorWebApp.Pages.CustomerPage
 {
     public class CreateModel : PageModel
     {
-        private readonly ClinicData.Models.NET1702_PRN221_ClinicContext _context;
+        private readonly ICustomerBusinessClass _customerBusiness;
+        private readonly ICommonService _commonService;
 
-        public CreateModel(ClinicData.Models.NET1702_PRN221_ClinicContext context)
+        public CreateModel(ICustomerBusinessClass clinicBusinessClass, ICommonService commonService)
         {
-            _context = context;
+            _customerBusiness = clinicBusinessClass;
+            _commonService = commonService;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Password");
             return Page();
         }
 
         [BindProperty]
         public Customer Customer { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile customerImageFile)
         {
-          if (!ModelState.IsValid || _context.Customers == null || Customer == null)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
-
-            _context.Customers.Add(Customer);
-            await _context.SaveChangesAsync();
-
+            var imageUrl = await _commonService.UploadAnImage(customerImageFile, Const.PATH_IMG_CUSTOMER, "Clinic" + Guid.NewGuid().ToString());
+            Customer.Image = imageUrl;
+            var customerResult = _customerBusiness.Save(Customer);
             return RedirectToPage("./Index");
         }
     }

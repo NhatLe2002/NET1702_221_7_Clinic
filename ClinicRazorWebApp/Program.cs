@@ -1,4 +1,5 @@
 using ClinicBusiness;
+using ClinicCommon;
 
 namespace ClinicRazorWebApp
 {
@@ -11,8 +12,10 @@ namespace ClinicRazorWebApp
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<IClinicBusinessClass, ClinicBusinessClass>();
-
-
+            
+            //Add Dependency Injection
+            builder.Services.AddScoped<ICommonService, CommonService>();
+            builder.Services.AddScoped<ICustomerBusinessClass, CustomerBusiness>();
 
             var app = builder.Build();
 

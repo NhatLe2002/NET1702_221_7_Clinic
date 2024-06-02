@@ -35,32 +35,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Clinic) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClinicName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClinicImage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClinicDescription)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ClinicId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ClinicId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ClinicId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Clinic)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClinicName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClinicDescription)
+                </td>
+                <td>
+                    <img src="@item.ClinicImage" alt="Clinic Image" style="width:100px;height:100px;">
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ClinicId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ClinicId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ClinicId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
