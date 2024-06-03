@@ -45,7 +45,8 @@
             </div>
             <div class="form-group">
                 <label for="clinicImageFile" class="control-label">Clinic Image</label>
-                <input id="clinicImageFile" type="file" name="clinicImageFile" class="form-control" />
+                <input id="clinicImageFile" type="file" name="clinicImageFile" class="form-control" onchange="previewImage(event)" />
+                <img id="imagePreview" src="#" alt="Image Preview" style="display:none; margin-top:10px; max-width:100%; height:auto;" />
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -62,5 +63,18 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function() {
+                var dataURL = reader.result;
+                var imagePreview = document.getElementById('imagePreview');
+                imagePreview.src = dataURL;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
 }
 
