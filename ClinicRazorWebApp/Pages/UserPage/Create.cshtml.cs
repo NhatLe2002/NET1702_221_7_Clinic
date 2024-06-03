@@ -25,9 +25,11 @@ namespace ClinicRazorWebApp.Pages.UserPage
             _context = context;
         }*/
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-        //ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
+            //ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
+            var roles = await _UserBusiness.GetRoles();
+            ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
             return Page();
         }
 

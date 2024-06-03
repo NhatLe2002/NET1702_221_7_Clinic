@@ -17,6 +17,7 @@ namespace ClinicBusiness
         Task<IBusinessResult> Save(User user);
         Task<IBusinessResult> Update(User user);
         Task<IBusinessResult> DeleteById(string code);
+        Task<IEnumerable<Role>> GetRoles();
     }
     public class UserBusiness : IUserBusiness
     {
@@ -177,6 +178,11 @@ namespace ClinicBusiness
             {
                 return new BusinessResult(-4, ex.ToString());
             }
+        }
+
+        public async Task<IEnumerable<Role>> GetRoles()
+        {
+            return await _unitOfWork.RoleRepository.GetAllAsync();
         }
     }
 }

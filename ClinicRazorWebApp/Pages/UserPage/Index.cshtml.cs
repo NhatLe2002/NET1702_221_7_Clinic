@@ -39,11 +39,11 @@ namespace ClinicRazorWebApp.Pages.UserPage
         }
         private List<User> GetCurrencies()
         {
-            var currencyResult = _UserBusiness.GetAll();
+            var userResult = _UserBusiness.GetAll();
 
-            if (currencyResult.Status > 0 && currencyResult.Result.Data != null)
+            if (userResult.Status > 0 && userResult.Result.Data != null)
             {
-                var currencies = (List<User>)currencyResult.Result.Data;
+                var currencies = (List<User>)userResult.Result.Data;
                 return currencies;
             }
             return new List<User>();
