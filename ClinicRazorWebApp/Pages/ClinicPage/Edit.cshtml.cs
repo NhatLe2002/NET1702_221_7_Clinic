@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
 using ClinicBusiness;
-using static System.Collections.Specialized.BitVector32;
 using ClinicCommon;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ClinicRazorWebApp.Pages.ClinicPage
 {
@@ -61,8 +61,6 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
                 var imageUrl = await _commonService.UploadAnImage(clinicImageFile, Const.PATH_IMG_CLINIC, GetUrlTail(Clinic.ClinicImage));
                 Clinic.ClinicImage = imageUrl;
             }
-
-            
             _ClinicBusiness.Update(Clinic);
 
             return RedirectToPage("./Index");
@@ -84,8 +82,4 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
             return fileName;
         }
     }
-}
-@section Scripts
-{
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
