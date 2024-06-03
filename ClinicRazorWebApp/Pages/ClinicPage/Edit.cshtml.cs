@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
 using ClinicBusiness;
+using ClinicCommon;
 
 namespace ClinicRazorWebApp.Pages.ClinicPage
 {
@@ -15,10 +16,11 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
     {
 
         private readonly IClinicBusinessClass _ClinicBusiness;
-
-        public EditModel(IClinicBusinessClass clinicBusinessClass)
+        private readonly ICommonService _commonService;
+        public EditModel(IClinicBusinessClass clinicBusinessClass, ICommonService commonService)
         {
             _ClinicBusiness = clinicBusinessClass;
+            _commonService = commonService;
         }
 
         [BindProperty]
@@ -41,22 +43,44 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
             {
                 return NotFound();
             }
-
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile clinicImageFile)
         {
+            ModelState.Remove("clinicImageFile");
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            if (clinicImageFile!=null)
+            {
+                var imageUrl = await _commonService.UploadAnImage(clinicImageFile, Const.PATH_IMG_CLINIC, GetUrlTail(Clinic.ClinicImage));
+                Clinic.ClinicImage = imageUrl;
+            }
+
+            
             _ClinicBusiness.Update(Clinic);
 
             return RedirectToPage("./Index");
         }
 
+        private string GetUrlTail(string url)
+        {
+            Uri uri = new Uri(url);
+
+            string path = uri.AbsolutePath;
+            string[] segments = path.Split('/');
+            string fileName = segments[^1]; 
+            int dotIndex = fileName.LastIndexOf('.');
+            if (dotIndex != -1)
+            {
+                fileName = fileName.Substring(0, dotIndex);
+            }
+
+            return fileName;
+        }
     }
 }
