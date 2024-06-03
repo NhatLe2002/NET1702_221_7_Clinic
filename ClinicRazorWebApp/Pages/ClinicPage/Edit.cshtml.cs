@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
 using ClinicBusiness;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ClinicRazorWebApp.Pages.ClinicPage
 {
@@ -52,11 +53,14 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
             {
                 return Page();
             }
-
             _ClinicBusiness.Update(Clinic);
 
             return RedirectToPage("./Index");
         }
 
     }
+}
+@section Scripts
+{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
