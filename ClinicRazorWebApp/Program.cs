@@ -1,4 +1,5 @@
 using ClinicBusiness;
+using ClinicCommon;
 using ClinicData.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,10 @@ namespace ClinicRazorWebApp
             builder.Services.AddDbContext<NET1702_PRN221_ClinicContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("NET1702_PRN221_Clinic")));
             builder.Services.AddScoped<IClinicBusinessClass, ClinicBusinessClass>();
+            
+            //Add Dependency Injection
+            builder.Services.AddScoped<ICommonService, CommonService>();
+            builder.Services.AddScoped<ICustomerBusinessClass, CustomerBusiness>();
             builder.Services.AddScoped<IUserBusiness, UserBusiness>();
 
 

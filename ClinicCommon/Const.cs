@@ -47,5 +47,12 @@ namespace ClinicCommon
         public static string WARNING_NO_DATA__MSG = "No data";
 
         #endregion
+
+        #region Path save file
+
+        public static string PATH_IMG_CUSTOMER = "NET1702_221_7_Clinic/Customer/";
+        public static string PATH_IMG_CLINIC = "NET1702_221_7_Clinic/Clinic/";
+
+        #endregion
     }
 }

@@ -6,27 +6,39 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
+using ClinicBusiness;
 
 namespace ClinicRazorWebApp.Pages.CustomerPage
 {
     public class IndexModel : PageModel
     {
-        private readonly ClinicData.Models.NET1702_PRN221_ClinicContext _context;
+        private readonly ICustomerBusinessClass _customerBusiness;
 
-        public IndexModel(ClinicData.Models.NET1702_PRN221_ClinicContext context)
+        public IndexModel(ICustomerBusinessClass customerBusiness)
         {
-            _context = context;
+            _customerBusiness = customerBusiness;
         }
 
-        public IList<Customer> Customer { get;set; } = default!;
+        public IList<Customer> Customer { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Customers != null)
+            Customer = this.GetAllCustomer();
+            /* if (_context.Clinics != null)
+             {
+                 Clinic = await _context.Clinics.ToListAsync();
+             }*/
+        }
+        private List<Customer> GetAllCustomer()
+        {
+            var customerResult = _customerBusiness.GetAll();
+
+            if (customerResult.Status > 0 && customerResult.Result.Data != null)
             {
-                Customer = await _context.Customers
-                .Include(c => c.User).ToListAsync();
+                var customers = (List<Customer>)customerResult.Result.Data;
+                return customers;
             }
+            return new List<Customer>();
         }
     }
 }

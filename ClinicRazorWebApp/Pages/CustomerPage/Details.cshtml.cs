@@ -6,37 +6,45 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
+using ClinicBusiness;
 
 namespace ClinicRazorWebApp.Pages.CustomerPage
 {
     public class DetailsModel : PageModel
     {
-        private readonly ClinicData.Models.NET1702_PRN221_ClinicContext _context;
+        private readonly ICustomerBusinessClass _customerBusiness;
 
-        public DetailsModel(ClinicData.Models.NET1702_PRN221_ClinicContext context)
+        public DetailsModel(ICustomerBusinessClass customerBusiness)
         {
-            _context = context;
+            _customerBusiness = customerBusiness;
         }
 
-      public Customer Customer { get; set; } = default!; 
+        public Customer Customer { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Customers == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerId == id);
-            if (customer == null)
+            var customer = await _customerBusiness.GetById(id.ToString());
+            if (customer.Status != -1)
+            {
+                Customer = (Customer)customer.Data;
+            }
+
+            return Page();
+        }
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            if (id == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Customer = customer;
-            }
-            return Page();
+            await _customerBusiness.DeleteById(id.ToString());
+            TempData["Message"] = "Delete successfully";
+            return RedirectToPage("./Index");
         }
     }
 }
