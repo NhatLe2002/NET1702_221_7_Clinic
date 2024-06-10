@@ -33,6 +33,49 @@ namespace Clinic.WpfApp.UI.User
         }
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                //int idTmp = -1;
+                //int.TryParse(txtCurrencyCode.Text, out idTmp);
+
+                var item = await _business.GetById(txtCurrencyCode.Text);
+
+                if (item.Data == null)
+                {
+                    var currency = new Currency()
+                    {
+                        CurrencyCode = txtCurrencyCode.Text,
+                        CurrencyName = txtCurrencyName.Text,
+                        NationCode = txtNationCode.Text,
+                        IsActive = chkIsActive.IsChecked
+                    };
+
+                    var result = await _business.Create(currency);
+                    MessageBox.Show(result.Message, "Save");
+                }
+                else
+                {
+                    var currency = item.Data as Currency;
+                    //currency.CurrencyCode = txtCurrencyCode.Text;
+                    currency.CurrencyName = txtCurrencyName.Text;
+                    currency.NationCode = txtNationCode.Text;
+                    currency.IsActive = chkIsActive.IsChecked;
+
+                    var result = await _business.Update(currency);
+                    MessageBox.Show(result.Message, "Update");
+                }
+
+                txtCurrencyCode.Text = string.Empty;
+                txtCurrencyName.Text = string.Empty;
+                txtNationCode.Text = string.Empty;
+                chkIsActive.IsChecked = false;
+                this.LoadGrdCurrencies();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+
         }
         private async void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -40,18 +83,18 @@ namespace Clinic.WpfApp.UI.User
         private async void grdCurrency_MouseDouble_Click(object sender, RoutedEventArgs e)
         {
         }
-        //private async void LoadGrdCurrencies()
-        //{
-        //    var result = await _business.GetAll();
+        private async void LoadGrdCurrencies()
+        {
+            var result = await _business.GetAll();
 
-        //    if (result.Status > 0 && result.Data != null)
-        //    {
-        //        grdCurrency.ItemsSource = result.Data as List<User>;
-        //    }
-        //    else
-        //    {
-        //        grdCurrency.ItemsSource = new List<User>();
-        //    }
-        //}
+            if (result.Status > 0 && result.Data != null)
+            {
+                grdCurrency.ItemsSource = result.Data as List<User>;
+            }
+            else
+            {
+               grdCurrency.ItemsSource = new List<User>();
+            }
+        }
     }
 }
