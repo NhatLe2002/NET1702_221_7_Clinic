@@ -17,11 +17,11 @@
         </Menu>
         <Grid>
             <StackPanel Orientation="Vertical">
-                <GroupBox Header="Clinic Form" Margin="10,30,10,10" >
-                    <Grid Height="100">
+                <GroupBox Header="Clinic Form" Margin="10,30,10,10">
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
@@ -31,19 +31,37 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="156.6"/>
-                            <ColumnDefinition Width="43.4000000000001"/>
+                            <ColumnDefinition Width="200"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Content="Code" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Column="1" Grid.Row="0" x:Name="txtClinicCode" Height="25" Text="{Binding Path=Clinic.ClinicCode, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="2" Grid.Row="0" Content="Name" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtClinicName" Height="25" Text="{Binding Path=Clinic.ClinicName, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="4" Grid.Row="0" Content="Nation" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Column="5" Grid.Row="0" x:Name="txtNationCode" Height="25" Text="{Binding Path=Clinic.NationCode, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="6" Grid.Row="0" Content="Active" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <CheckBox Grid.Column="7" Grid.Row="0" x:Name="chkIsActive" Height="25" IsChecked="{Binding ElementName=IsActive, Path=IsCheckBoxChecked}"  Margin="5,12,0,12"  Width="30" HorizontalAlignment="Left"/>
+
+                        <!-- Row 0 -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="Code" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtClinicCode" Height="25" Text="{Binding Path=Clinic.ClinicCode, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="0" Grid.Column="2" Content="Name" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtClinicName" Height="25" Text="{Binding Path=Clinic.ClinicName, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="0" Grid.Column="4" Content="Address" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="5" x:Name="txtAddress" Height="25" Text="{Binding Path=Clinic.Address, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="0" Grid.Column="6" Content="Phone" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="7" x:Name="txtPhone" Height="25" Text="{Binding Path=Clinic.Phone, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <!-- Row 1 -->
+                        <Label Grid.Row="1" Grid.Column="0" Content="Email" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtEmail" Height="25" Text="{Binding Path=Clinic.Email, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+                        
+                        <Label Grid.Row="1" Grid.Column="4" Content="Description" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="1" Grid.Column="5" x:Name="txtClinicDescription" Height="25" Text="{Binding Path=Clinic.ClinicDescription, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="1" Grid.Column="2" Content="Image" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="1" Grid.Column="3" x:Name="txtClinicImage" Height="25" Text="{Binding Path=Clinic.ClinicImage, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
                     </Grid>
                 </GroupBox>
+
+
+
                 <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="ButtonSave" Content="Save" Height="30" Width="80" Click="ButtonSave_Click"/>
                     <Button x:Name="ButtonCancel" Content="Cancel" Height="30" Width="80" Click="ButtonCancel_Click"/>
