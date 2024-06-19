@@ -16,6 +16,10 @@ namespace ClinicData.Models
         public decimal TotalPrice { get; set; }
         public string? PaymentMethod { get; set; }
         public int? PaymentStatus { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public DateTime? ScheduledDate { get; set; }
+        public string? Note { get; set; }
 
         public virtual Customer Customer { get; set; } = null!;
         public virtual ICollection<AppoimentDetail> AppoimentDetails { get; set; }

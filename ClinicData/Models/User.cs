@@ -16,6 +16,11 @@ namespace ClinicData.Models
         public string Username { get; set; } = null!;
         public string Password { get; set; } = null!;
         public bool IsActive { get; set; }
+        public string? Fullname { get; set; }
+        public string? Email { get; set; }
+        public int? Phone { get; set; }
+        public string? Address { get; set; }
+        public DateTime? Birthday { get; set; }
 
         public virtual Role Role { get; set; } = null!;
         public virtual ICollection<Customer> Customers { get; set; }

@@ -8,13 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
 using ClinicBusiness;
-using static System.Collections.Specialized.BitVector32;
 
-namespace ClinicRazorWebApp.Pages.ClinicPage
+namespace ClinicRazorWebApp.Pages.ClinicUpdatePage
 {
     public class EditModel : PageModel
     {
-
         private readonly IClinicBusinessClass _ClinicBusiness;
 
         public EditModel(IClinicBusinessClass clinicBusinessClass)
@@ -42,7 +40,6 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
             {
                 return NotFound();
             }
-
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -57,6 +54,5 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
 
             return RedirectToPage("./Index");
         }
-
     }
 }

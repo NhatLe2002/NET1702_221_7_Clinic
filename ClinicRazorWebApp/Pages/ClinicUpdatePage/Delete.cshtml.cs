@@ -4,59 +4,63 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
 using ClinicBusiness;
-using static System.Collections.Specialized.BitVector32;
 
-namespace ClinicRazorWebApp.Pages.ClinicPage
+namespace ClinicRazorWebApp.Pages.ClinicUpdatePage
 {
-    public class EditModel : PageModel
+    public class DeleteModel : PageModel
     {
-
         private readonly IClinicBusinessClass _ClinicBusiness;
 
-        public EditModel(IClinicBusinessClass clinicBusinessClass)
+        public DeleteModel(IClinicBusinessClass clinicBusinessClass)
         {
             _ClinicBusiness = clinicBusinessClass;
         }
-
         [BindProperty]
         public Clinic Clinic { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
+
             {
                 return NotFound();
             }
 
             var clinic = await _ClinicBusiness.GetById(id.ToString());
-            if (clinic != null && clinic.Data is Clinic clinicReturn)
-            {
-                Clinic = clinicReturn;
-                return Page();
-            }
-            else
+
+            if (clinic == null)
             {
                 return NotFound();
             }
+            else
+            {
+                if (clinic.Data is Clinic clinicResult)
+                {
 
+                    Clinic = clinicResult;
+                }
+            }
+            return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
-            _ClinicBusiness.Update(Clinic);
+            _ClinicBusiness.DeleteById(id.ToString());
+            /*var clinic = await _ClinicBusiness.GetById(id.ToString());
+
+            if (clinic != null)
+            {
+                _ClinicBusiness.DeleteById(id.ToString());
+            }*/
 
             return RedirectToPage("./Index");
         }
-
     }
 }

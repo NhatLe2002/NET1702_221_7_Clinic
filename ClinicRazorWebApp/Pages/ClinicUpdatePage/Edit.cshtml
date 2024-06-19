@@ -1,0 +1,75 @@
+﻿@page
+@model ClinicRazorWebApp.Pages.ClinicUpdatePage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Clinic</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Clinic.ClinicId" />
+            <div class="form-group">
+                <label asp-for="Clinic.ClinicName" class="control-label"></label>
+                <input asp-for="Clinic.ClinicName" class="form-control" />
+                <span asp-validation-for="Clinic.ClinicName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.Address" class="control-label"></label>
+                <input asp-for="Clinic.Address" class="form-control" />
+                <span asp-validation-for="Clinic.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.Phone" class="control-label"></label>
+                <input asp-for="Clinic.Phone" class="form-control" />
+                <span asp-validation-for="Clinic.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.Email" class="control-label"></label>
+                <input asp-for="Clinic.Email" class="form-control" />
+                <span asp-validation-for="Clinic.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.ClinicImage" class="control-label"></label>
+                <input asp-for="Clinic.ClinicImage" class="form-control" />
+                <span asp-validation-for="Clinic.ClinicImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.ClinicDescription" class="control-label"></label>
+                <input asp-for="Clinic.ClinicDescription" class="form-control" />
+                <span asp-validation-for="Clinic.ClinicDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.OpenTime" class="control-label"></label>
+                <input asp-for="Clinic.OpenTime" class="form-control" />
+                <span asp-validation-for="Clinic.OpenTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.CloseTime" class="control-label"></label>
+                <input asp-for="Clinic.CloseTime" class="form-control" />
+                <span asp-validation-for="Clinic.CloseTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.IsActive" class="control-label"></label>
+                <input asp-for="Clinic.IsActive" class="form-control" />
+                <span asp-validation-for="Clinic.IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
