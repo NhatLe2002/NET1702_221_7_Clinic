@@ -19,25 +19,13 @@ namespace ClinicRazorWebApp.Pages.UserPage
             _UserBusiness = userBusiness;
         }
 
-        //private readonly ClinicData.Models.NET1702_PRN221_ClinicContext _context;
-
-        /*public IndexModel(ClinicData.Models.NET1702_PRN221_ClinicContext context)
-        {
-            _context = context;
-        }*/
-
         public IList<User> User { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            User = this.GetCurrencies();
-            /*if (_context.Users != null)
-            {
-                User = await _context.Users
-                .Include(u => u.Role).ToListAsync();
-            }*/
+            User = this.GetUsers();
         }
-        private List<User> GetCurrencies()
+        private List<User> GetUsers()
         {
             var userResult = _UserBusiness.GetAll();
 

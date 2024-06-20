@@ -31,16 +31,11 @@ namespace ClinicRazorWebApp.Pages.UserPage
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            //if (id == null || _context.Users == null)
-            //{
-            //    return NotFound();
-            //}
             if (id == null)
             {
                 return NotFound();
             }
 
-            //var user =  await _context.Users.FirstOrDefaultAsync(m => m.UserId == id);
             var user = await _UserBusiness.GetById(id.ToString());
 
             if (user != null && user.Data is User userReturn)
@@ -52,13 +47,6 @@ namespace ClinicRazorWebApp.Pages.UserPage
             {
                 return NotFound();
             }
-            //if (user == null)
-            //{
-            //    return NotFound();
-            //}
-            //User = user;
-            //ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
-            //return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -69,24 +57,6 @@ namespace ClinicRazorWebApp.Pages.UserPage
             {
                 return Page();
             }
-
-            //_context.Attach(User).State = EntityState.Modified;
-
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!UserExists(User.UserId))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
             _UserBusiness.Update(User);
 
             return RedirectToPage("./Index");
