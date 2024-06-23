@@ -23,7 +23,22 @@
                 @Html.DisplayNameFor(model => model.User[0].IsActive)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Role)
+                @Html.DisplayNameFor(model => model.User[0].Role.RoleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Fullname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Birthday)
             </th>
             <th></th>
         </tr>
@@ -42,6 +57,21 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Role.RoleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fullname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthday)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.UserId">Edit</a> |
