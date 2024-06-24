@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ClinicData.Models;
 using ClinicBusiness;
+using ClinicCommon;
 
 namespace ClinicRazorWebApp.Pages.UserPage
 {
@@ -43,13 +44,25 @@ namespace ClinicRazorWebApp.Pages.UserPage
             //if (!ModelState.IsValid || _context.Users == null || User == null)
             if (!ModelState.IsValid)
             {
+                var roles = await _UserBusiness.GetRoles();
+                ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
                 return Page();
             }
 
             //_context.Users.Add(User);
             //await _context.SaveChangesAsync();
-            var userResult = _UserBusiness.Save(User);
-            return RedirectToPage("./Index");
+            var userResult = await _UserBusiness.Save(User);
+            if (userResult.Status == Const.SUCCESS_CREATE_CODE)
+            {
+                return RedirectToPage("./Index");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, userResult.Message);
+                var roles = await _UserBusiness.GetRoles();
+                ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
+                return Page();
+            }
         }
     }
 }
