@@ -35,16 +35,16 @@ namespace ClinicBusiness
 
                 //var currencies = _DAO.GetAll();
                 //var currencies = await _currencyRepository.GetAllAsync();
-                var currencies = await _unitOfWork.UserRepository.GetAllAsync();
+                var users = await _unitOfWork.UserRepository.GetAllAsync();
 
 
-                if (currencies == null)
+                if (users == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, currencies);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, users);
                 }
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace ClinicBusiness
         {
             try
             {
-                var users = await _unitOfWork.ServiceRepository.GetAllAsync();
+                var users = await _unitOfWork.UserRepository.GetAllAsync();
                 if (users != null && users.Count > 0)
                 {
                     List<IBusinessResult> results = new List<IBusinessResult>();

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
 using ClinicBusiness;
+using ClinicCommon;
 
 namespace ClinicRazorWebApp.Pages.UserPage
 {
@@ -23,6 +24,15 @@ namespace ClinicRazorWebApp.Pages.UserPage
 
         public async Task OnGetAsync()
         {
+            var userResult = await _UserBusiness.GetAll();
+            if (userResult.Status == Const.SUCCESS_READ_CODE)
+            {
+                User = userResult.Data as IList<User>;
+            }
+        }
+
+        /*public async Task OnGetAsync()
+        {
             User = this.GetUsers();
         }
         private List<User> GetUsers()
@@ -35,6 +45,6 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 return currencies;
             }
             return new List<User>();
-        }
+        }*/
     }
 }
