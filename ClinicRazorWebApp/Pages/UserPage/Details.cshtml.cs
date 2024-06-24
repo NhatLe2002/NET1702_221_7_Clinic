@@ -39,7 +39,21 @@ namespace ClinicRazorWebApp.Pages.UserPage
             }
 
             //var user = await _context.Users.FirstOrDefaultAsync(m => m.UserId == id);
-            var User = await _UserBusiness.GetById(id.ToString());
+            var user = await _UserBusiness.GetById(id.ToString());
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                //User = user;
+                if (user.Data is User userResult)
+                {
+
+                    User = userResult;
+                }
+            }
 
             //if (user == null)
             //{
