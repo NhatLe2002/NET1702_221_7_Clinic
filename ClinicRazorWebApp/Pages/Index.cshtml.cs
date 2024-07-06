@@ -26,6 +26,12 @@ namespace ClinicRazorWebApp.Pages
         }
         public IActionResult OnPost()
         {
+            Password = Password.Trim();
+            if(Password.Length < 8)
+            {
+                ViewData["ErrorMessage"] = "Password is more or equal than 8 characters!";
+                return Page();
+            }
             var session = HttpContext.Session;
             if (_configuration.GetSection("Login")["Username"].Equals(Username) &&
                 _configuration.GetSection("Login")["Password"].Equals(Password))
@@ -36,8 +42,7 @@ namespace ClinicRazorWebApp.Pages
             }
             else
             {
-                ModelState.AddModelError(String.Empty, "Thông tin đăng nhập không đúng.");
-                ViewData["ErrorMessage"] = "Thông tin đăng nhập không đúng.";
+                ViewData["ErrorMessage"] = "Username or password is incorrect!";
                 return Page();
             }
         }
