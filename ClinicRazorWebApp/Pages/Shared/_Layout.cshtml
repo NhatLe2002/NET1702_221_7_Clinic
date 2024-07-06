@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var user = ClinicRazorWebApp.SessionExtendsions.Get<string>(Context.Session, "User");
+    // var admin = Prn221_8_HoaLan.SessionExtensions.Get<String>(Context.Session, "Admin");
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,41 +11,53 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ClinicRazorWebApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/nav_bar.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">ClinicRazorWebApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Clinic">Clinic</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/ClinicPage/Index">Clinic Page</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/CustomerPage/Index">Customer Page</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/AuthorPage/Login">Login</a>
-                        </li>
-                    </ul>
+        <div class="nav">
+            <div class="navLogo">
+                <img src="https://cdn-icons-png.flaticon.com/512/6525/6525366.png" alt="logo" height="75px" width="auto">
+            </div>
+            <div class="navItemContainer">
+                @*                @if (ViewBag.Role != null)
+                {
+                <a asp-area="" asp-page="/" class="navItem" data-index="0">Pricing</a>
+                <a asp-area="" asp-page="/About" class="navItem" data-index="2">About</a>
+                <a asp-area="" asp-page="/Contact" class="navItem" data-index="3">Contact</a>
+                }
+                else
+                {
+                <a asp-area="" asp-page="/AuthorPage/Login" class="navItem" data-index="1">Login</a>
+                } *@
+                @if (user == null)
+                {
+                    <a asp-area="" asp-page="/Index" class="navItem" data-index="3">Login</a>
+                }
+                else
+                {
+                    <a asp-area="" asp-page="/CustomerPage/Index" class="navItem" data-index="1">Customer</a>
+                    @* <a asp-area="" asp-page="/CustomerPage/Index" class="navItem" data-index="0">Customer</a> *@
+                    <a asp-area ="" asp-page="/AuthorPage/Logout" class="navItem" data-index="0">Logout</a>
+                }
+               
+                <div class="navItemActiveContainer">
+                    <div class="navItemActive">
+                        <div class="navItemActiveLeft"></div>
+                        <div class="navItemActiveCenter"></div>
+                        <div class="navItemActiveRight"></div>
+                    </div>
+                    <div class="navItemActive">
+                        <div class="navItemActiveCopyLeft"></div>
+                        <div class="navItemActiveCopyCenter"></div>
+                        <div class="navItemActiveCopyRight"></div>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
     </header>
+
+
 
     @* BODY NHÚNG VÔ *@
     <div class="container">
@@ -51,16 +67,16 @@
     </div>
 
     @* Foodter *@
-@*     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - ClinicRazorWebApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+    @*     <footer class="border-top footer text-muted">
+    <div class="container">
+    &copy; 2024 - ClinicRazorWebApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    </div>
     </footer> *@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <script src="~/js/nav_bar.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

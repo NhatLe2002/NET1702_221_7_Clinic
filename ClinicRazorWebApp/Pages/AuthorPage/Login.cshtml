@@ -30,18 +30,22 @@
                                         <h4 class="mt-1 mb-3 pb-1">We are Clinic Booking</h4>
                                     </div>
 
-                                    <form>
+                                    <form method="post">
                                         <p>Please login to your account</p>
                                         <div class="form-outline mb-4">
-                                            <input type="email" id="form2Example11" class="form-control"
-                                                   placeholder="Phone number or email address" />
+                                            <input id="form2Example11" class="form-control"
+                                                   placeholder="Phone number or email address" asp-for="Username" />
                                             <label class="form-label" for="form2Example11">Username</label>
                                         </div>
-
+                                        <div>
+                                            <span asp-validation-for="Username" class="text-danger"></span>
+                                        </div>
+                                        
                                         <div class="form-outline mb-4">
-                                            <input type="password" id="form2Example22" class="form-control" />
+                                            <input type="password" id="form2Example22" class="form-control" asp-for="Password" />
                                             <label class="form-label" for="form2Example22">Password</label>
                                         </div>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
                                         <div class="form-outline mb-4">
                                             <label class="container">
                                                 <input type="checkbox">
@@ -49,13 +53,21 @@
                                             </label>
                                         </div>
                                         <div class="text-center pt-1 mb-4 pb-1">
-                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Log in</button>
+                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit" name="Login">Log in</button>
+                                            @* <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit" name="ForgotPassword"> *@
                                             <a class="text-muted" href="#!">Forgot password?</a>
+                                            </button>
                                         </div>
-
+                                        <!-- Display validation summary -->
+                                        @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+                                        {
+                                            <div class="alert alert-danger" role="alert">
+                                                @Html.Display(ViewData["ErrorMessage"] as string)
+                                            </div>
+                                        }
                                         <div class="d-flex align-items-center justify-content-center pb-4">
                                             <p class="mb-0 me-2">Don't have an account?</p>
-                                            <button type="button" class="btn btn-outline-danger">Create new</button>
+                                            <button type="submit" class="btn btn-outline-danger" name="btnCreateAccount">CreateNew</button>
                                         </div>
                                     </form>
 
