@@ -15,5 +15,89 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
+        <Grid>
+            <StackPanel Orientation="Vertical">
+                <GroupBox Header="Clinic Form" Margin="10,30,10,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Row 0 -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="Code" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtClinicCode" Height="25" Text="{Binding Path=Clinic.ClinicCode, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="0" Grid.Column="2" Content="Name" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtClinicName" Height="25" Text="{Binding Path=Clinic.ClinicName, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="0" Grid.Column="4" Content="Address" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="5" x:Name="txtAddress" Height="25" Text="{Binding Path=Clinic.Address, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="0" Grid.Column="6" Content="Phone" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="7" x:Name="txtPhone" Height="25" Text="{Binding Path=Clinic.Phone, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <!-- Row 1 -->
+                        <Label Grid.Row="1" Grid.Column="0" Content="Email" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtEmail" Height="25" Text="{Binding Path=Clinic.Email, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+                        
+                        <Label Grid.Row="1" Grid.Column="4" Content="Description" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="1" Grid.Column="5" x:Name="txtClinicDescription" Height="25" Text="{Binding Path=Clinic.ClinicDescription, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="1" Grid.Column="2" Content="Image" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="1" Grid.Column="3" x:Name="txtClinicImage" Height="25" Text="{Binding Path=Clinic.ClinicImage, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                    </Grid>
+                </GroupBox>
+
+
+
+                <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="ButtonSave" Content="Save" Height="30" Width="80" Click="ButtonSave_Click"/>
+                    <Button x:Name="ButtonCancel" Content="Cancel" Height="30" Width="80" Click="ButtonCancel_Click"/>
+                </StackPanel>
+                <StackPanel Height="210">
+                    <DataGrid x:Name="grdClinic" AutoGenerateColumns="False" ItemsSource="{Binding Currencies}" CanUserAddRows="False" Height="200" Margin="10" MouseDoubleClick="grdClinic_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
+                        <DataGrid.Columns>
+                            <!--<DataGridTextColumn Header="Code" Binding="{Binding Path=Id}" Visibility="Hidden"/>-->
+                            <DataGridTextColumn Header="ClinicId" Binding="{Binding Path=ClinicId}" Visibility="Visible"/>
+                            <DataGridTextColumn Header="ClinicName" Binding="{Binding Path=ClinicName}" Width="100"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Address" Binding="{Binding Path=Address}" Width="50"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Phone" Binding="{Binding Path=Phone}" Width="50"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}" Width="50"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="ClinicDescription" Binding="{Binding Path=ClinicDescription}" Width="50"  IsReadOnly="True"/>
+                            <DataGridTemplateColumn Width="50">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding Path=ClinicCode}" Click="grdClinic_ButtonDelete_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!--<DataGridTemplateColumn Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Delete" x:Name="ButtonDelete" CommandParameter="{Binding Path=Id}"
+                                Command="{Binding Path=DataContext.DeleteCommand, RelativeSource={RelativeSource FindAncestor,
+                                        AncestorType=Window}}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>-->
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

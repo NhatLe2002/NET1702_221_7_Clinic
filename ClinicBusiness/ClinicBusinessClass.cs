@@ -30,7 +30,7 @@ namespace ClinicBusiness
             _unitOfWork = new UnitOfWork();
         }
 
-        
+
 
         public async Task<IBusinessResult> GetAll()
         {
@@ -109,7 +109,7 @@ namespace ClinicBusiness
                 }
                 else
                 {
-                        return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, clinic);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, clinic);
                 }
             }
             catch (Exception ex)
@@ -189,8 +189,47 @@ namespace ClinicBusiness
                 return new BusinessResult(-4, ex.ToString());
             }
         }
+        public async Task<List<IBusinessResult>> GetAllByFillterAndPagingAsync(string searchClinicName, string address, string phone, int? minDentists, int? maxDentists, int? pageIndex, int? pageSize)
+        {
+            try
+            {
+                var clinics = _unitOfWork.ClinicRepository.GetAllByFillterAndPaging(
+               filter: c => (string.IsNullOrEmpty(searchClinicName) || c.ClinicName.Contains(searchClinicName)) &&
+                            (string.IsNullOrEmpty(address) || c.Address.Contains(address)) &&
+                            (string.IsNullOrEmpty(phone) || c.Phone.Contains(phone)),
+               orderBy: clinics => clinics.OrderBy(c => c.ClinicName),
+               pageIndex: pageIndex ?? 1,
+               pageSize: pageSize ?? 10
+           );
+                if (clinics != null )
+                {
+                    List<IBusinessResult> results = new List<IBusinessResult>();
+                    foreach (var clinic in clinics)
+                    {
+                        results.Add(new BusinessResult
+                        {
+                            Data = clinic,
+                            Message = "Oke",
+                            Status = 2
+                        });
+                    }
+                    return results;
+                }
+                else
+                {
+                    return new List<IBusinessResult>();
+                }
+            }
+            catch (Exception ex)
+            {
+                return new List<IBusinessResult> {  new BusinessResult {
+                    Status = 4,
+                    Message = ex.Message,
+                } };
+            }
 
 
+        }
     }
 }
 
