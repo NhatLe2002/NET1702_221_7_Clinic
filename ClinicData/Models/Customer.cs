@@ -19,7 +19,7 @@ namespace ClinicData.Models
         public string? Phone { get; set; }
         public string? Email { get; set; }
         public string? Image { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual User? User { get; set; }
         public virtual ICollection<Appointment> Appointments { get; set; }

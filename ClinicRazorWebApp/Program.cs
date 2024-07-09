@@ -17,18 +17,19 @@ namespace ClinicRazorWebApp
 
             builder.Services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(30);
+                options.IdleTimeout = TimeSpan.FromMinutes(60);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-            builder.Services.AddScoped<IClinicBusinessClass, ClinicBusinessClass>();
 
             //Add Dependency Injection
             builder.Services.AddScoped<ICommonService, CommonService>();
             builder.Services.AddScoped<ICustomerBusinessClass, CustomerBusiness>();
+            builder.Services.AddScoped<IUserBusinessClass, UserBusiness>();
+            builder.Services.AddScoped<IClinicBusinessClass, ClinicBusinessClass>();
 
             var app = builder.Build();
 

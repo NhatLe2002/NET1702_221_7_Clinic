@@ -13,45 +13,23 @@
     <link rel="stylesheet" href="~/ClinicRazorWebApp.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/nav_bar.css" asp-append-version="true" />
 </head>
-<body>
+<body style="background: #C0C0C0;">
     @if (user != null)
     {
         <header>
-            <div class="nav">
-                <div class="navLogo">
-                    <img src="https://cdn-icons-png.flaticon.com/512/6525/6525366.png" alt="logo" height="75px" width="auto">
-                </div>
-                <div class="navItemContainer">
-                    @*                @if (ViewBag.Role != null)
-                {
-                <a asp-area="" asp-page="/" class="navItem" data-index="0">Pricing</a>
-                <a asp-area="" asp-page="/About" class="navItem" data-index="2">About</a>
-                <a asp-area="" asp-page="/Contact" class="navItem" data-index="3">Contact</a>
-                }
-                else
-                {
-                <a asp-area="" asp-page="/AuthorPage/Login" class="navItem" data-index="1">Login</a>
-                } *@
-                       
-                        <a asp-area="" asp-page="/AuthorPage/Logout" class="navItem" data-index="1">Logout</a>
-                    <a asp-area="" asp-page="/CustomerPage/Index" class="navItem" data-index="0">Customer</a>
-                    <div class="navItemActiveContainer">
-                        <div class="navItemActive">
-                            <div class="navItemActiveLeft"></div>
-                            <div class="navItemActiveCenter"></div>
-                            <div class="navItemActiveRight"></div>
-                        </div>
-                        <div class="navItemActive">
-                            <div class="navItemActiveCopyLeft"></div>
-                            <div class="navItemActiveCopyCenter"></div>
-                            <div class="navItemActiveCopyRight"></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="containerNav">
+                <img src="https://cdn-icons-png.flaticon.com/512/6525/6525366.png"
+                style="width: 60px;" alt="logo" class="logo">
+                <nav>
+                    <ul>
+                        <li><a asp-page="/Customerpage/Index">Customer</a></li>
+                        <li><a asp-page="/ClinicUpdatePage/Index">Clinic</a></li>
+                    </ul>
+                </nav>
             </div>
         </header>
-    }
-   
+    } 
+
 
 
 

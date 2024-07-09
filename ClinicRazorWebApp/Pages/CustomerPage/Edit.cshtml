@@ -5,61 +5,108 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Customer</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Customer.CustomerId" />
-            <div class="form-group">
-                <label asp-for="Customer.CustomerName" class="control-label"></label>
-                <input asp-for="Customer.CustomerName" class="form-control" />
-                <span asp-validation-for="Customer.CustomerName" class="text-danger"></span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Edit</title>
+    <link rel="stylesheet" href="~/css/CreateCustomer.css">
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Customer.CustomerId" />
+        <div class="wrapper">
+            <div class="title">
+                Edit Customer
             </div>
-            <div class="form-group">
-                <label asp-for="Customer.DateOfBirth" class="control-label"></label>
-                <input asp-for="Customer.DateOfBirth" class="form-control" />
-                <span asp-validation-for="Customer.DateOfBirth" class="text-danger"></span>
+            <div class="form">
+                <div class="inputfield">
+                    <label>User</label>
+                    <select asp-for="Customer.UserId" class="input" required>
+                        <option value="" required>Select a user</option>
+                        @foreach (var user in (List<SelectListItem>)ViewData["Users"])
+                        {
+                            <option value="@user.Value">@user.Text</option>
+                        }
+                    </select>
+                </div>
+                <div class="inputfield">
+                    <label>Name</label>
+                    <input type="text" class="input" value="@Model.Customer.CustomerName" asp-for="Customer.CustomerName" required>
+                </div>
+                <div class="inputfield">
+                    <label>Birthday</label>
+                    <input type="date" class="input" asp-for="Customer.DateOfBirth" max="@Model.MaxDate" required>
+                </div>
+                <div class="inputfield">
+                    <label>Gender</label>
+                    <select asp-for="Customer.Gender" class="input" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="inputfield">
+                    <label>Address</label>
+                    <input type="text" class="input" value="@Model.Customer.Address" asp-for="Customer.Address" required>
+                </div>
+                <div class="inputfield">
+                    <label>Phone</label>
+                    <input type="text" class="input" value="@Model.Customer.Phone" asp-for="Customer.Phone" required>
+                </div>
+                <div class="inputfield">
+                    <label>Email</label>
+                    <input type="text" class="input" value="@Model.Customer.Email" asp-for="Customer.Email" required>
+                </div>
+                <div class="inputfield">
+                    <label>Active</label>
+                    <input type="text" class="input" value="@Model.Customer.IsActive.ToString()" asp-for="Customer.IsActive" required>
+                </div>
+                <div class="inputfield">
+                    <label>Image</label>
+                    <input id="customerImageFile" type="file" name="customerImage" class="form-control" onchange="previewImage(event)" asp-for="Customer.Image" />
+                </div>
+                <div class="inputfield">
+                    <img id="imagePreview" src="@Model.Customer.Image" alt="Image Preview" style="display:@(string.IsNullOrEmpty(Model.Customer.Image) ? "none" : "block"); margin-top:10px; max-width:100%; max-height:200px; width:auto; height:auto; border:1px solid #ccc; border-radius:5px; margin-left:auto; margin-right:auto; display:block;" />
+                </div>
+                <input type="hidden" name="UrlImage" value="@Model.Customer.Image" />
+                <div class="inputfield">
+                    @if (ModelState.ContainsKey("ERROR"))
+                    {
+                        <ul>
+                            @foreach (var error in ModelState["ERROR"].Errors)
+                            {
+                                <li class="text-danger">@error.ErrorMessage</li>
+                            }
+                        </ul>
+                    }
+                </div>
+                <div class="inputfield">
+                    <a asp-page="./Index" class="btn btn-primary">Back to List</a>
+                    <input type="submit" value="Edit" class="btn">
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Customer.Gender" class="control-label"></label>
-                <input asp-for="Customer.Gender" class="form-control" />
-                <span asp-validation-for="Customer.Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Customer.Address" class="control-label"></label>
-                <input asp-for="Customer.Address" class="form-control" />
-                <span asp-validation-for="Customer.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Customer.Phone" class="control-label"></label>
-                <input asp-for="Customer.Phone" class="form-control" />
-                <span asp-validation-for="Customer.Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Customer.Email" class="control-label"></label>
-                <input asp-for="Customer.Email" class="form-control" />
-                <span asp-validation-for="Customer.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Customer.Image" class="control-label"></label>
-                <input asp-for="Customer.Image" class="form-control" />
-                <span asp-validation-for="Customer.Image" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
+        </div>
+    </form>
+</body>
+</html> 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataURL = reader.result;
+                var imagePreview = document.getElementById('imagePreview');
+                imagePreview.src = dataURL;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
 }

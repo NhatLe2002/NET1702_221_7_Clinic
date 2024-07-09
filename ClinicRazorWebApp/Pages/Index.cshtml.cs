@@ -26,7 +26,7 @@ namespace ClinicRazorWebApp.Pages
         }
         public IActionResult OnPost()
         {
-            Password = Password.Trim();
+            //Password = Password.Trim();
             if(Password.Length < 8)
             {
                 ViewData["ErrorMessage"] = "Password is more or equal than 8 characters!";

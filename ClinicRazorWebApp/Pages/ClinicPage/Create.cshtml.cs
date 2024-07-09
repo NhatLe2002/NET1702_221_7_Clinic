@@ -39,6 +39,7 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
             {
                 return Page();
             }
+
             var imageUrl = await _commonService.UploadAnImage(clinicImageFile, Const.PATH_IMG_CLINIC, "Clinic"+Guid.NewGuid().ToString());
             Clinic.ClinicImage = imageUrl;
             var clinicResult = _ClinicBusiness.Save(Clinic);
