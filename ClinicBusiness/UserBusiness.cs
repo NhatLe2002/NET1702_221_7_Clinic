@@ -18,6 +18,7 @@ namespace ClinicBusiness
         Task<IBusinessResult> Update(User user);
         Task<IBusinessResult> DeleteById(string code);
         Task<IEnumerable<Role>> GetRoles();
+        Task<IBusinessResult> GetAllUserAsync();
     }
     public class UserBusiness : IUserBusiness
     {
@@ -183,6 +184,30 @@ namespace ClinicBusiness
         public async Task<IEnumerable<Role>> GetRoles()
         {
             return await _unitOfWork.RoleRepository.GetAllAsync();
+        }
+
+        public async Task<IBusinessResult> GetAllUserAsync()
+        {
+            try
+            {
+                var users = await _unitOfWork.UserRepository.GetAllUserAsync();
+                if (users != null && users.Count > 0)
+                {
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, users);
+                }
+                else
+                {
+                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG, null);
+                }
+                //return new Result<List<User>>(users, Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine($"Exception in GetAllUserAsync: {ex.Message}");
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message, null);
+                //return new Result<List<User>>(null, Const.ERROR_EXCEPTION, ex.Message);
+            }
         }
     }
 }

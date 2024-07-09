@@ -24,10 +24,24 @@ namespace ClinicRazorWebApp.Pages.UserPage
 
         public async Task OnGetAsync()
         {
-            var userResult = await _UserBusiness.GetAll();
-            if (userResult.Status == Const.SUCCESS_READ_CODE)
+            try
             {
-                User = userResult.Data as IList<User>;
+                var userResult = await _UserBusiness.GetAllUserAsync();
+                if (userResult.Status == Const.SUCCESS_READ_CODE)
+                {
+                    User = userResult.Data as List<User>;
+                    Console.WriteLine(Const.SUCCESS_READ_MSG); // Print "Get data success"
+                }
+                else
+                {
+                    // Log hoặc xử lý trường hợp không thành công
+                    Console.WriteLine($"Không tải được danh sách người dùng: {userResult.Message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle unsuccessful case
+                Console.WriteLine($"Exception occurred: {ex.Message}");
             }
         }
 
