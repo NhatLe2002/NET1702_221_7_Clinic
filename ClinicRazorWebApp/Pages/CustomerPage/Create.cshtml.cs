@@ -23,9 +23,9 @@ namespace ClinicRazorWebApp.Pages.CustomerPage
         public Customer Customer { get; set; } = default!;
         public string MaxDate { get; set; }
 
-        public CreateModel(ICustomerBusinessClass clinicBusinessClass, ICommonService commonService, IUserBusinessClass userBusinessClass)
+        public CreateModel(ICustomerBusinessClass customerBusinessClass, ICommonService commonService, IUserBusinessClass userBusinessClass)
         {
-            _customerBusiness = clinicBusinessClass;
+            _customerBusiness = customerBusinessClass;
             _commonService = commonService;
             _userBusiness = userBusinessClass;
         }
