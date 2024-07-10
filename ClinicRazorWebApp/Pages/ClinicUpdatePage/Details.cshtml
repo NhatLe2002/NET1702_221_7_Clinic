@@ -1,5 +1,5 @@
 ﻿@page
-@model ClinicRazorWebApp.Pages.ClinicPage.DetailsModel
+@model ClinicRazorWebApp.Pages.ClinicUpdatePage.DetailsModel
 
 @{
     ViewData["Title"] = "Details";
@@ -39,13 +39,31 @@
             @Html.DisplayNameFor(model => model.Clinic.ClinicImage)
         </dt>
         <dd class="col-sm-10">
-            <img src="@Model.Clinic.ClinicImage" alt="Clinic Image" style="width:100px;height:100px;">
+            @Html.DisplayFor(model => model.Clinic.ClinicImage)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayFor(model => model.Clinic.ClinicDescription)
+            @Html.DisplayNameFor(model => model.Clinic.ClinicDescription)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayNameFor(model => model.Clinic.ClinicDescription)
+            @Html.DisplayFor(model => model.Clinic.ClinicDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Clinic.OpenTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Clinic.OpenTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Clinic.CloseTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Clinic.CloseTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Clinic.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Clinic.IsActive)
         </dd>
     </dl>
 </div>

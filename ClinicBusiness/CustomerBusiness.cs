@@ -15,9 +15,10 @@ namespace ClinicBusiness
     {
         Task<IBusinessResult> GetAll();
         Task<IBusinessResult> GetById(string code);
-        Task<IBusinessResult> Save(Customer clinic);
-        Task<IBusinessResult> Update(Customer clinic);
+        Task<IBusinessResult> Save(Customer customer);
+        Task<IBusinessResult> Update(Customer customer);
         Task<IBusinessResult> DeleteById(string code);
+        Task<IBusinessResult> DeleteAllAsync();
     }
 
     public class CustomerBusiness : ICustomerBusinessClass
@@ -41,16 +42,16 @@ namespace ClinicBusiness
 
                 //var currencies = _DAO.GetAll();
                 //var currencies = await _currencyRepository.GetAllAsync();
-                var currencies = await _unitOfWork.CustomerRepository.GetAllAsync();
+                var customers = await _unitOfWork.CustomerRepository.GetAllAsync();
 
 
-                if (currencies == null)
+                if (customers == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, currencies);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, customers);
                 }
             }
             catch (Exception ex)
@@ -63,11 +64,11 @@ namespace ClinicBusiness
         {
             try
             {
-                var clinics = await _unitOfWork.CustomerRepository.GetAllAsync();
-                if (clinics != null && clinics.Count > 0)
+                var customer = await _unitOfWork.CustomerRepository.GetAllAsync();
+                if (customer != null && customer.Count > 0)
                 {
                     List<IBusinessResult> results = new List<IBusinessResult>();
-                    foreach (var clinic in clinics)
+                    foreach (var clinic in customer)
                     {
                         results.Add(new BusinessResult
                         {
@@ -139,12 +140,12 @@ namespace ClinicBusiness
             }
         }
 
-        public async Task<IBusinessResult> Update(Customer currency)
+        public async Task<IBusinessResult> Update(Customer customer)
         {
             try
             {
                 //int result = await _currencyRepository.UpdateAsync(currency);
-                int result = await _unitOfWork.CustomerRepository.UpdateAsync(currency);
+                int result = await _unitOfWork.CustomerRepository.UpdateAsync(customer);
 
                 if (result > 0)
                 {
@@ -165,19 +166,44 @@ namespace ClinicBusiness
             try
             {
                 //var currency = await _currencyRepository.GetByIdAsync(code);
-                var currency = await _unitOfWork.CustomerRepository.GetByIdAsync(code);
-                if (currency != null)
+                var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(code);
+                if (customer != null)
                 {
                     //var result = await _currencyRepository.RemoveAsync(currency);
-                    var result = await _unitOfWork.CustomerRepository.RemoveAsync(currency);
+                    var result = await _unitOfWork.CustomerRepository.RemoveAsync(customer);
                     if (result)
                     {
-                        return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG, currency);
+                        return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG, customer);
                     }
                     else
                     {
                         return new BusinessResult(Const.FAIL_DELETE_CODE, Const.FAIL_DELETE_MSG);
                     }
+                }
+                else
+                {
+                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(-4, ex.ToString());
+            }
+        }
+
+        public async Task<IBusinessResult> DeleteAllAsync()
+        {
+            try
+            {
+                var customers = await _unitOfWork.CustomerRepository.GetAllAsync();
+
+                if (customers != null || customers.Any())
+                {
+                    foreach (var customer in customers)
+                    {
+                        await _unitOfWork.CustomerRepository.RemoveAsync(customer);
+                    }
+                        return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG, null);
                 }
                 else
                 {

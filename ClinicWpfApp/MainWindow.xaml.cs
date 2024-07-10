@@ -21,15 +21,15 @@ namespace ClinicWpfApp
     public partial class MainWindow : Window
     {
         private readonly ClinicBusinessClass _business;
+
         public MainWindow()
         {
-            _business = new ClinicBusinessClass();
             InitializeComponent();
-            this.LoadGrdCurrencies();
         }
-        private async void Open_wClinic_Click(object sender, RoutedEventArgs e)
+
+        private async void Open_wCustomer_Click(object sender, RoutedEventArgs e)
         {
-            var p = new wClinic();
+            var p = new wCustomer();
             p.Owner = this;
             p.Show();
         }

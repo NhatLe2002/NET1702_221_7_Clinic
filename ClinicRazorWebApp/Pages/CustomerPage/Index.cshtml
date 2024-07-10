@@ -1,0 +1,179 @@
+﻿@page
+@model ClinicRazorWebApp.Pages.CustomerPage.IndexModel
+
+@{
+    ViewData["Title"] = "Customer Index";
+    int currentPageCount = Model.Customer.Count;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customer Index</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/css/Customer.css">
+    <script type="module" src="~/js/Customer.js"></script>
+</head>
+<body>
+    <div class="col-md-3">
+        <form method="get" class="form-search">
+            <div class="form-group">
+                <label asp-for="Name">Customer Name</label>
+                <input asp-for="Name" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Address">Address</label>
+                <input asp-for="Address" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone">Phone</label>
+                <input asp-for="Phone" type="number" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="text" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    <div class="col-md-9">
+        <form method="post">
+            <div class="container">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2>Manage <b>Customer</b></h2>
+                            </div>
+                            <div class="col-sm-6">
+                                <a asp-page="Create" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Customer</span></a>
+                                <a href="#deleteAllEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete All</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">Id</th>
+                                <th style="text-align: center;">UserId</th>
+                                <th style="text-align: center;">Name</th>
+                                <th style="text-align: center;">DateOfBirth</th>
+                                <th style="text-align: center;">Gender</th>
+                                <th style="text-align: center;">Address</th>
+                                <th style="text-align: center;">Phone</th>
+                                <th style="text-align: center;">Email</th>
+                                <th style="text-align: center;">Image</th>
+                                <th style="text-align: center;">IsActive</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Customer)
+                            {
+                                <tr>
+                                    <td style="text-align: center;">@item.CustomerId</td>
+                                    <td style="text-align: center;">@item.UserId</td>
+                                    <td style="text-align: center;">@item.CustomerName</td>
+                                    <td style="text-align: center;">@item.DateOfBirth</td>
+                                    <td style="text-align: center;">@item.Gender</td>
+                                    <td style="text-align: center;">@item.Address</td>
+                                    <td style="text-align: center;">@item.Phone</td>
+                                    <td style="text-align: center;">@item.Email</td>
+                                    <td style="text-align: center;">
+                                        <img src="@item.Image" alt="Customer Image" class="rounded-circle" style="width:100px;height:100px;">
+                                    </td>
+                                    <td style="text-align: center;">@item.IsActive</td>
+                                    <td style="text-align: center;">
+                                        <a class="edit" data-toggle="modal" asp-page="./Details" asp-route-id="@item.CustomerId">
+                                            <i class="material-icons purple-icon" data-toggle="tooltip" title="View">visibility</i>
+                                        </a>
+                                        <a class="edit" data-toggle="modal" asp-page="./Edit" asp-route-id="@item.CustomerId">
+                                            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                                        </a>
+                                        <a href="#deleteSpecificEmployeeModal-@item.CustomerId" class="delete" data-toggle="modal">
+                                            <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @* Delete specific customer *@
+                                <div id="deleteSpecificEmployeeModal-@item.CustomerId" class="modal fade">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" mt-3>Delete Specific Customer</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to delete this Customer?</p>
+                                                <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                                <button type="submit" class="btn btn-danger" asp-page-handler="DeleteACustomer" asp-route-id="@item.CustomerId" asp-route-pageIndex="@Model.PageIndex">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="clearfix">
+                        <div class="hint-text">Showing <b>@Model.PageSize</b> out of <b>@Model.TotalCustomer</b> customers</div>
+                        <ul class="pagination">
+                            @if (Model.PageIndex > 1)
+                            {
+                                <li class="page-item"><a href="?pageIndex=@(Model.PageIndex - 1)" class="page-link">Previous</a></li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                            }
+
+                            @for (int i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == Model.PageIndex ? "active" : "")"><a href="CustomerPage?pageIndex=@i" class="page-link">@i</a></li>
+                            }
+
+                            @if (Model.PageIndex < Model.TotalPages)
+                            {
+                                <li class="page-item"><a href="?pageIndex=@(Model.PageIndex + 1)" class="page-link">Next</a></li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled"><span class="page-link">Next</span></li>
+                            }
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            @* Delete All Customer *@
+            <div id="deleteAllEmployeeModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" mt-3>Delete All Customer</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete these Customer?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <button type="submit" asp-page-handler="DeleteAllCustomer" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -21,13 +21,13 @@ namespace ClinicWpfApp.UI.ClinicPage
     /// </summary>
     public partial class wClinic : Window
     {
-        private readonly ClinicBusinessClass _businessClinic;
+        private readonly ClinicBusinessClass _business;
 
         public wClinic()
         {
-            _businessClinic = new ClinicBusinessClass();
+            _business = new ClinicBusinessClass();
             InitializeComponent();
-            this.LoadGrdwClinic();
+            this.LoadGrdClinic();
         }
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
@@ -44,17 +44,11 @@ namespace ClinicWpfApp.UI.ClinicPage
 
         }
 
-        private void grdClinic_ButtonDelete_Click(object sender, RoutedEventArgs e)
+        private void GrdClinic_ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
 
         }
-
-        private void Open_wClinic_Click(object sender, RoutedEventArgs e)
-        {
-            // Đây là nơi để viết chức năng của bạn khi click vào menu item
-        }
-
-        private async void LoadGrdwClinic()
+        private async void LoadGrdClinic()
         {
             var result = await _business.GetAll();
 

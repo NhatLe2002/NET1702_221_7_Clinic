@@ -1,31 +1,30 @@
 ﻿using ClinicBusiness.Base;
 using ClinicCommon;
-using ClinicData;
-using ClinicData.DAO;
 using ClinicData.Models;
+using ClinicData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ClinicBusiness
 {
-    public interface IClinicBusinessClass
+    public interface IUserBusinessClass
     {
         Task<IBusinessResult> GetAll();
         Task<IBusinessResult> GetById(string code);
-        Task<IBusinessResult> Save(Clinic clinic);
-        Task<IBusinessResult> Update(Clinic clinic);
+        Task<IBusinessResult> Save(User user);
+        Task<IBusinessResult> Update(User user);
         Task<IBusinessResult> DeleteById(string code);
     }
-    public class ClinicBusinessClass : IClinicBusinessClass
+
+    public class UserBusiness : IUserBusinessClass
     {
         private readonly UnitOfWork _unitOfWork;
 
 
-        public ClinicBusinessClass()
+        public UserBusiness()
         {
             _unitOfWork = new UnitOfWork();
         }
@@ -41,16 +40,16 @@ namespace ClinicBusiness
 
                 //var currencies = _DAO.GetAll();
                 //var currencies = await _currencyRepository.GetAllAsync();
-                var currencies = await _unitOfWork.ClinicRepository.GetAllAsync();
+                var users = await _unitOfWork.UserRepository.GetAllAsync();
 
 
-                if (currencies == null)
+                if (users == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, currencies);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, users);
                 }
             }
             catch (Exception ex)
@@ -63,11 +62,11 @@ namespace ClinicBusiness
         {
             try
             {
-                var clinics = await _unitOfWork.ClinicRepository.GetAllAsync();
-                if (clinics != null && clinics.Count > 0)
+                var users = await _unitOfWork.UserRepository.GetAllAsync();
+                if (users != null && users.Count > 0)
                 {
                     List<IBusinessResult> results = new List<IBusinessResult>();
-                    foreach (var clinic in clinics)
+                    foreach (var clinic in users)
                     {
                         results.Add(new BusinessResult
                         {
@@ -101,15 +100,15 @@ namespace ClinicBusiness
                 #endregion
 
                 //var currency = await _currencyRepository.GetByIdAsync(code);
-                var clinic = await _unitOfWork.ClinicRepository.GetByIdAsync(code);
+                var user = await _unitOfWork.UserRepository.GetByIdAsync(code);
 
-                if (clinic == null)
+                if (user == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, clinic);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, user);
                 }
             }
             catch (Exception ex)
@@ -118,12 +117,12 @@ namespace ClinicBusiness
             }
         }
 
-        public async Task<IBusinessResult> Save(Clinic currency)
+        public async Task<IBusinessResult> Save(User user)
         {
             try
             {
                 //int result = await _currencyRepository.CreateAsync(currency);
-                int result = await _unitOfWork.ClinicRepository.CreateAsync(currency);
+                int result = await _unitOfWork.UserRepository.CreateAsync(user);
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_CREATE_CODE, Const.SUCCESS_CREATE_MSG);
@@ -139,12 +138,12 @@ namespace ClinicBusiness
             }
         }
 
-        public async Task<IBusinessResult> Update(Clinic currency)
+        public async Task<IBusinessResult> Update(User user)
         {
             try
             {
                 //int result = await _currencyRepository.UpdateAsync(currency);
-                int result = await _unitOfWork.ClinicRepository.UpdateAsync(currency);
+                int result = await _unitOfWork.UserRepository.UpdateAsync(user);
 
                 if (result > 0)
                 {
@@ -165,11 +164,11 @@ namespace ClinicBusiness
             try
             {
                 //var currency = await _currencyRepository.GetByIdAsync(code);
-                var currency = await _unitOfWork.ClinicRepository.GetByIdAsync(code);
+                var currency = await _unitOfWork.CustomerRepository.GetByIdAsync(code);
                 if (currency != null)
                 {
                     //var result = await _currencyRepository.RemoveAsync(currency);
-                    var result = await _unitOfWork.ClinicRepository.RemoveAsync(currency);
+                    var result = await _unitOfWork.CustomerRepository.RemoveAsync(currency);
                     if (result)
                     {
                         return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG, currency);
@@ -189,47 +188,5 @@ namespace ClinicBusiness
                 return new BusinessResult(-4, ex.ToString());
             }
         }
-        public async Task<List<IBusinessResult>> GetAllByFillterAndPagingAsync(string searchClinicName, string address, string phone, int? minDentists, int? maxDentists, int? pageIndex, int? pageSize)
-        {
-            try
-            {
-                var clinics = _unitOfWork.ClinicRepository.GetAllByFillterAndPaging(
-               filter: c => (string.IsNullOrEmpty(searchClinicName) || c.ClinicName.Contains(searchClinicName)) &&
-                            (string.IsNullOrEmpty(address) || c.Address.Contains(address)) &&
-                            (string.IsNullOrEmpty(phone) || c.Phone.Contains(phone)),
-               orderBy: clinics => clinics.OrderBy(c => c.ClinicName),
-               pageIndex: pageIndex ?? 1,
-               pageSize: pageSize ?? 10
-           );
-                if (clinics != null )
-                {
-                    List<IBusinessResult> results = new List<IBusinessResult>();
-                    foreach (var clinic in clinics)
-                    {
-                        results.Add(new BusinessResult
-                        {
-                            Data = clinic,
-                            Message = "Oke",
-                            Status = 2
-                        });
-                    }
-                    return results;
-                }
-                else
-                {
-                    return new List<IBusinessResult>();
-                }
-            }
-            catch (Exception ex)
-            {
-                return new List<IBusinessResult> {  new BusinessResult {
-                    Status = 4,
-                    Message = ex.Message,
-                } };
-            }
-
-
-        }
     }
 }
-

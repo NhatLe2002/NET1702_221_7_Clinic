@@ -8,12 +8,12 @@
         Title="MainWindow" Height="754" Width="1413">
     <Grid>
         <Menu Height="30" Name="menu1" Margin="0,0,0,0" VerticalAlignment="Top" BorderThickness="2" FontSize="16" FontWeight="Bold">
-            <MenuItem Header="Clinic" IsCheckable="False" FontSize="16">
-                <MenuItem Header="Clinic" IsCheckable="False" FontSize="12" Click="Open_wClinic_Click">
-
+            <MenuItem Header="Menu" IsCheckable="False" FontSize="16">
+                <!--<MenuItem Header="Clinic Managemnet" IsCheckable="False" FontSize="12" Click="Open_wClinic_Click">
+                </MenuItem>-->
+                <MenuItem Header="Customer Managemnet" IsCheckable="False" FontSize="12" Click="Open_wCustomer_Click">
                 </MenuItem>
             </MenuItem>
-
         </Menu>
         <Grid>
             <StackPanel Orientation="Vertical">

@@ -89,10 +89,8 @@ namespace ClinicRazorWebApp.Pages.AppoinmentPage
                 pagedAppointments = PaginationHelper.GetPaged(appointmentResult, PageIndex, PageSize);
             }
 
-            TotalAppointment = appointmentResult.Count;
-
-
-            TotalPages = (int)Math.Ceiling(appointmentResult.Count / (double)PageSize);
+            TotalAppointment = appointmentResult?.Count ?? 0;
+            TotalPages = PaginationHelper.GetTotalPages(appointmentResult, PageSize);
             Appointment = pagedAppointments;
 
            

@@ -18,8 +18,8 @@ namespace ClinicData.Models
         public string Email { get; set; } = null!;
         public string? ClinicImage { get; set; }
         public string? ClinicDescription { get; set; }
-        public DateTime? OpenTime { get; set; }
-        public DateTime? CloseTime { get; set; }
+        public TimeSpan? OpenTime { get; set; }
+        public TimeSpan? CloseTime { get; set; }
         public double? IsActive { get; set; }
 
         public virtual ICollection<AppoimentDetail> AppoimentDetails { get; set; }
