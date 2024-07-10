@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ClinicData.Models;
 using ClinicBusiness;
 using ClinicCommon;
+using CloudinaryDotNet.Actions;
 
 namespace ClinicRazorWebApp.Pages.UserPage
 {
@@ -30,7 +31,18 @@ namespace ClinicRazorWebApp.Pages.UserPage
         {
             //ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
             var roles = await _UserBusiness.GetRoles();
-            ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
+            if (roles != null)
+            {
+                ViewData["Roles"] = roles.Select(u => new SelectListItem
+                {
+                    Value = u.RoleId.ToString(),
+                    Text = u.RoleName
+                }).ToList();
+            }
+            else
+            {
+                ViewData["Users"] = new List<SelectListItem>();
+            }
             return Page();
         }
 
@@ -44,9 +56,22 @@ namespace ClinicRazorWebApp.Pages.UserPage
             //if (!ModelState.IsValid || _context.Users == null || User == null)
             if (!ModelState.IsValid)
             {
+                //var roles = await _UserBusiness.GetRoles();
+                //ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
+                //return Page();
                 var roles = await _UserBusiness.GetRoles();
-                ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
-                return Page();
+                if (roles != null)
+                {
+                    ViewData["Roles"] = roles.Select(u => new SelectListItem
+                    {
+                        Value = u.RoleId.ToString(),
+                        Text = u.RoleName
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Users"] = new List<SelectListItem>();
+                }
             }
 
             //_context.Users.Add(User);

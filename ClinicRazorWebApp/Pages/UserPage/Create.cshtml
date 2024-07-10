@@ -13,10 +13,18 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
             <div class="form-group">
-                <label asp-for="User.Role.RoleName" class="control-label"></label>
+               @*  <label asp-for="User.Role.RoleName" class="control-label"></label>
                 <select asp-for="User.Role.RoleName" class ="form-control" asp-items="ViewBag.RoleId"></select>
-                <span asp-validation-for="User.RoleId" class="text-danger"></span>
+                <span asp-validation-for="User.RoleId" class="text-danger"></span> *@
+                <select asp-for="User.RoleId" class="input" required>
+                    <option value="" required>Select a role</option>
+                    @foreach (var role in (List<SelectListItem>)ViewData["Roles"])
+                    {
+                        <option value="@role.Value">@role.Text</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="User.Username" class="control-label"></label>
