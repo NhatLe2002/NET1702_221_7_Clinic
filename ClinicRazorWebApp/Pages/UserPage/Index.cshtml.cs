@@ -35,7 +35,7 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 else
                 {
                     // Log hoặc xử lý trường hợp không thành công
-                    Console.WriteLine($"Không tải được danh sách người dùng: {userResult.Message}");
+                    Console.WriteLine($"Failed to load user list: {userResult.Message}");
                 }
             }
             catch (Exception ex)
