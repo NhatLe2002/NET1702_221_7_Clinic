@@ -1,0 +1,74 @@
+﻿@page
+@model ClinicRazorWebApp.Pages.ExaminationResultPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ExaminationResult</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ExaminationResult.Content" class="control-label"></label>
+                <input asp-for="ExaminationResult.Content" class="form-control" />
+                <span asp-validation-for="ExaminationResult.Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExaminationResult.Date" class="control-label"></label>
+                <input asp-for="ExaminationResult.Date" class="form-control" />
+                <span asp-validation-for="ExaminationResult.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExaminationResult.IsActive" class="control-label"></label>
+                <input asp-for="ExaminationResult.IsActive" class="form-control" />
+                <span asp-validation-for="ExaminationResult.IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExaminationResult.ReExaminationDate" class="control-label"></label>
+                <input asp-for="ExaminationResult.ReExaminationDate" class="form-control" />
+                <span asp-validation-for="ExaminationResult.ReExaminationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExaminationResult.Diagnosis" class="control-label"></label>
+                <input asp-for="ExaminationResult.Diagnosis" class="form-control" />
+                <span asp-validation-for="ExaminationResult.Diagnosis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExaminationResult.Prescription" class="control-label"></label>
+                <input asp-for="ExaminationResult.Prescription" class="form-control" />
+                <span asp-validation-for="ExaminationResult.Prescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExaminationResult.Note" class="control-label"></label>
+                <input asp-for="ExaminationResult.Note" class="form-control" />
+                <span asp-validation-for="ExaminationResult.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExaminationResult.CreatedAt" class="control-label"></label>
+                <input asp-for="ExaminationResult.CreatedAt" class="form-control" />
+                <span asp-validation-for="ExaminationResult.CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExaminationResult.UpdatedAt" class="control-label"></label>
+                <input asp-for="ExaminationResult.UpdatedAt" class="form-control" />
+                <span asp-validation-for="ExaminationResult.UpdatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

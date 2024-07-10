@@ -1,4 +1,5 @@
 using ClinicBusiness;
+using DentistBusiness;
 
 namespace ClinicRazorWebApp
 {
@@ -11,7 +12,8 @@ namespace ClinicRazorWebApp
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<IClinicBusinessClass, ClinicBusinessClass>();
-
+            builder.Services.AddScoped<IDentistBusiness, DentistBusinessClass>();
+            builder.Services.AddScoped<IUserBusiness, UserBusinessClass>();
 
 
             var app = builder.Build();

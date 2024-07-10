@@ -1,0 +1,223 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace ClinicData.Models;
+
+public partial class Net1702Prn221ClinicContext : DbContext
+{
+    public Net1702Prn221ClinicContext()
+    {
+    }
+
+    public Net1702Prn221ClinicContext(DbContextOptions<Net1702Prn221ClinicContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<AppoimentDetail> AppoimentDetails { get; set; }
+
+    public virtual DbSet<Appointment> Appointments { get; set; }
+
+    public virtual DbSet<Clinic> Clinics { get; set; }
+
+    public virtual DbSet<Customer> Customers { get; set; }
+
+    public virtual DbSet<Dentist> Dentists { get; set; }
+
+    public virtual DbSet<ExaminationResult> ExaminationResults { get; set; }
+
+    public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<Service> Services { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-I2EDF0S\\THANHTAM;Database=NET1702_PRN221_Clinic;Uid=sa; Pwd=sa123456;TrustServerCertificate=True");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<AppoimentDetail>(entity =>
+        {
+            entity.HasKey(e => e.AppoimnetDetailId).HasName("PK__Appoimen__90CC0291F5045DA4");
+
+            entity.Property(e => e.AppoimnetDetailId).HasColumnName("AppoimnetDetailID");
+            entity.Property(e => e.AppointmentId).HasColumnName("AppointmentID");
+            entity.Property(e => e.ClinicId).HasColumnName("ClinicID");
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+            entity.Property(e => e.Date).HasColumnType("datetime");
+            entity.Property(e => e.DentistId).HasColumnName("DentistID");
+            entity.Property(e => e.ExaminationResultId).HasColumnName("ExaminationResultID");
+            entity.Property(e => e.Note).HasMaxLength(255);
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Appointment).WithMany(p => p.AppoimentDetails)
+                .HasForeignKey(d => d.AppointmentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Appoiment__Appoi__3B75D760");
+
+            entity.HasOne(d => d.Clinic).WithMany(p => p.AppoimentDetails)
+                .HasForeignKey(d => d.ClinicId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Appoiment__Clini__38996AB5");
+
+            entity.HasOne(d => d.Dentist).WithMany(p => p.AppoimentDetails)
+                .HasForeignKey(d => d.DentistId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Appoiment__Denti__398D8EEE");
+
+            entity.HasOne(d => d.ExaminationResult).WithMany(p => p.AppoimentDetails)
+                .HasForeignKey(d => d.ExaminationResultId)
+                .HasConstraintName("FK__Appoiment__Exami__3C69FB99");
+
+            entity.HasOne(d => d.Service).WithMany(p => p.AppoimentDetails)
+                .HasForeignKey(d => d.ServiceId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Appoiment__Servi__3A81B327");
+        });
+
+        modelBuilder.Entity<Appointment>(entity =>
+        {
+            entity.HasKey(e => e.AppointmentId).HasName("PK__Appointm__8ECDFCA29C69971A");
+
+            entity.Property(e => e.AppointmentId).HasColumnName("AppointmentID");
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+            entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+            entity.Property(e => e.Note).HasMaxLength(255);
+            entity.Property(e => e.PaymentMethod).HasMaxLength(50);
+            entity.Property(e => e.ScheduledDate).HasColumnType("datetime");
+            entity.Property(e => e.Status).HasMaxLength(50);
+            entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.Appointments)
+                .HasForeignKey(d => d.CustomerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Appointme__Custo__31EC6D26");
+        });
+
+        modelBuilder.Entity<Clinic>(entity =>
+        {
+            entity.HasKey(e => e.ClinicId).HasName("PK__Clinics__3347C2FD31E97A55");
+
+            entity.Property(e => e.ClinicId).HasColumnName("ClinicID");
+            entity.Property(e => e.Address).HasMaxLength(255);
+            entity.Property(e => e.ClinicImage)
+                .HasMaxLength(150)
+                .IsUnicode(false);
+            entity.Property(e => e.ClinicName).HasMaxLength(255);
+            entity.Property(e => e.CloseTime).HasColumnType("datetime");
+            entity.Property(e => e.Email).HasMaxLength(255);
+            entity.Property(e => e.OpenTime).HasColumnType("datetime");
+            entity.Property(e => e.Phone).HasMaxLength(20);
+        });
+
+        modelBuilder.Entity<Customer>(entity =>
+        {
+            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__A4AE64B8125BF44A");
+
+            entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+            entity.Property(e => e.Address).HasMaxLength(255);
+            entity.Property(e => e.CustomerName).HasMaxLength(255);
+            entity.Property(e => e.Email).HasMaxLength(255);
+            entity.Property(e => e.Gender).HasMaxLength(10);
+            entity.Property(e => e.Image)
+                .HasMaxLength(150)
+                .IsUnicode(false);
+            entity.Property(e => e.Phone).HasMaxLength(20);
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Customers)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__Customers__UserI__2F10007B");
+        });
+
+        modelBuilder.Entity<Dentist>(entity =>
+        {
+            entity.HasKey(e => e.DentistId).HasName("PK__Dentists__9157336F8DF831FD");
+
+            entity.Property(e => e.DentistId).HasColumnName("DentistID");
+            entity.Property(e => e.ClinicId).HasColumnName("ClinicID");
+            entity.Property(e => e.DentistName).HasMaxLength(255);
+            entity.Property(e => e.Email).HasMaxLength(255);
+            entity.Property(e => e.Gender).HasMaxLength(10);
+            entity.Property(e => e.Image)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Phone).HasMaxLength(20);
+            entity.Property(e => e.ProfessionalQualifications).HasMaxLength(255);
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.Clinic).WithMany(p => p.Dentists)
+                .HasForeignKey(d => d.ClinicId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Dentists__Clinic__2C3393D0");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Dentists)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Dentists__UserID__2B3F6F97");
+        });
+
+        modelBuilder.Entity<ExaminationResult>(entity =>
+        {
+            entity.HasKey(e => e.ExaminationResultId).HasName("PK__Examinat__7478B56866FC3FBF");
+
+            entity.Property(e => e.ExaminationResultId).HasColumnName("ExaminationResultID");
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+            entity.Property(e => e.Date).HasColumnType("datetime");
+            entity.Property(e => e.Diagnosis).HasMaxLength(255);
+            entity.Property(e => e.Note).HasMaxLength(255);
+            entity.Property(e => e.Prescription).HasMaxLength(255);
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasKey(e => e.RoleId).HasName("PK__Roles__8AFACE3AF9A195F5");
+
+            entity.Property(e => e.RoleId).HasColumnName("RoleID");
+            entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.RoleName).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Service>(entity =>
+        {
+            entity.HasKey(e => e.ServiceId).HasName("PK__Services__C51BB0EAA1047E43");
+
+            entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
+            entity.Property(e => e.Category).HasMaxLength(100);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Note).HasMaxLength(255);
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.ServiceName).HasMaxLength(255);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCAC076EA517");
+
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+            entity.Property(e => e.Address).HasMaxLength(50);
+            entity.Property(e => e.Email).HasMaxLength(50);
+            entity.Property(e => e.Fullname).HasMaxLength(50);
+            entity.Property(e => e.Password).HasMaxLength(255);
+            entity.Property(e => e.RoleId).HasColumnName("RoleID");
+            entity.Property(e => e.Username).HasMaxLength(50);
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Users)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Users__RoleID__267ABA7A");
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}

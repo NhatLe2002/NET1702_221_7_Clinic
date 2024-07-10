@@ -1,0 +1,84 @@
+﻿@page
+@model ClinicRazorWebApp.Pages.ExaminationResultPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ExaminationResult[0].Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExaminationResult[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExaminationResult[0].IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExaminationResult[0].ReExaminationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExaminationResult[0].Diagnosis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExaminationResult[0].Prescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExaminationResult[0].Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExaminationResult[0].CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExaminationResult[0].UpdatedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ExaminationResult) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReExaminationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnosis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ExaminationResultId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ExaminationResultId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ExaminationResultId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

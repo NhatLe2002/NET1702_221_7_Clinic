@@ -1,0 +1,76 @@
+﻿@page
+@model ClinicRazorWebApp.Pages.ExaminationResultPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ExaminationResult</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.Content)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.Content)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.ReExaminationDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.ReExaminationDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.Diagnosis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.Diagnosis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.Prescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.Prescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.Note)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.Note)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.CreatedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.UpdatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.UpdatedAt)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="ExaminationResult.ExaminationResultId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

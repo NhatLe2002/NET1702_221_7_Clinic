@@ -1,0 +1,73 @@
+﻿@page
+@model ClinicRazorWebApp.Pages.ExaminationResultPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ExaminationResult</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.Content)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.Content)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.ReExaminationDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.ReExaminationDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.Diagnosis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.Diagnosis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.Prescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.Prescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.Note)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.Note)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.CreatedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExaminationResult.UpdatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExaminationResult.UpdatedAt)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.ExaminationResult.ExaminationResultId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

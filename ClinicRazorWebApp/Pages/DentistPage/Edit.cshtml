@@ -1,0 +1,80 @@
+﻿@page
+@model ClinicRazorWebApp.Pages.DentistPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit Dentist";
+}
+
+<h1>Edit Dentist</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Dentist.DentistId" />
+                <input type="hidden" asp-for="Dentist.UserId" />
+               
+                <div class="form-group">
+                    <label for="clinicId">Clinic:</label>
+                    <select id="clinicId" asp-for="Dentist.ClinicId" class="form-control" asp-items="@((SelectList)ViewData["ClinicId"] ?? new SelectList(new List<SelectListItem>()))"></select>
+                    <span asp-validation-for="Dentist.ClinicId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="dentistName">Name:</label>
+                    <input id="dentistName" asp-for="Dentist.DentistName" class="form-control" />
+                    <span asp-validation-for="Dentist.DentistName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth:</label>
+                    <input id="dateOfBirth" asp-for="Dentist.DateOfBirth" class="form-control" type="date" />
+                    <span asp-validation-for="Dentist.DateOfBirth" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" asp-for="Dentist.Gender" class="form-control">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span asp-validation-for="Dentist.Gender" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input id="address" asp-for="Dentist.Address" class="form-control" />
+                    <span asp-validation-for="Dentist.Address" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="qualifications">Professional Qualifications:</label>
+                    <input id="qualifications" asp-for="Dentist.ProfessionalQualifications" class="form-control" />
+                    <span asp-validation-for="Dentist.ProfessionalQualifications" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input id="phone" asp-for="Dentist.Phone" class="form-control" />
+                    <span asp-validation-for="Dentist.Phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input id="email" asp-for="Dentist.Email" class="form-control" />
+                    <span asp-validation-for="Dentist.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Image URL:</label>
+                    <input id="image" asp-for="Dentist.Image" class="form-control" />
+                    <span asp-validation-for="Dentist.Image" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
