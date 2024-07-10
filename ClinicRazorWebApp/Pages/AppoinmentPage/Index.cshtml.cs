@@ -1,14 +1,18 @@
 using ClinicBusiness;
 using ClinicCommon;
 using ClinicData.Models;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
 
 namespace ClinicRazorWebApp.Pages.AppoinmentPage
@@ -28,13 +32,17 @@ namespace ClinicRazorWebApp.Pages.AppoinmentPage
         }
 
         public IList<Appointment> Appointment { get; set; } = default!;
+
         public IList<Customer> Customer { get; set; } = default!;
+       
+        [BindProperty(SupportsGet =true)]
+        public string SearchTerm { get; set; }
 
-
-        public int PageSize { get; set; } = 3;
+        public int PageSize { get; set; } = 5;
         public int PageIndex { get; set; } = 1;
         public int TotalPages { get; set; }
         public int TotalAppointment { get; set; } = 20;
+        public ActionResult excelFile { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string totalPrice { get; set; }
@@ -52,7 +60,7 @@ namespace ClinicRazorWebApp.Pages.AppoinmentPage
             //customer = this.getcustomers();
             PageIndex = pageIndex ?? 1;
             List<Appointment> pagedAppointments;
-            List<Appointment> appointmentResult = (List<Appointment>)((await _AppointmentBusiness.GetAll())?.Data);
+            List<Appointment> appointmentResult = (List<Appointment>)((await _AppointmentBusiness.Search(SearchTerm))?.Data);
             if (!string.IsNullOrEmpty(totalPrice))
             {
                 appointmentResult = appointmentResult.Where(a => a.TotalPrice.ToString().Contains(totalPrice)).ToList();
@@ -82,36 +90,33 @@ namespace ClinicRazorWebApp.Pages.AppoinmentPage
             }
 
             TotalAppointment = appointmentResult.Count;
-            if             (TotalAppointment == null)
-            {
-                System.Console.WriteLine("tôi null");
-            }
 
 
             TotalPages = (int)Math.Ceiling(appointmentResult.Count / (double)PageSize);
             Appointment = pagedAppointments;
 
+           
 
         }
-
-    
-        private List<Appointment> GetAppointments()
+        public async Task<IActionResult> OnPostExportExcelAsync()
         {
-            var appointmentResult = _AppointmentBusiness.GetAll();
 
+            var myBUs = await _AppointmentBusiness.GetAll();
+            // above code loads the data using LINQ with EF (query of table), you can substitute this with any data source.
+            var stream = new MemoryStream();
 
-
-            if (appointmentResult.Status > 0 && appointmentResult.Result.Data != null)
+            using (var package = new ExcelPackage(stream))
             {
-                var appointment = (List<Appointment>)appointmentResult.Result.Data;
-                return appointment;
+                var workSheet = package.Workbook.Worksheets.Add("Sheet1");
+                                package.Save();
             }
-            return new List<Appointment>();
-        }
-        
-        
+            stream.Position = 0;
 
-        
+            string excelName = $"BusinessUnits-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+            // above I define the name of the file using the current datetime.
+
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName); // this will be the actual export.
+        }
         private List<Customer> GetCustomers()
         {
             var custometResult = _AppointmentBusiness.GetAllCustomer();
@@ -122,6 +127,20 @@ namespace ClinicRazorWebApp.Pages.AppoinmentPage
                 return customer;
             }
             return new List<Customer>();
+        }
+        
+        private ActionResult ExportExcel()
+        {
+            var _empdata = _AppointmentBusiness.GetEmpData();
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.AddWorksheet(_empdata, "AppointmentRecord");
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    wb.SaveAs(ms);
+                    return File(ms.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Appointment.xlsx");
+                }
+            }
         }
     }
 }

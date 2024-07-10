@@ -6,16 +6,29 @@
 }
 <h1>Appoinment List</h1>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
 <p>
-    <a asp-page="Create" class="btn btn-success">Create New</a>
+    <a asp-page="Create" class="btn btn-dark">Create New</a>
 </p>
+
 @if (TempData["Message"] != null)
 {
     <div class="alert alert-success" style="color: #33FF66">
         @TempData["Message"]
     </div>
 }
+<form method="get">
+    <div class="input-group">
+        <input class="form-control" asp-for="SearchTerm" />
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-dark">Search</button>
+        </div>
+    </div>
+</form>
+<form method="post" asp-page-handler="excelFile">
+    <button class="btn btn-sm btn-secondary order-button ">ExportExcel</button>
+</form>
 @if (Model.Appointment != null && Model.Appointment.Any())
 {
     <table class="table">
@@ -136,4 +149,13 @@ else
         }
     </ul>
 </div>
+@section scripts{
+    <script>
 
+        $(function){
+            $("basic-text1").click(function)(){
+        $("Form").submit();
+            }
+        }
+    </script>
+}

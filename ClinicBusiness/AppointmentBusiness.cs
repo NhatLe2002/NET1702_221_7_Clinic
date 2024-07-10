@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 
 namespace ClinicBusiness
@@ -19,8 +20,10 @@ namespace ClinicBusiness
         Task<IBusinessResult> Update(Appointment appoiment);
         Task<IBusinessResult> DeleteById(string code);
         Task<IBusinessResult> GetAllCustomer();
-
+        Task<IBusinessResult> Search(string searchTerm);
         Task<IBusinessResult> GetCustomerById(string code);
+
+        DataTable GetEmpData();
 
     }
     public class AppointmentBusinessClass : IAppointmentBusinessClass
@@ -61,8 +64,35 @@ namespace ClinicBusiness
             }
         }
 
+        public async Task<IBusinessResult> Search(string searchTerm)
+        {
+            try
+            {
+                #region Business rule
+                #endregion
 
-            public async Task<IBusinessResult> GetAll()
+                //var currencies = _DAO.GetAll();
+                //var currencies = await _currencyRepository.GetAllAsync();
+                var data = await _unitOfWork.AppointmentRepository.SearchAppointmentsAsync(searchTerm);
+
+
+                if (data == null)
+                {
+                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
+                }
+                else
+                {
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, data);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
+            }
+        }
+
+
+        public async Task<IBusinessResult> GetAll()
         {
             try
             {
@@ -247,5 +277,9 @@ namespace ClinicBusiness
             }
         }
 
+        public DataTable GetEmpData()
+        {
+            return _unitOfWork.AppointmentRepository.GetEmpData();
+        }
     }
 }
