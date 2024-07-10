@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 namespace ClinicData.Models
 {
@@ -29,14 +28,10 @@ namespace ClinicData.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            IConfiguration config = new ConfigurationBuilder()
-                           .SetBasePath(Directory.GetCurrentDirectory())
-                           .AddJsonFile("appsettings.json", true, true)
-                           .Build();
-            string cs = config["ConnectionStrings:DB"];
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(cs);
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=LAPTOP-FEOOS2UC;Database=NET1702_PRN221_Clinic;Uid=sa; Pwd=123;TrustServerCertificate=True");
             }
         }
 
@@ -53,15 +48,21 @@ namespace ClinicData.Models
 
                 entity.Property(e => e.ClinicId).HasColumnName("ClinicID");
 
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.Property(e => e.DentistId).HasColumnName("DentistID");
 
                 entity.Property(e => e.ExaminationResultId).HasColumnName("ExaminationResultID");
 
+                entity.Property(e => e.Note).HasMaxLength(255);
+
                 entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
+
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Appointment)
                     .WithMany(p => p.AppoimentDetails)
@@ -97,13 +98,21 @@ namespace ClinicData.Models
             {
                 entity.Property(e => e.AppointmentId).HasColumnName("AppointmentID");
 
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
+                entity.Property(e => e.Note).HasMaxLength(255);
+
                 entity.Property(e => e.PaymentMethod).HasMaxLength(50);
+
+                entity.Property(e => e.ScheduledDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Status).HasMaxLength(50);
 
                 entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Appointments)
@@ -119,12 +128,16 @@ namespace ClinicData.Models
                 entity.Property(e => e.Address).HasMaxLength(255);
 
                 entity.Property(e => e.ClinicImage)
-                    .HasMaxLength(50)
+                    .HasMaxLength(150)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ClinicName).HasMaxLength(255);
 
+                entity.Property(e => e.CloseTime).HasColumnType("datetime");
+
                 entity.Property(e => e.Email).HasMaxLength(255);
+
+                entity.Property(e => e.OpenTime).HasColumnType("datetime");
 
                 entity.Property(e => e.Phone).HasMaxLength(20);
             });
@@ -198,9 +211,19 @@ namespace ClinicData.Models
             {
                 entity.Property(e => e.ExaminationResultId).HasColumnName("ExaminationResultID");
 
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
+                entity.Property(e => e.Diagnosis).HasMaxLength(255);
+
+                entity.Property(e => e.Note).HasMaxLength(255);
+
+                entity.Property(e => e.Prescription).HasMaxLength(255);
+
                 entity.Property(e => e.ReExaminationDate).HasColumnType("date");
+
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -216,14 +239,30 @@ namespace ClinicData.Models
             {
                 entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
 
+                entity.Property(e => e.Category).HasMaxLength(100);
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Note).HasMaxLength(255);
+
                 entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.ServiceName).HasMaxLength(255);
+
+                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.Address).HasMaxLength(50);
+
+                entity.Property(e => e.Birthday).HasColumnType("date");
+
+                entity.Property(e => e.Email).HasMaxLength(50);
+
+                entity.Property(e => e.Fullname).HasMaxLength(50);
 
                 entity.Property(e => e.Password).HasMaxLength(255);
 

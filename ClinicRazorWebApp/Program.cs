@@ -1,5 +1,6 @@
 using ClinicBusiness;
 using ClinicCommon;
+using ClinicData.Repository;
 
 namespace ClinicRazorWebApp
 {
@@ -16,6 +17,9 @@ namespace ClinicRazorWebApp
             //Add Dependency Injection
             builder.Services.AddScoped<ICommonService, CommonService>();
             builder.Services.AddScoped<ICustomerBusinessClass, CustomerBusiness>();
+            builder.Services.AddScoped<IAppointmentBusinessClass, AppointmentBusinessClass>();
+            //builder.Services.AddScoped<IAppointmentDetailBusiness, AppointmentDetailRepository>();
+
 
             var app = builder.Build();
 

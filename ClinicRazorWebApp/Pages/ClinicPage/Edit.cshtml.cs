@@ -60,7 +60,3 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
 
     }
 }
-@section Scripts
-{
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-}

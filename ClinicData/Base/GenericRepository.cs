@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class GenericRepository<T> where T : class
 {
-    protected  NET1702_PRN221_ClinicContext _context;
+    protected NET1702_PRN221_ClinicContext _context;
     protected readonly DbSet<T> _dbSet;
 
     public GenericRepository()

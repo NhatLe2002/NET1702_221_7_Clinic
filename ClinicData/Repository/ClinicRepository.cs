@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClinicData.Repository
 {
-    public class ClinicRepository: GenericRepository<Clinic>
+    public class ClinicRepository : GenericRepository<Clinic>
     {
         protected readonly NET1702_PRN221_ClinicContext _context;
         protected readonly DbSet<Clinic> _dbSet;
@@ -19,7 +19,7 @@ namespace ClinicData.Repository
         }
         public ClinicRepository(NET1702_PRN221_ClinicContext context) => _context = context;
 
-        
+
         public async Task<Clinic> GetByIdOkeAsync(int id)
         {
             return await _context.Clinics

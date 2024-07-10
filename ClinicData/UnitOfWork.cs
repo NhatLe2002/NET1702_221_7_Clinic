@@ -14,6 +14,11 @@ namespace ClinicData
         private NET1702_PRN221_ClinicContext _context;
         private ClinicRepository _clinic;
         private CustomerRepository _customer;
+        private AppointmentRepository _appointment;
+        private AppointmentDetailRepository _appointmentDetailRepository;
+
+
+
 
         public UnitOfWork()
         {
@@ -24,6 +29,21 @@ namespace ClinicData
             get
             {
                 return _clinic ??= new ClinicRepository(_context);
+            }
+        }
+
+        public AppointmentRepository AppointmentRepository
+        {
+            get
+            {
+                return _appointment ??= new AppointmentRepository(_context);
+            }
+        }
+        public AppointmentDetailRepository AppointmentDetailRepository
+        {
+            get
+            {
+                return _appointmentDetailRepository ??= new AppointmentDetailRepository(_context);
             }
         }
 

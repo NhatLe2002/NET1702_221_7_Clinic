@@ -13,6 +13,9 @@ namespace ClinicData.Models
         public int? ExaminationResultId { get; set; }
         public decimal? Price { get; set; }
         public DateTime? Date { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public string? Note { get; set; }
 
         public virtual Appointment Appointment { get; set; } = null!;
         public virtual Clinic Clinic { get; set; } = null!;

@@ -29,6 +29,7 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
                  Clinic = await _context.Clinics.ToListAsync();
              }*/
         }
+
         private List<Clinic> GetCurrencies()
         {
             var currencyResult = _ClinicBusiness.GetAll();
