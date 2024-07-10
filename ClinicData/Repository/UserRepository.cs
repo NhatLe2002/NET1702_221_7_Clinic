@@ -36,5 +36,27 @@ namespace ClinicData.Repository
                 .ToListAsync();*/
            return await _context.Users.Include(p => p.Role).ToListAsync();
         }
+        public async Task<User> GetByIdUserAsync(string userId)
+        {
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                throw new ArgumentException("The userId cannot be null or empty.", nameof(userId));
+            }
+
+            if (!int.TryParse(userId, out int id))
+            {
+                throw new ArgumentException("The userId must be a valid integer.", nameof(userId));
+            }
+
+            var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.UserId == id);
+
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"User with ID {id} not found.");
+            }
+
+            return user;
+        }
+
     }
 }

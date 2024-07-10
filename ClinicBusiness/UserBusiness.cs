@@ -19,6 +19,7 @@ namespace ClinicBusiness
         Task<IBusinessResult> DeleteById(string code);
         Task<IEnumerable<Role>> GetRoles();
         Task<IBusinessResult> GetAllUserAsync();
+        Task<IBusinessResult> GetByIdUser(string userId);
     }
     public class UserBusiness : IUserBusiness
     {
@@ -94,15 +95,15 @@ namespace ClinicBusiness
                 #endregion
 
                 //var currency = await _currencyRepository.GetByIdAsync(code);
-                var currency = await _unitOfWork.UserRepository.GetByIdAsync(code);
+                var user = await _unitOfWork.UserRepository.GetByIdAsync(code);
 
-                if (currency == null)
+                if (user == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, currency);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, user);
                 }
             }
             catch (Exception ex)
@@ -207,6 +208,26 @@ namespace ClinicBusiness
                 Console.WriteLine($"Exception in GetAllUserAsync: {ex.Message}");
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message, null);
                 //return new Result<List<User>>(null, Const.ERROR_EXCEPTION, ex.Message);
+            }
+        }
+
+        public async Task<IBusinessResult> GetByIdUser(string userId)
+        {
+            try
+            {
+                var user = await _unitOfWork.UserRepository.GetByIdUserAsync(userId);
+                if (user == null)
+                {
+                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
+                }
+                else
+                {
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, user);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
             }
         }
     }
