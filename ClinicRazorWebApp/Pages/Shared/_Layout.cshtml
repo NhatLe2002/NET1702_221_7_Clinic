@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="~/css/nav_bar.css" asp-append-version="true" />
 </head>
 <body style="background: #C0C0C0;">
-    @if (user != null)
+    @if (@* user != null *@ true)
     {
         <header>
             <div class="containerNav">
@@ -24,6 +24,7 @@
                     <ul>
                         <li><a asp-page="/Customerpage/Index">Customer</a></li>
                         <li><a asp-page="/ClinicUpdatePage/Index">Clinic</a></li>
+                        <li><a asp-page="/AppoinmentPage/Index">Appoinment</a></li>
                         <li><a asp-page="/DentistPage/Index">Dentist</a></li>
                     </ul>
                 </nav>
@@ -35,8 +36,8 @@
 
 
     @* BODY NHÚNG VÔ *@
-    <div class="container">
-        <main role="main" class="pb-3 mt-5">
+    <div class="container" style="margin-left: 0px; margin-right: 0px">
+        <main role="main" class="pb-3 mt-5" >
             @RenderBody()
         </main>
     </div>

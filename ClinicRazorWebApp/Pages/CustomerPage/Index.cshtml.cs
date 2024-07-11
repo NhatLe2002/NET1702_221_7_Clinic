@@ -64,8 +64,8 @@ namespace ClinicRazorWebApp.Pages.CustomerPage
                 pagedCustomers = PaginationHelper.GetPaged(customerResult, PageIndex, PageSize);
             }
 
-            TotalCustomer = customerResult.Count;
-            TotalPages = (int)Math.Ceiling(customerResult.Count / (double)PageSize);
+            TotalCustomer = customerResult?.Count ?? 0;
+            TotalPages = PaginationHelper.GetTotalPages(customerResult, PageSize);
             Customer = pagedCustomers;
         }
 

@@ -1,6 +1,7 @@
 using ClinicBusiness;
 using ClinicCommon;
 using ClinicData.Models;
+using ClinicData.Repository;
 
 namespace ClinicRazorWebApp
 {
@@ -30,6 +31,9 @@ namespace ClinicRazorWebApp
             builder.Services.AddScoped<ICustomerBusinessClass, CustomerBusiness>();
             builder.Services.AddScoped<IUserBusinessClass, UserBusiness>();
             builder.Services.AddScoped<IClinicBusinessClass, ClinicBusinessClass>();
+            builder.Services.AddScoped<IAppointmentBusinessClass, AppointmentBusinessClass>();
+            //builder.Services.AddScoped<IAppointmentDetailBusiness, AppointmentDetailRepository>();
+
             builder.Services.AddScoped<IDentistBusiness, DentistBusinessClass>();
 
             var app = builder.Build();
