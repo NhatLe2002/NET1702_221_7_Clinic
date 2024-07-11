@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
 using ClinicBusiness;
+using ClinicCommon;
 
 namespace ClinicRazorWebApp.Pages.UserPage
 {
@@ -84,13 +85,28 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 {
                     ViewData["Roles"] = new List<SelectListItem>();
                 }
+                //_UserBusiness.Update(User);                
+                //return Page();
+            }
 
+            var result = await _UserBusiness.Update(User);
+            if (result.Status == Const.SUCCESS_UPDATE_CODE)
+            {
+                return RedirectToPage("./Index");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, result.Message);
+                var roles = await _UserBusiness.GetRoles();
+                ViewData["Roles"] = roles.Select(u => new SelectListItem
+                {
+                    Value = u.RoleId.ToString(),
+                    Text = u.RoleName
+                }).ToList();
                 return Page();
             }
 
-            _UserBusiness.Update(User);
-
-            return RedirectToPage("./Index");
+            //return RedirectToPage("./Index");
         }
 
         //private bool UserExists(int id)
