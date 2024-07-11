@@ -36,11 +36,26 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 return NotFound();
             }
 
-            var user = await _UserBusiness.GetById(id.ToString());
+            var user = await _UserBusiness.GetByIdUser(id.ToString());
 
             if (user != null && user.Data is User userReturn)
             {
                 User = userReturn;
+
+                var roles = await _UserBusiness.GetRoles();
+                if (roles != null)
+                {
+                    ViewData["Roles"] = roles.Select(u => new SelectListItem
+                    {
+                        Value = u.RoleId.ToString(),
+                        Text = u.RoleName
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Roles"] = new List<SelectListItem>();
+                }
+
                 return Page();
             }
             else
@@ -55,8 +70,24 @@ namespace ClinicRazorWebApp.Pages.UserPage
         {
             if (!ModelState.IsValid)
             {
+
+                var roles = await _UserBusiness.GetRoles();
+                if (roles != null)
+                {
+                    ViewData["Roles"] = roles.Select(u => new SelectListItem
+                    {
+                        Value = u.RoleId.ToString(),
+                        Text = u.RoleName
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Roles"] = new List<SelectListItem>();
+                }
+
                 return Page();
             }
+
             _UserBusiness.Update(User);
 
             return RedirectToPage("./Index");
