@@ -1,0 +1,92 @@
+﻿@page
+@model ClinicRazorWebApp.Pages.DentistPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Dentist Details";
+}
+
+<h1>Dentist Details</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">
+            <strong>Name:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Dentist.DentistName)
+        </dd>
+
+        <dt class="col-sm-3">
+            <strong>Date of Birth:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Dentist.DateOfBirth)
+        </dd>
+
+        <dt class="col-sm-3">
+            <strong>Gender:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Dentist.Gender)
+        </dd>
+
+        <dt class="col-sm-3">
+            <strong>Address:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Dentist.Address)
+        </dd>
+
+        <dt class="col-sm-3">
+            <strong>Professional Qualifications:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Dentist.ProfessionalQualifications)
+        </dd>
+
+        <dt class="col-sm-3">
+            <strong>Phone:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Dentist.Phone)
+        </dd>
+
+        <dt class="col-sm-3">
+            <strong>Email:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Dentist.Email)
+        </dd>
+
+        <dt class="col-sm-3">
+            <strong>Clinic Name:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Dentist.Clinic.ClinicName)
+        </dd>
+
+        <dt class="col-sm-3">
+            <strong>Clinic Address:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Dentist.Clinic.Address)
+        </dd>
+
+       @*  <!-- Displaying Username and Password if available -->
+        <dt class="col-sm-3">
+            <strong>Username:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.LabelFor(model => model.Dentist.User.Username)
+        </dd>
+
+
+        <dt class="col-sm-3">
+            <strong>Password:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.LabelFor(model => model.Dentist.User.Password) *@
+        @* </dd> *@
+
+    </dl>
+</div>

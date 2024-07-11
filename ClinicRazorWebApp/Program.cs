@@ -30,6 +30,7 @@ namespace ClinicRazorWebApp
             builder.Services.AddScoped<ICustomerBusinessClass, CustomerBusiness>();
             builder.Services.AddScoped<IUserBusinessClass, UserBusiness>();
             builder.Services.AddScoped<IClinicBusinessClass, ClinicBusinessClass>();
+            builder.Services.AddScoped<IDentistBusiness, DentistBusinessClass>();
 
             var app = builder.Build();
 

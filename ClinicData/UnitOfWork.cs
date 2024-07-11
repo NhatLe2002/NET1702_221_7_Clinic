@@ -15,6 +15,7 @@ namespace ClinicData
         private ClinicRepository _clinic;
         private CustomerRepository _customer;
         private UserRepository _user;
+        private DentistRepository _dentist;
 
         public UnitOfWork()
         {
@@ -41,6 +42,14 @@ namespace ClinicData
             get
             {
                 return _user ??= new UserRepository(_context);
+            }
+        }
+
+        public DentistRepository DentistRepository
+        {
+            get
+            {
+                return _dentist ??= new DentistRepository(_context);
             }
         }
     }
