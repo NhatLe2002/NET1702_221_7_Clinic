@@ -48,7 +48,11 @@ namespace ClinicRazorWebApp.Pages.UserPage
 
         [BindProperty]
         public User User { get; set; } = default!;
-        
+
+        private bool ValidatePassword(string password)
+        {
+            return !string.IsNullOrEmpty(password) && password.Length >= 6;
+        }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -72,6 +76,25 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 {
                     ViewData["Users"] = new List<SelectListItem>();
                 }
+            }
+
+            if (!ValidatePassword(User.Password))
+            {
+                ModelState.AddModelError(string.Empty, "Password must be at least 6 characters long.");
+                var roles = await _UserBusiness.GetRoles();
+                if (roles != null)
+                {
+                    ViewData["Roles"] = roles.Select(u => new SelectListItem
+                    {
+                        Value = u.RoleId.ToString(),
+                        Text = u.RoleName
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Users"] = new List<SelectListItem>();
+                }
+                return Page();
             }
 
             //_context.Users.Add(User);

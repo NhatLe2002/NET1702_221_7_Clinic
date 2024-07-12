@@ -89,6 +89,9 @@ namespace ClinicRazorWebApp.Pages.UserPage
                         users = users.Where(u => u.IsActive == isActive).ToList();
                     }
                     break;
+                case "Role":
+                    users = users.Where(u => u.Role.RoleName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+                    break;
                 default:
                     break;
             }
