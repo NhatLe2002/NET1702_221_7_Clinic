@@ -22,6 +22,11 @@ namespace ClinicRazorWebApp.Pages.UserPage
 
         public IList<User> User { get;set; } = default!;
 
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchField { get; set; }
+
         public async Task OnGetAsync()
         {
             try
@@ -30,6 +35,10 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 if (userResult.Status == Const.SUCCESS_READ_CODE)
                 {
                     User = userResult.Data as List<User>;
+                    if (!string.IsNullOrEmpty(SearchTerm) && !string.IsNullOrEmpty(SearchField))
+                    {
+                        User = SearchUsers(User.ToList(), SearchField, SearchTerm);
+                    }
                     Console.WriteLine(Const.SUCCESS_READ_MSG); // Print "Get data success"
                 }
                 else
@@ -43,6 +52,47 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 // Log or handle unsuccessful case
                 Console.WriteLine($"Exception occurred: {ex.Message}");
             }
+        }
+
+        private List<User> SearchUsers(List<User> users, string searchField, string searchTerm)
+        {
+            switch (searchField)
+            {
+                case "Fullname":
+                    users = users.Where(u => u.Fullname.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+                    break;
+                case "Email":
+                    users = users.Where(u => u.Email.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+                    break;
+                case "Phone":
+                    if (int.TryParse(searchTerm, out int phone))
+                    {
+                        users = users.Where(u => u.Phone.ToString().Contains(phone.ToString())).ToList();
+                    }
+                    break;
+                    break;
+                case "Username":
+                    users = users.Where(u => u.Username.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+                    break;
+                case "Address":
+                    users = users.Where(u => u.Address.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+                    break;
+                case "Birthday":
+                    if (DateTime.TryParse(searchTerm, out DateTime birthday))
+                    {
+                        users = users.Where(u => u.Birthday.HasValue && u.Birthday.Value.Date == birthday.Date).ToList();
+                    }
+                    break;
+                case "IsActive":
+                    if (bool.TryParse(searchTerm, out bool isActive))
+                    {
+                        users = users.Where(u => u.IsActive == isActive).ToList();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return users;
         }
 
         /*public async Task OnGetAsync()
