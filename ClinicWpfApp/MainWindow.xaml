@@ -8,17 +8,15 @@
         Title="MainWindow" Height="754" Width="1413">
     <Grid>
         <Menu Height="30" Name="menu1" Margin="0,0,0,0" VerticalAlignment="Top" BorderThickness="2" FontSize="16" FontWeight="Bold">
-            <MenuItem Header="Clinic" IsCheckable="False" FontSize="16">
-                <MenuItem Header="Clinic" IsCheckable="False" FontSize="12" Click="Open_wClinic_Click">
-
+            <MenuItem Header="User Management" IsCheckable="False" FontSize="16">
+                <MenuItem Header="User" IsCheckable="False" FontSize="12" Click="Open_wUser_Click">
                 </MenuItem>
             </MenuItem>
-
         </Menu>
         <Grid>
             <StackPanel Orientation="Vertical">
-                <GroupBox Header="Clinic Form" Margin="10,30,10,10" >
-                    <Grid Height="100">
+                <GroupBox Header="User Form" Margin="10,30,10,10" >
+                    <Grid Height="200">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
@@ -34,14 +32,24 @@
                             <ColumnDefinition Width="156.6"/>
                             <ColumnDefinition Width="43.4000000000001"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Content="Code" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Column="1" Grid.Row="0" x:Name="txtClinicCode" Height="25" Text="{Binding Path=Clinic.ClinicCode, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="2" Grid.Row="0" Content="Name" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtClinicName" Height="25" Text="{Binding Path=Clinic.ClinicName, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="4" Grid.Row="0" Content="Nation" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Column="5" Grid.Row="0" x:Name="txtNationCode" Height="25" Text="{Binding Path=Clinic.NationCode, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
+                        <Label Grid.Column="0" Grid.Row="0" Content="User ID" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
+                        <TextBox Grid.Column="1" Grid.Row="0" x:Name="txtUserId" Height="25" Text="{Binding Path=User.UserId, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
+                        <Label Grid.Column="2" Grid.Row="0" Content="Username" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
+                        <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtUsername" Height="25" Text="{Binding Path=User.Username, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
+                        <Label Grid.Column="4" Grid.Row="0" Content="Password" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
+                        <TextBox Grid.Column="5" Grid.Row="0" x:Name="txtPassword" Height="25" Text="{Binding Path=User.Password, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
                         <Label Grid.Column="6" Grid.Row="0" Content="Active" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <CheckBox Grid.Column="7" Grid.Row="0" x:Name="chkIsActive" Height="25" IsChecked="{Binding ElementName=IsActive, Path=IsCheckBoxChecked}"  Margin="5,12,0,12"  Width="30" HorizontalAlignment="Left"/>
+                        <CheckBox Grid.Column="7" Grid.Row="0" x:Name="chkIsActive" Height="25" IsChecked="{Binding Path=User.IsActive, Mode=TwoWay}"  Margin="5,12,0,12"  Width="30" HorizontalAlignment="Left"/>
+                        <Label Grid.Column="0" Grid.Row="1" Content="Fullname" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
+                        <TextBox Grid.Column="1" Grid.Row="1" x:Name="txtFullname" Height="25" Text="{Binding Path=User.Fullname, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
+                        <Label Grid.Column="2" Grid.Row="1" Content="Email" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
+                        <TextBox Grid.Row="1" Grid.Column="3" x:Name="txtEmail" Height="25" Text="{Binding Path=User.Email, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
+                        <Label Grid.Column="4" Grid.Row="1" Content="Phone" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
+                        <TextBox Grid.Column="5" Grid.Row="1" x:Name="txtPhone" Height="25" Text="{Binding Path=User.Phone, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
+                        <Label Grid.Column="6" Grid.Row="1" Content="Address" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
+                        <TextBox Grid.Column="7" Grid.Row="1" x:Name="txtAddress" Height="25" Text="{Binding Path=User.Address, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
+                        <Label Grid.Column="0" Grid.Row="2" Content="Birthday" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
+                        <DatePicker Grid.Column="1" Grid.Row="2" x:Name="dpBirthday" Height="25" SelectedDate="{Binding Path=User.Birthday, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
                     </Grid>
                 </GroupBox>
                 <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
@@ -49,33 +57,23 @@
                     <Button x:Name="ButtonCancel" Content="Cancel" Height="30" Width="80" Click="ButtonCancel_Click"/>
                 </StackPanel>
                 <StackPanel Height="210">
-                    <DataGrid x:Name="grdClinic" AutoGenerateColumns="False" ItemsSource="{Binding Currencies}" CanUserAddRows="False" Height="200" Margin="10" MouseDoubleClick="grdClinic_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
+                    <DataGrid x:Name="grdUser" AutoGenerateColumns="False" ItemsSource="{Binding Users}" CanUserAddRows="False" Height="200" Margin="10" MouseDoubleClick="grdUser_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
                         <DataGrid.Columns>
                             <!--<DataGridTextColumn Header="Code" Binding="{Binding Path=Id}" Visibility="Hidden"/>-->
-                            <DataGridTextColumn Header="ClinicId" Binding="{Binding Path=ClinicId}" Visibility="Visible"/>
-                            <DataGridTextColumn Header="ClinicName" Binding="{Binding Path=ClinicName}" Width="100"  IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Address" Binding="{Binding Path=Address}" Width="50"  IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Phone" Binding="{Binding Path=Phone}" Width="50"  IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}" Width="50"  IsReadOnly="True"/>
-                            <DataGridTextColumn Header="ClinicDescription" Binding="{Binding Path=ClinicDescription}" Width="50"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="UserId" Binding="{Binding Path=UserId}" Visibility="Visible"/>
+                            <DataGridTextColumn Header="Username" Binding="{Binding Path=Username}" Width="100"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Fullname" Binding="{Binding Path=Fullname}" Width="100"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}" Width="100"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Phone" Binding="{Binding Path=Phone}" Width="100"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Address" Binding="{Binding Path=Address}" Width="100"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Birthday" Binding="{Binding Path=Birthday}" Width="100"  IsReadOnly="True"/>
                             <DataGridTemplateColumn Width="50">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding Path=ClinicCode}" Click="grdClinic_ButtonDelete_Click"/>
+                                        <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding Path=UserId}" Click="grdUser_ButtonDelete_Click"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-
-                            <!--<DataGridTemplateColumn Width="50">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Delete" x:Name="ButtonDelete" CommandParameter="{Binding Path=Id}"
-                                Command="{Binding Path=DataContext.DeleteCommand, RelativeSource={RelativeSource FindAncestor,
-                                        AncestorType=Window}}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>-->
-
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
