@@ -35,10 +35,11 @@ namespace ClinicRazorWebApp.Pages.ClinicPage
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync(IFormFile clinicImageFile)
         {
-            if (!ModelState.IsValid )
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
+
             var imageUrl = await _commonService.UploadAnImage(clinicImageFile, Const.PATH_IMG_CLINIC, "Clinic"+Guid.NewGuid().ToString());
             Clinic.ClinicImage = imageUrl;
             var clinicResult = _ClinicBusiness.Save(Clinic);

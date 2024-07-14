@@ -8,18 +8,20 @@
         Title="MainWindow" Height="754" Width="1413">
     <Grid>
         <Menu Height="30" Name="menu1" Margin="0,0,0,0" VerticalAlignment="Top" BorderThickness="2" FontSize="16" FontWeight="Bold">
-            <MenuItem Header="User Management" IsCheckable="False" FontSize="16">
-                <MenuItem Header="User" IsCheckable="False" FontSize="12" Click="Open_wUser_Click">
+            <MenuItem Header="Menu" IsCheckable="False" FontSize="16">
+                <!--<MenuItem Header="Clinic Managemnet" IsCheckable="False" FontSize="12" Click="Open_wClinic_Click">
+                </MenuItem>-->
+                <MenuItem Header="Customer Managemnet" IsCheckable="False" FontSize="12" Click="Open_wCustomer_Click">
                 </MenuItem>
             </MenuItem>
         </Menu>
         <Grid>
             <StackPanel Orientation="Vertical">
-                <GroupBox Header="User Form" Margin="10,30,10,10" >
-                    <Grid Height="200">
+                <GroupBox Header="Clinic Form" Margin="10,30,10,10">
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
@@ -29,29 +31,37 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="156.6"/>
-                            <ColumnDefinition Width="43.4000000000001"/>
+                            <ColumnDefinition Width="200"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Content="User ID" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Column="1" Grid.Row="0" x:Name="txtUserId" Height="25" Text="{Binding Path=User.UserId, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="2" Grid.Row="0" Content="Username" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtUsername" Height="25" Text="{Binding Path=User.Username, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="4" Grid.Row="0" Content="Password" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Column="5" Grid.Row="0" x:Name="txtPassword" Height="25" Text="{Binding Path=User.Password, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="6" Grid.Row="0" Content="Active" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <CheckBox Grid.Column="7" Grid.Row="0" x:Name="chkIsActive" Height="25" IsChecked="{Binding Path=User.IsActive, Mode=TwoWay}"  Margin="5,12,0,12"  Width="30" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="0" Grid.Row="1" Content="Fullname" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Column="1" Grid.Row="1" x:Name="txtFullname" Height="25" Text="{Binding Path=User.Fullname, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="2" Grid.Row="1" Content="Email" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Row="1" Grid.Column="3" x:Name="txtEmail" Height="25" Text="{Binding Path=User.Email, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="4" Grid.Row="1" Content="Phone" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Column="5" Grid.Row="1" x:Name="txtPhone" Height="25" Text="{Binding Path=User.Phone, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="6" Grid.Row="1" Content="Address" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <TextBox Grid.Column="7" Grid.Row="1" x:Name="txtAddress" Height="25" Text="{Binding Path=User.Address, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
-                        <Label Grid.Column="0" Grid.Row="2" Content="Birthday" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                        <DatePicker Grid.Column="1" Grid.Row="2" x:Name="dpBirthday" Height="25" SelectedDate="{Binding Path=User.Birthday, Mode=TwoWay}"  Margin="5,12,0,12"  Width="180" HorizontalAlignment="Left"/>
+
+                        <!-- Row 0 -->
+                        <Label Grid.Row="0" Grid.Column="0" Content="Code" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtClinicCode" Height="25" Text="{Binding Path=Clinic.ClinicCode, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="0" Grid.Column="2" Content="Name" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtClinicName" Height="25" Text="{Binding Path=Clinic.ClinicName, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="0" Grid.Column="4" Content="Address" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="5" x:Name="txtAddress" Height="25" Text="{Binding Path=Clinic.Address, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="0" Grid.Column="6" Content="Phone" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="7" x:Name="txtPhone" Height="25" Text="{Binding Path=Clinic.Phone, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <!-- Row 1 -->
+                        <Label Grid.Row="1" Grid.Column="0" Content="Email" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtEmail" Height="25" Text="{Binding Path=Clinic.Email, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+                        
+                        <Label Grid.Row="1" Grid.Column="4" Content="Description" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="1" Grid.Column="5" x:Name="txtClinicDescription" Height="25" Text="{Binding Path=Clinic.ClinicDescription, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
+                        <Label Grid.Row="1" Grid.Column="2" Content="Image" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <TextBox Grid.Row="1" Grid.Column="3" x:Name="txtClinicImage" Height="25" Text="{Binding Path=Clinic.ClinicImage, Mode=TwoWay}" Margin="5,12,0,12" Width="180" HorizontalAlignment="Left"/>
+
                     </Grid>
                 </GroupBox>
+
+
+
                 <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="ButtonSave" Content="Save" Height="30" Width="80" Click="ButtonSave_Click"/>
                     <Button x:Name="ButtonCancel" Content="Cancel" Height="30" Width="80" Click="ButtonCancel_Click"/>

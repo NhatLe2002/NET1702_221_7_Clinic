@@ -20,6 +20,7 @@ namespace ClinicData.Models
         public string Phone { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string? Image { get; set; }
+        public string Address { get; set; } = null!;
 
         public virtual Clinic Clinic { get; set; } = null!;
         public virtual User User { get; set; } = null!;

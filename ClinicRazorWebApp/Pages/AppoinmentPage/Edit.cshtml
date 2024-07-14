@@ -1,0 +1,93 @@
+﻿@page
+@model ClinicRazorWebApp.Pages.AppoinmentPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Appointment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Appointment.AppointmentId" />        
+                <div class="form-group">
+                    <label for="customerId">Customer:</label>
+                    <select id="customerId" asp-for="Appointment.CustomerId" class="form-control" asp-items="@((SelectList)ViewData["Customer"] ?? new SelectList(new List<SelectListItem>()))"></select>
+                    <span asp-validation-for="Appointment.CustomerId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Appointment.Status" class="control-label"></label>
+                    <select asp-for="Appointment.Status" class="form-control" id="Status">
+                        {
+                        <option value="">Choose Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="No-show">No-show</option>
+                        <option value="Completed">Completed</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Appointment.TotalPrice" class="control-label"></label>
+                    <input asp-for="Appointment.TotalPrice" class="form-control" />
+                    <span asp-validation-for="Appointment.TotalPrice" class="text-danger"></span>
+                </div>
+              
+                <div class="form-group">
+                    <label asp-for="Appointment.PaymentMethod" class="control-label"></label>
+                    <select asp-for="Appointment.PaymentMethod" class="form-control" id="PaymentMethod">
+                        {
+                        <option value="">Choose Payment</option>
+                        <option value="Cash payment">Cash payment</option>
+                        <option value="Card payment">Card payment</option>
+                        <option value="E-wallet payment">E-wallet payment</option>
+                        <option value="Bank transfer">Bank transfer</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Appointment.PaymentStatus" class="control-label"></label>
+                    <select asp-for="Appointment.PaymentStatus" class="form-control" id="PaymentStatus">
+                        {
+                        <option value="">Choose Payment Status</option>
+                        <option value="0">Pending</option>
+                        <option value="1">Paid</option>
+                        <option value="2">Refunded</option>
+                        <option value="3">Processing</option>
+                        <option value="-1">Failed</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Appointment.ScheduledDate" class="control-label"></label>
+                    <input asp-for="Appointment.ScheduledDate" class="form-control" />
+                    <span asp-validation-for="Appointment.ScheduledDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Appointment.Note" class="control-label"></label>
+                    <input asp-for="Appointment.Note" class="form-control" />
+                    <span asp-validation-for="Appointment.Note" class="text-danger"></span>
+                </div>
+                <div class="form-group ">
+                <input type="submit" value="Save" class="col-md-2 btn btn-warning" />
+                </div>
+            
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index" class="btn btn-secondary col-md-1">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

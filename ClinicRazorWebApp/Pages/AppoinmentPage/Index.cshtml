@@ -1,0 +1,161 @@
+﻿@page
+@model ClinicRazorWebApp.Pages.AppoinmentPage.IndexModel
+@{
+    ViewData["Title"] = "Index";
+
+}
+<h1>Appoinment List</h1>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+<p>
+    <a asp-page="Create" class="btn btn-dark">Create New</a>
+</p>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success" style="color: #33FF66">
+        @TempData["Message"]
+    </div>
+}
+<form method="get">
+    <div class="input-group">
+        <input class="form-control" asp-for="SearchTerm" />
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-dark">Search</button>
+        </div>
+    </div>
+</form>
+<form method="post" asp-page-handler="excelFile">
+    <button class="btn btn-sm btn-secondary order-button ">ExportExcel</button>
+</form>
+@if (Model.Appointment != null && Model.Appointment.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].AppointmentId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].Customer.CustomerId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].TotalPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].PaymentStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].PaymentMethod)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].ScheduledDate)
+                </th>
+                <th>
+                    @Html.DisplayName("Action")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Appointment)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AppointmentId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentMethod)
+                    <td>
+                            @Html.DisplayFor(modelItem => item.ScheduledDate)
+                    </td>
+
+
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.AppointmentId" class="btn btn-warning">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.AppointmentId" class="btn btn-info">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.AppointmentId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="alert alert-danger" style="color: red">
+        Can't find appointment!
+    </div>
+}
+@* <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-end">
+    <li class="page-item @(Model.pageNo == 1 ? "disabled" : "")">
+      <a class="page-link" href="@(Model.pageNo - 1)&s=@Model.pageSize" tabindex="-1">Previous</a>
+    </li>
+    @for (int i = 1; i <= Math.Ceiling((double)Model.totalProducts / Model.pageSize); i++)
+    {
+      <li class="page-item @(Model.pageNo == i ? "active" : "")">
+        <a class="page-link" href="@Model.pageSize">@i</a>
+      </li>
+    }
+    <li class="page-item @(Model.pageNo == Math.Ceiling((double)Model.totalProducts / Model.pageSize) ? "disabled" : "")">
+      <a class="page-link" href="@(Model.pageNo + 1)&s=@Model.pageSize">Next</a>
+    </li>
+  </ul>
+</nav> *@
+
+<div class="clearfix">
+    <div class="hint-text">Showing <b>@Model.PageSize</b> out of <b>@Model.TotalAppointment</b> Appointments</div>
+    <ul class="pagination">
+        @if (Model.PageIndex > 1)
+        {
+            <li class="page-item"><a href="?pageIndex=@(Model.PageIndex - 1)" class="page-link">Previous</a></li>
+        }
+        else
+        {
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        }
+
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.PageIndex ? "active" : "")"><a href="AppoinmentPage?pageIndex=@i" class="page-link">@i</a></li>
+        }
+
+        @if (Model.PageIndex < Model.TotalPages)
+        {
+            <li class="page-item"><a href="?pageIndex=@(Model.PageIndex + 1)" class="page-link">Next</a></li>
+        }
+        else
+        {
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
+        }
+    </ul>
+</div>
+@section scripts{
+    <script>
+
+        $(function){
+            $("basic-text1").click(function)(){
+        $("Form").submit();
+            }
+        }
+    </script>
+}

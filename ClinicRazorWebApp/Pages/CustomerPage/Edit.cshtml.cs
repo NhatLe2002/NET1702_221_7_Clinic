@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
 using ClinicBusiness;
+using ClinicCommon;
 
 namespace ClinicRazorWebApp.Pages.CustomerPage
 {
@@ -15,14 +16,21 @@ namespace ClinicRazorWebApp.Pages.CustomerPage
     {
 
         private readonly ICustomerBusinessClass _customercBusiness;
+        private readonly ICommonService _commonService;
+        private readonly IUserBusiness _userBusiness;
 
-        public EditModel(ICustomerBusinessClass customerBusinessClass)
+        public EditModel(ICustomerBusinessClass customerBusinessClass, ICommonService commonService, IUserBusiness userBusinessClass)
         {
             _customercBusiness = customerBusinessClass;
+            _commonService = commonService;
+            _userBusiness = userBusinessClass;
         }
 
         [BindProperty]
         public Customer Customer { get; set; } = default!;
+        public string MaxDate { get; set; }
+        [BindProperty]
+        public string UrlImage { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,9 +38,27 @@ namespace ClinicRazorWebApp.Pages.CustomerPage
             {
                 return NotFound();
             }
+            var usersResult = await _userBusiness.GetAll();
+            if (usersResult.Status == Const.SUCCESS_READ_CODE)
+            {
+                var listUser = usersResult.Data as List<User>;
+                if (listUser != null)
+                {
+                    ViewData["Users"] = listUser.Select(u => new SelectListItem
+                    {
+                        Value = u.UserId.ToString(),
+                        Text = u.Username
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Users"] = new List<SelectListItem>();
+                }
+            }
+            MaxDate = DateTime.Today.AddYears(-18).ToString("yyyy-MM-dd");
 
-            var clinic = await _customercBusiness.GetById(id.ToString());
-            if (clinic != null && clinic.Data is Customer customerReturn)
+            var customer = await _customercBusiness.GetById(id.ToString());
+            if (customer != null && customer.Data is Customer customerReturn)
             {
                 Customer = customerReturn;
                 return Page();
@@ -44,18 +70,84 @@ namespace ClinicRazorWebApp.Pages.CustomerPage
 
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile customerImage)
         {
+            ModelState.Remove("customerImage");
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+            var usersResult = await _userBusiness.GetAll();
+            if (usersResult.Status == Const.SUCCESS_READ_CODE)
+            {
+                var listUser = usersResult.Data as List<User>;
+                if (listUser != null)
+                {
+                    ViewData["Users"] = listUser.Select(u => new SelectListItem
+                    {
+                        Value = u.UserId.ToString(),
+                        Text = u.Username
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Users"] = new List<SelectListItem>();
+                }
+            }
+            //Check validate
+            bool isValid = true;
+            //Valid Phone
+            if (!Validation.IsValidPhoneNumber(Customer.Phone))
+            {
+                ModelState.AddModelError("ERROR", "Phone is not valid");
+                isValid = false;
+            }
+            //Valid Email
+            if (!Validation.IsValidEmail(Customer.Email))
+            {
+                ModelState.AddModelError("ERROR", "Email is not valid");
+                isValid = false;
+            }
+            if (customerImage == null && String.IsNullOrEmpty(UrlImage))
+            {
+                ModelState.AddModelError("ERROR", "Need to input a image");
+                isValid = false;
+            }
+            if (!isValid)
+            {
+                return Page();
+            }
 
-            _customercBusiness.Update(Customer);
+            string imageUrl;
+            if (customerImage != null)
+            {
+                imageUrl = await _commonService.UploadAnImage(customerImage, Const.PATH_IMG_CLINIC, "Clinic" + Guid.NewGuid().ToString());
+                Customer.Image = imageUrl;
+            }
+            else if(!String.IsNullOrEmpty(UrlImage))
+            {
+                Customer.Image = UrlImage;
+            }
+
+            await _customercBusiness.Update(Customer);
 
             return RedirectToPage("./Index");
+        }
+
+        private string GetUrlTail(string url)
+        {
+            Uri uri = new Uri(url);
+
+            string path = uri.AbsolutePath;
+            string[] segments = path.Split('/');
+            string fileName = segments[^1];
+            int dotIndex = fileName.LastIndexOf('.');
+            if (dotIndex != -1)
+            {
+                fileName = fileName.Substring(0, dotIndex);
+            }
+
+            return fileName;
         }
     }
 }

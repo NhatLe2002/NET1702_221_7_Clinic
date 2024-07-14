@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ClinicPage\**" />
+    <EmbeddedResource Remove="ClinicPage\**" />
+    <None Remove="ClinicPage\**" />
+    <Page Remove="ClinicPage\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.Development.json" />
     <None Remove="appsettings.json" />
   </ItemGroup>
@@ -24,11 +31,6 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClinicPage\" />
-    <Folder Include="UI\UserPage\" />
   </ItemGroup>
 
   <ItemGroup>

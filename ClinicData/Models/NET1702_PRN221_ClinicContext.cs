@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace ClinicData.Models
 {
@@ -28,11 +29,12 @@ namespace ClinicData.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-HBGQF69;Database=NET1702_PRN221_Clinic;Uid=sa; Pwd=12345;TrustServerCertificate=True");
-            }
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                                          .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                                          .AddJsonFile("appsettings.json")
+                                          .Build();
+            Console.WriteLine("**************************************" + configuration.GetConnectionString("DefaultConnectionString"));
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -133,11 +135,7 @@ namespace ClinicData.Models
 
                 entity.Property(e => e.ClinicName).HasMaxLength(255);
 
-                entity.Property(e => e.CloseTime).HasColumnType("datetime");
-
                 entity.Property(e => e.Email).HasMaxLength(255);
-
-                entity.Property(e => e.OpenTime).HasColumnType("datetime");
 
                 entity.Property(e => e.Phone).HasMaxLength(20);
             });
@@ -174,6 +172,8 @@ namespace ClinicData.Models
             {
                 entity.Property(e => e.DentistId).HasColumnName("DentistID");
 
+                entity.Property(e => e.Address).HasMaxLength(255);
+
                 entity.Property(e => e.ClinicId).HasColumnName("ClinicID");
 
                 entity.Property(e => e.DateOfBirth).HasColumnType("date");
@@ -185,7 +185,7 @@ namespace ClinicData.Models
                 entity.Property(e => e.Gender).HasMaxLength(10);
 
                 entity.Property(e => e.Image)
-                    .HasMaxLength(50)
+                    .HasMaxLength(150)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone).HasMaxLength(20);

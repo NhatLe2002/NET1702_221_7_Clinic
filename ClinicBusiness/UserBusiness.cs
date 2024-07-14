@@ -24,10 +24,15 @@ namespace ClinicBusiness
     public class UserBusiness : IUserBusiness
     {
         private readonly UnitOfWork _unitOfWork;
+
+
         public UserBusiness()
         {
             _unitOfWork = new UnitOfWork();
         }
+
+
+
         public async Task<IBusinessResult> GetAll()
         {
             try
@@ -54,6 +59,7 @@ namespace ClinicBusiness
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
             }
         }
+
         public async Task<List<IBusinessResult>> GetAllAsync()
         {
             try
@@ -87,6 +93,7 @@ namespace ClinicBusiness
                 } };
             }
         }
+
         public async Task<IBusinessResult> GetById(string code)
         {
             try
