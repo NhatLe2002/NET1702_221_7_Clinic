@@ -68,7 +68,7 @@ namespace ClinicRazorWebApp.Pages.UserPage
             //{
             //    return NotFound();
             //}
-            _UserBusiness.DeleteById(id.ToString());
+            await _UserBusiness.DeleteById(id.ToString());
             //var user = await _context.Users.FindAsync(id);
 
             //if (user != null)
