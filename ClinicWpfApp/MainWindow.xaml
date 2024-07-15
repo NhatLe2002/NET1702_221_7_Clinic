@@ -67,33 +67,23 @@
                     <Button x:Name="ButtonCancel" Content="Cancel" Height="30" Width="80" Click="ButtonCancel_Click"/>
                 </StackPanel>
                 <StackPanel Height="210">
-                    <DataGrid x:Name="grdClinic" AutoGenerateColumns="False" ItemsSource="{Binding Currencies}" CanUserAddRows="False" Height="200" Margin="10" MouseDoubleClick="grdClinic_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
+                    <DataGrid x:Name="grdUser" AutoGenerateColumns="False" ItemsSource="{Binding Users}" CanUserAddRows="False" Height="200" Margin="10" MouseDoubleClick="grdUser_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
                         <DataGrid.Columns>
                             <!--<DataGridTextColumn Header="Code" Binding="{Binding Path=Id}" Visibility="Hidden"/>-->
-                            <DataGridTextColumn Header="ClinicId" Binding="{Binding Path=ClinicId}" Visibility="Visible"/>
-                            <DataGridTextColumn Header="ClinicName" Binding="{Binding Path=ClinicName}" Width="100"  IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Address" Binding="{Binding Path=Address}" Width="50"  IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Phone" Binding="{Binding Path=Phone}" Width="50"  IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}" Width="50"  IsReadOnly="True"/>
-                            <DataGridTextColumn Header="ClinicDescription" Binding="{Binding Path=ClinicDescription}" Width="50"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="UserId" Binding="{Binding Path=UserId}" Visibility="Visible"/>
+                            <DataGridTextColumn Header="Username" Binding="{Binding Path=Username}" Width="100"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Fullname" Binding="{Binding Path=Fullname}" Width="100"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}" Width="100"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Phone" Binding="{Binding Path=Phone}" Width="100"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Address" Binding="{Binding Path=Address}" Width="100"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Birthday" Binding="{Binding Path=Birthday}" Width="100"  IsReadOnly="True"/>
                             <DataGridTemplateColumn Width="50">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding Path=ClinicCode}" Click="grdClinic_ButtonDelete_Click"/>
+                                        <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding Path=UserId}" Click="grdUser_ButtonDelete_Click"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-
-                            <!--<DataGridTemplateColumn Width="50">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Delete" x:Name="ButtonDelete" CommandParameter="{Binding Path=Id}"
-                                Command="{Binding Path=DataContext.DeleteCommand, RelativeSource={RelativeSource FindAncestor,
-                                        AncestorType=Window}}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>-->
-
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

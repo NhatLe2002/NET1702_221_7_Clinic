@@ -10,29 +10,21 @@ using System.Threading.Tasks;
 
 namespace ClinicBusiness
 {
-    public interface IUserBusiness
+    public interface IServiceBusiness
     {
         Task<IBusinessResult> GetAll();
         Task<IBusinessResult> GetById(string code);
-        Task<IBusinessResult> Save(User user);
-        Task<IBusinessResult> Update(User user);
+        Task<IBusinessResult> Save(Service service);
+        Task<IBusinessResult> Update(Service service);
         Task<IBusinessResult> DeleteById(string code);
-        Task<IEnumerable<Role>> GetRoles();
-        Task<IBusinessResult> GetAllUserAsync();
-        Task<IBusinessResult> GetByIdUser(string userId);
     }
-    public class UserBusiness : IUserBusiness
+    public class ServiceBusiness : IServiceBusiness
     {
         private readonly UnitOfWork _unitOfWork;
-
-
-        public UserBusiness()
+        public ServiceBusiness()
         {
             _unitOfWork = new UnitOfWork();
         }
-
-
-
         public async Task<IBusinessResult> GetAll()
         {
             try
@@ -42,16 +34,16 @@ namespace ClinicBusiness
 
                 //var currencies = _DAO.GetAll();
                 //var currencies = await _currencyRepository.GetAllAsync();
-                var users = await _unitOfWork.UserRepository.GetAllAsync();
+                var currencies = await _unitOfWork.ServiceRepository.GetAllAsync();
 
 
-                if (users == null)
+                if (currencies == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, users);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, currencies);
                 }
             }
             catch (Exception ex)
@@ -59,20 +51,19 @@ namespace ClinicBusiness
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
             }
         }
-
         public async Task<List<IBusinessResult>> GetAllAsync()
         {
             try
             {
-                var users = await _unitOfWork.UserRepository.GetAllAsync();
-                if (users != null && users.Count > 0)
+                var services = await _unitOfWork.ServiceRepository.GetAllAsync();
+                if (services != null && services.Count > 0)
                 {
                     List<IBusinessResult> results = new List<IBusinessResult>();
-                    foreach (var user in users)
+                    foreach (var service in services)
                     {
                         results.Add(new BusinessResult
                         {
-                            Data = user,
+                            Data = service,
                             Message = "Oke",
                             Status = 2
                         });
@@ -93,7 +84,6 @@ namespace ClinicBusiness
                 } };
             }
         }
-
         public async Task<IBusinessResult> GetById(string code)
         {
             try
@@ -102,15 +92,15 @@ namespace ClinicBusiness
                 #endregion
 
                 //var currency = await _currencyRepository.GetByIdAsync(code);
-                var user = await _unitOfWork.UserRepository.GetByIdAsync(code);
+                var currency = await _unitOfWork.ServiceRepository.GetByIdAsync(code);
 
-                if (user == null)
+                if (currency == null)
                 {
                     return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
                 }
                 else
                 {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, user);
+                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, currency);
                 }
             }
             catch (Exception ex)
@@ -118,12 +108,12 @@ namespace ClinicBusiness
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
             }
         }
-        public async Task<IBusinessResult> Save(User currency)
+        public async Task<IBusinessResult> Save(Service currency)
         {
             try
             {
                 //int result = await _currencyRepository.CreateAsync(currency);
-                int result = await _unitOfWork.UserRepository.CreateAsync(currency);
+                int result = await _unitOfWork.ServiceRepository.CreateAsync(currency);
                 if (result > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_CREATE_CODE, Const.SUCCESS_CREATE_MSG);
@@ -138,12 +128,12 @@ namespace ClinicBusiness
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.ToString());
             }
         }
-        public async Task<IBusinessResult> Update(User currency)
+        public async Task<IBusinessResult> Update(Service currency)
         {
             try
             {
                 //int result = await _currencyRepository.UpdateAsync(currency);
-                int result = await _unitOfWork.UserRepository.UpdateAsync(currency);
+                int result = await _unitOfWork.ServiceRepository.UpdateAsync(currency);
 
                 if (result > 0)
                 {
@@ -164,11 +154,11 @@ namespace ClinicBusiness
             try
             {
                 //var currency = await _currencyRepository.GetByIdAsync(code);
-                var currency = await _unitOfWork.UserRepository.GetByIdAsync(code);
+                var currency = await _unitOfWork.ServiceRepository.GetByIdAsync(code);
                 if (currency != null)
                 {
                     //var result = await _currencyRepository.RemoveAsync(currency);
-                    var result = await _unitOfWork.UserRepository.RemoveAsync(currency);
+                    var result = await _unitOfWork.ServiceRepository.RemoveAsync(currency);
                     if (result)
                     {
                         return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG);
@@ -189,53 +179,5 @@ namespace ClinicBusiness
             }
         }
 
-        public async Task<IEnumerable<Role>> GetRoles()
-        {
-            return await _unitOfWork.RoleRepository.GetAllAsync();
-        }
-
-        public async Task<IBusinessResult> GetAllUserAsync()
-        {
-            try
-            {
-                var users = await _unitOfWork.UserRepository.GetAllUserAsync();
-                if (users != null && users.Count > 0)
-                {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, users);
-                }
-                else
-                {
-                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG, null);
-                }
-                //return new Result<List<User>>(users, Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception
-                Console.WriteLine($"Exception in GetAllUserAsync: {ex.Message}");
-                return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message, null);
-                //return new Result<List<User>>(null, Const.ERROR_EXCEPTION, ex.Message);
-            }
-        }
-
-        public async Task<IBusinessResult> GetByIdUser(string userId)
-        {
-            try
-            {
-                var user = await _unitOfWork.UserRepository.GetByIdUserAsync(userId);
-                if (user == null)
-                {
-                    return new BusinessResult(Const.WARNING_NO_DATA_CODE, Const.WARNING_NO_DATA__MSG);
-                }
-                else
-                {
-                    return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, user);
-                }
-            }
-            catch (Exception ex)
-            {
-                return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
-            }
-        }
     }
 }

@@ -16,7 +16,7 @@ namespace ClinicRazorWebApp.Pages.DentistPage
     {
         private readonly IDentistBusiness _dentistBusiness;
         private readonly IClinicBusinessClass _clinicBusiness;
-        private readonly IUserBusinessClass _userBusiness;
+        private readonly IUserBusiness _userBusiness;
         private readonly ICommonService _commonService;
 
         [BindProperty]
@@ -27,7 +27,7 @@ namespace ClinicRazorWebApp.Pages.DentistPage
         public List<Clinic> Clinics { get; set; } = new List<Clinic>();
         public List<User> Users { get; set; } = new List<User>();
 
-        public CreateModel(IDentistBusiness dentistBusiness, IClinicBusinessClass clinicBusiness, IUserBusinessClass userBusiness, ICommonService commonService)
+        public CreateModel(IDentistBusiness dentistBusiness, IClinicBusinessClass clinicBusiness, IUserBusiness userBusiness, ICommonService commonService)
         {
             _dentistBusiness = dentistBusiness;
             _clinicBusiness = clinicBusiness;

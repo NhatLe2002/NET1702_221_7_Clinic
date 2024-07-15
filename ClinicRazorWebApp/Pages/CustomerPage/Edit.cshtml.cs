@@ -17,9 +17,9 @@ namespace ClinicRazorWebApp.Pages.CustomerPage
 
         private readonly ICustomerBusinessClass _customercBusiness;
         private readonly ICommonService _commonService;
-        private readonly IUserBusinessClass _userBusiness;
+        private readonly IUserBusiness _userBusiness;
 
-        public EditModel(ICustomerBusinessClass customerBusinessClass, ICommonService commonService, IUserBusinessClass userBusinessClass)
+        public EditModel(ICustomerBusinessClass customerBusinessClass, ICommonService commonService, IUserBusiness userBusinessClass)
         {
             _customercBusiness = customerBusinessClass;
             _commonService = commonService;

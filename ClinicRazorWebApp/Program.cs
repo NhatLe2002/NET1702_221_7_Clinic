@@ -29,7 +29,7 @@ namespace ClinicRazorWebApp
             //Add Dependency Injection
             builder.Services.AddScoped<ICommonService, CommonService>();
             builder.Services.AddScoped<ICustomerBusinessClass, CustomerBusiness>();
-            builder.Services.AddScoped<IUserBusinessClass, UserBusiness>();
+            builder.Services.AddScoped<IUserBusiness, UserBusiness>();
             builder.Services.AddScoped<IClinicBusinessClass, ClinicBusinessClass>();
             builder.Services.AddScoped<IAppointmentBusinessClass, AppointmentBusinessClass>();
             //builder.Services.AddScoped<IAppointmentDetailBusiness, AppointmentDetailRepository>();

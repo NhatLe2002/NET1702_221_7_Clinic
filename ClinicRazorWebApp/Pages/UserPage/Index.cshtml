@@ -1,0 +1,121 @@
+﻿@page
+@model ClinicRazorWebApp.Pages.UserPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>User Management Page</h1>
+
+<div style="display: flex; justify-content: center; margin-bottom: 20px;">
+    <form method="get" style="display: flex; align-items: center; gap: 10px;">
+        <div>
+            <label for="search">Search:</label>
+            <input type="text" id="search" name="searchTerm" value="@Model.SearchTerm" />
+        </div>
+        <div>
+            <label for="searchField">in</label>
+            <select id="searchField" name="searchField">
+                <option value="Fullname">Fullname</option>
+                <option value="Role">RoleName</option>
+                <option value="Email">Email</option>
+                <option value="Phone">Phone</option>
+                <option value="Username">Username</option>
+                <option value="Address">Address</option>
+                <option value="Birthday">Birthday</option>
+                <option value="IsActive">IsActive</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit" style="background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 5px;">Search</button>
+        </div>
+    </form>
+</div>
+
+<p>
+    <a asp-page="Create" style="background-color: #006400; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Role.RoleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Fullname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Birthday)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.User != null && Model.User.Count > 0)
+        {
+            foreach (var item in Model.User)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role.RoleName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fullname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Birthday)
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 5px;">
+                            <a asp-page="./Edit" asp-route-id="@item.UserId" style="background-color: #ffc107; color: white; padding: 5px; text-decoration: none; border-radius: 5px;">Edit</a>
+                            <a asp-page="./Details" asp-route-id="@item.UserId" style="background-color: #17a2b8; color: white; padding: 5px; text-decoration: none; border-radius: 5px;">Details</a>
+                            <a asp-page="./Delete" asp-route-id="@item.UserId" style="background-color: #dc3545; color: white; padding: 5px; text-decoration: none; border-radius: 5px;">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr style="background-color: #f8d7da; color: #721c24;">
+                <td colspan="10">No users found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

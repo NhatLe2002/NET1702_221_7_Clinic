@@ -17,13 +17,13 @@ namespace ClinicRazorWebApp.Pages.CustomerPage
     {
         private readonly ICustomerBusinessClass _customerBusiness;
         private readonly ICommonService _commonService;
-        private readonly IUserBusinessClass _userBusiness;
+        private readonly IUserBusiness _userBusiness;
 
         [BindProperty]
         public Customer Customer { get; set; } = default!;
         public string MaxDate { get; set; }
 
-        public CreateModel(ICustomerBusinessClass customerBusinessClass, ICommonService commonService, IUserBusinessClass userBusinessClass)
+        public CreateModel(ICustomerBusinessClass customerBusinessClass, ICommonService commonService, IUserBusiness userBusinessClass)
         {
             _customerBusiness = customerBusinessClass;
             _commonService = commonService;

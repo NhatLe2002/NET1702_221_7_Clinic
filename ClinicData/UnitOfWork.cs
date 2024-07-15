@@ -13,8 +13,10 @@ namespace ClinicData
     {
         private NET1702_PRN221_ClinicContext _context;
         private ClinicRepository _clinic;
-        private CustomerRepository _customer;
+        private ServiceRepository _service;
         private UserRepository _user;
+        private RoleRepository _role;
+        private CustomerRepository _customer;
         private AppointmentRepository _appointment;
         private AppointmentDetailRepository _appointmentDetailRepository;
         private DentistRepository _dentist;
@@ -56,7 +58,13 @@ namespace ClinicData
                 return _customer ??= new CustomerRepository(_context);
             }
         }
-
+        public ServiceRepository ServiceRepository
+        {
+            get
+            {
+                return _service ??= new ServiceRepository(_context);
+            }
+        }
         public UserRepository UserRepository
         {
             get
@@ -64,7 +72,13 @@ namespace ClinicData
                 return _user ??= new UserRepository(_context);
             }
         }
-
+        public RoleRepository RoleRepository
+        {
+            get
+            {
+                return _role ??= new RoleRepository(_context);
+            }
+        }
         public DentistRepository DentistRepository
         {
             get
