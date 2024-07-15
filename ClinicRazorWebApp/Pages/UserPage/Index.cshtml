@@ -1,10 +1,140 @@
 ﻿@page
+@using ClinicData.Models
 @model ClinicRazorWebApp.Pages.UserPage.IndexModel
 
-@{
-    ViewData["Title"] = "Index";
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 20px;
+            padding: 20px;
+        }
 
+        h1 {
+            text-align: center;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+            .form-container form {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .form-container label {
+                margin-right: 5px;
+            }
+
+            .form-container button {
+                background-color: #28a745;
+                color: white;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+            }
+
+        .create-new-link {
+            display: block;
+            background-color: #006400;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+            .table th, .table td {
+                border: 1px solid #dddddd;
+                padding: 8px;
+                text-align: left;
+            }
+
+            .table th {
+                background-color: #4CAF50; /* Màu nền đặc biệt cho hàng tiêu đề */
+                color: white; /* Màu chữ cho hàng tiêu đề */
+            }
+
+            .table tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+
+            .table tr:hover {
+                background-color: #f1f1f1;
+            }
+        /* Định dạng cho ô tick */
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            background-color: transparent;
+            border: 2px solid #007bff; /* Màu viền */
+            border-radius: 3px;
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+            .checkbox-custom.checked {
+                background-color: #007bff; /* Màu nền khi checked */
+            }
+
+                .checkbox-custom.checked::after {
+                    content: '\2713'; /* Dấu tick */
+                    font-size: 16px;
+                    color: white; /* Màu của dấu tick */
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+
+            /* Định dạng cho ô tick inactive */
+            .checkbox-custom.inactive {
+                background-color: #6c757d; /* Màu nền khi inactive */
+            }
+
+                .checkbox-custom.inactive::after {
+                    content: '\2715'; /* Dấu X */
+                    font-size: 16px;
+                    color: white; /* Màu của dấu X */
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+
+        .table-custom tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .table-custom tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
 <h1>User Management Page</h1>
 
 <div style="display: flex; justify-content: center; margin-bottom: 20px;">
@@ -35,7 +165,7 @@
 <p>
     <a asp-page="Create" style="background-color: #006400; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">Create New</a>
 </p>
-<table class="table">
+    <table class="table table-custom">
     <thead>
         <tr>
             <th>
@@ -80,8 +210,8 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Password)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsActive)
+                    <td style="text-align: center;">
+                        <div class="checkbox-custom @(item.IsActive ? "checked" : "inactive")"></div>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Role.RoleName)
@@ -119,3 +249,36 @@
         }
     </tbody>
 </table>
+</body>
+@if (Model.TotalPages > 1)
+{
+    <div style="text-align: center;">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (Model.PageIndex > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?pageIndex=@(Model.PageIndex - 1)&searchTerm=@Model.SearchTerm&searchField=@Model.SearchField" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                }
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                        <a class="page-link" href="?pageIndex=@i&searchTerm=@Model.SearchTerm&searchField=@Model.SearchField">@i</a>
+                    </li>
+                }
+                @if (Model.PageIndex < Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?pageIndex=@(Model.PageIndex + 1)&searchTerm=@Model.SearchTerm&searchField=@Model.SearchField" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+}
+</html>

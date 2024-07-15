@@ -14,6 +14,7 @@ namespace ClinicRazorWebApp.Pages.UserPage
     public class IndexModel : PageModel
     {
         private readonly IUserBusiness _UserBusiness;
+        private const int PageSize = 5;
 
         public IndexModel(IUserBusiness userBusiness)
         {
@@ -24,20 +25,36 @@ namespace ClinicRazorWebApp.Pages.UserPage
 
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
+
         [BindProperty(SupportsGet = true)]
         public string SearchField { get; set; }
+        public int PageIndex { get; set; } = 1;
+        public int TotalPages { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int pageIndex = 1, string searchTerm = null, string searchField = null)
         {
+            PageIndex = pageIndex;
+            SearchTerm = searchTerm;
+            SearchField = searchField;
             try
             {
                 var userResult = await _UserBusiness.GetAllUserAsync();
                 if (userResult.Status == Const.SUCCESS_READ_CODE)
                 {
-                    User = userResult.Data as List<User>;
-                    if (!string.IsNullOrEmpty(SearchTerm) && !string.IsNullOrEmpty(SearchField))
+                    var users = userResult.Data as List<User>;
+                    if (users != null)
                     {
-                        User = SearchUsers(User.ToList(), SearchField, SearchTerm);
+                        if (!string.IsNullOrEmpty(SearchTerm) && !string.IsNullOrEmpty(SearchField))
+                        {
+                            users = SearchUsers(users, SearchField, SearchTerm);
+                        }
+
+                        // Tính toán tổng số trang và lấy dữ liệu của trang hiện tại
+                        TotalPages = PaginationHelper.GetTotalPages(users, PageSize);
+                        User = PaginationHelper.GetPaged(users, PageIndex, PageSize);
+
+                        // Log các giá trị để kiểm tra
+                        Console.WriteLine($"TotalPages: {TotalPages}, PageIndex: {PageIndex}, User Count: {User.Count}");
                     }
                     Console.WriteLine(Const.SUCCESS_READ_MSG); // Print "Get data success"
                 }
@@ -49,7 +66,7 @@ namespace ClinicRazorWebApp.Pages.UserPage
             }
             catch (Exception ex)
             {
-                // Log or handle unsuccessful case
+                // Log hoặc xử lý trường hợp không thành công
                 Console.WriteLine($"Exception occurred: {ex.Message}");
             }
         }
