@@ -72,21 +72,22 @@
             @Html.DisplayFor(model => model.Dentist.Clinic.Address)
         </dd>
 
-       @*  <!-- Displaying Username and Password if available -->
         <dt class="col-sm-3">
-            <strong>Username:</strong>
+            <strong>Image:</strong>
         </dt>
         <dd class="col-sm-9">
-            @Html.LabelFor(model => model.Dentist.User.Username)
+            @if (!string.IsNullOrEmpty(Model.Dentist.Image))
+            {
+                <img src="@Model.Dentist.Image" alt="@Model.Dentist.DentistName" style="max-width: 200px; max-height: 200px;" />
+            }
+            else
+            {
+                <span>No Image</span>
+            }
         </dd>
-
-
-        <dt class="col-sm-3">
-            <strong>Password:</strong>
-        </dt>
-        <dd class="col-sm-9">
-            @Html.LabelFor(model => model.Dentist.User.Password) *@
-        @* </dd> *@
-
     </dl>
+</div>
+
+<div class="text-right">
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </div>

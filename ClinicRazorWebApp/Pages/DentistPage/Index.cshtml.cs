@@ -23,24 +23,26 @@ namespace ClinicRazorWebApp.Pages.DentistPage
 
         public IList<Dentist> Dentist { get; set; }
         public string SearchText { get; set; }
+        public string SearchPhone { get; set; }
         public int SelectedClinicId { get; set; }
         public SelectList Clinics { get; set; }
         public int PageSize { get; set; } = 5;
         public int PageIndex { get; set; } = 1;
         public int TotalPages { get; set; }
 
-        public async Task OnGetAsync(string searchText, int selectedClinicId = 0, int pageIndex = 1)
+        public async Task OnGetAsync(string searchText, string searchPhone, int selectedClinicId = 0, int pageIndex = 1)
         {
             SearchText = searchText;
+            SearchPhone = searchPhone;
             SelectedClinicId = selectedClinicId;
             PageIndex = pageIndex;
 
             await LoadDataAsync();
         }
 
-        public async Task<IActionResult> OnPostSearchAsync(string searchText, int selectedClinicId = 0)
+        public async Task<IActionResult> OnPostSearchAsync(string searchText, string searchPhone, int selectedClinicId = 0)
         {
-            return RedirectToPage(new { searchText, selectedClinicId, pageIndex = 1 });
+            return RedirectToPage(new { searchText, searchPhone, selectedClinicId, pageIndex = 1 });
         }
 
         private async Task LoadDataAsync()
@@ -64,8 +66,13 @@ namespace ClinicRazorWebApp.Pages.DentistPage
                 {
                     dentists = dentists.Where(d =>
                         d.DentistName.ToLower().Contains(SearchText.ToLower()) ||
-                        d.Phone.ToLower().Contains(SearchText.ToLower()) ||
                         d.Clinic.ClinicName.ToLower().Contains(SearchText.ToLower())
+                    ).ToList();
+                }
+                if (!string.IsNullOrEmpty(SearchPhone))
+                {
+                    dentists = dentists.Where(d =>
+                        d.Phone.ToLower().Contains(SearchPhone.ToLower())
                     ).ToList();
                 }
                 if (SelectedClinicId > 0)
