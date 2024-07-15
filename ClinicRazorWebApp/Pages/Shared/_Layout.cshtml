@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="~/css/nav_bar.css" asp-append-version="true" />
 </head>
 <body style="background: #C0C0C0;">
-    @if (@* user != null *@ true)
+    @if (user != null )
     {
         <header>
             <div class="containerNav">
@@ -38,7 +38,7 @@
 
     @* BODY NHÚNG VÔ *@
     <div class="container" style="margin-left: 0px; margin-right: 0px">
-        <main role="main" class="pb-3 mt-5" >
+        <main role="main" class="pb-3 mt-5" style="margin-left : 100px">
             @RenderBody()
         </main>
     </div>

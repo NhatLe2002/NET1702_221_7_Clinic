@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
 using ClinicBusiness;
+using ClinicCommon;
 
 namespace ClinicRazorWebApp.Pages.ClinicUpdatePage
 {
@@ -52,15 +53,19 @@ namespace ClinicRazorWebApp.Pages.ClinicUpdatePage
             {
                 return NotFound();
             }
-            _ClinicBusiness.DeleteById(id.ToString());
-            /*var clinic = await _ClinicBusiness.GetById(id.ToString());
 
-            if (clinic != null)
+            var result = await _ClinicBusiness.DeactivateClinic(id.ToString());
+
+            if (result.Status == Const.SUCCESS_UPDATE_CODE)
             {
-                _ClinicBusiness.DeleteById(id.ToString());
-            }*/
-
-            return RedirectToPage("./Index");
+                return RedirectToPage("./Index");
+            }
+            else
+            {
+                // Handle error
+                ModelState.AddModelError(string.Empty, result.Message);
+                return Page();
+            }
         }
     }
 }

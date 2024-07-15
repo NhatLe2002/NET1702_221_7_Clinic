@@ -19,6 +19,7 @@ namespace ClinicBusiness
         Task<IBusinessResult> Save(Clinic clinic);
         Task<IBusinessResult> Update(Clinic clinic);
         Task<IBusinessResult> DeleteById(string code);
+        Task<IBusinessResult> DeactivateClinic(string code); 
     }
     public class ClinicBusinessClass : IClinicBusinessClass
     {
@@ -230,6 +231,26 @@ namespace ClinicBusiness
 
 
         }
+        public async Task<IBusinessResult> DeactivateClinic(string code)
+        {
+            try
+            {
+                bool result = await _unitOfWork.ClinicRepository.DeactivateClinicAsync(int.Parse(code));
+                if (result)
+                {
+                    return new BusinessResult(Const.SUCCESS_UPDATE_CODE, "Clinic has been deactivated successfully.");
+                }
+                else
+                {
+                    return new BusinessResult(Const.FAIL_UPDATE_CODE, "Failed to deactivate the clinic.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(-4, ex.ToString());
+            }
+        }
     }
+
 }
 

@@ -38,6 +38,32 @@ namespace ClinicCommon
                 return false;
             }
         }
+        public static bool IsValidName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return false;
+
+            // Kiểm tra tên không rỗng, bắt đầu bằng chữ viết hoa và có hơn 10 ký tự
+            string pattern = @"^[A-Z][a-zA-Z\s]{9,}$";
+            Regex regex = new Regex(pattern);
+            return regex.IsMatch(name);
+        }
+
+        public static bool IsValidAddress(string address)
+        {
+            if (string.IsNullOrWhiteSpace(address))
+                return false;
+
+            // Kiểm tra địa chỉ bao gồm cả chữ và số
+            string pattern = @"^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d\s]+$";
+            Regex regex = new Regex(pattern);
+            return regex.IsMatch(address);
+        }
+
+        public static bool IsValidOpeningClosingTime(TimeSpan openTime, TimeSpan closeTime)
+        {
+            return openTime < closeTime;
+        }
 
     }
 }

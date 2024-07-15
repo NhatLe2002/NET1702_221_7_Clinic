@@ -49,9 +49,13 @@ namespace ClinicRazorWebApp.Pages.ClinicUpdatePage
                 {
                     clinics = clinics.Where(c => c.Address.Contains(SearchAddress, StringComparison.OrdinalIgnoreCase)).ToList();
                 }
-                if (SearchOpenTime.HasValue && SearchCloseTime.HasValue)
+                if (SearchOpenTime.HasValue)
                 {
-                    clinics = clinics.Where(c => c.OpenTime >= SearchOpenTime && c.CloseTime <= SearchCloseTime).ToList();
+                    clinics = clinics.Where(c => c.OpenTime.HasValue && c.OpenTime.Value >= SearchOpenTime.Value).ToList();
+                }
+                if (SearchCloseTime.HasValue)
+                {
+                    clinics = clinics.Where(c => c.CloseTime.HasValue && c.CloseTime.Value <= SearchCloseTime.Value).ToList();
                 }
 
                 TotalPages = (int)Math.Ceiling(clinics.Count / (double)PageSize);

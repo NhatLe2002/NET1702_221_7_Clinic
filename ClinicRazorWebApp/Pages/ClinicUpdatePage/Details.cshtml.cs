@@ -6,36 +6,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ClinicData.Models;
+using ClinicBusiness;
+using ClinicCommon;
 
 namespace ClinicRazorWebApp.Pages.ClinicUpdatePage
 {
     public class DetailsModel : PageModel
     {
-        private readonly ClinicData.Models.NET1702_PRN221_ClinicContext _context;
+        private readonly IClinicBusinessClass _clinicBusinessClass;
 
-        public DetailsModel(ClinicData.Models.NET1702_PRN221_ClinicContext context)
+        public DetailsModel(IClinicBusinessClass clinicBusinessClass)
         {
-            _context = context;
+            _clinicBusinessClass = clinicBusinessClass;
         }
 
       public Clinic Clinic { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Clinics == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var clinic = await _context.Clinics.FirstOrDefaultAsync(m => m.ClinicId == id);
-            if (clinic == null)
+            var result = await _clinicBusinessClass.GetById(id.ToString());
+            if (result.Status != Const.SUCCESS_READ_CODE)
             {
                 return NotFound();
             }
-            else 
+
+            Clinic = result.Data as Clinic;
+            if (Clinic == null)
             {
-                Clinic = clinic;
+                return NotFound();
             }
+
             return Page();
         }
     }

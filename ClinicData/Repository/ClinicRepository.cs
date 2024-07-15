@@ -27,5 +27,16 @@ namespace ClinicData.Repository
             .Include(p => p.Dentists)
             .FirstOrDefaultAsync(p => p.ClinicId == id);
         }
+        public async Task<bool> DeactivateClinicAsync(int id)
+        {
+            var clinic = await _context.Clinics.FirstOrDefaultAsync(p => p.ClinicId == id);
+            if (clinic != null)
+            {
+                clinic.IsActive = false;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }

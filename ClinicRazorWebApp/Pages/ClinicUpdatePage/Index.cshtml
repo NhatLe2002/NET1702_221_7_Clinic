@@ -4,24 +4,74 @@
 @{
     ViewData["Title"] = "Index";
 }
+<style>
+    .form-container {
+        display: flex;
+        justify-content: space-between;
+    }
 
+    .form-column {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .half-width {
+        width: calc(50% - 100px);
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+    .form-control {
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 16px;
+    }
+</style>
 <h1>Index</h1>
 <form method="get">
-    <div class="form-group">
-        <label asp-for="SearchClinicName">Clinic Name</label>
-        <input asp-for="SearchClinicName" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="SearchAddress">Address</label>
-        <input asp-for="SearchAddress" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="SearchOpenTime">From Open Time</label>
-        <input asp-for="SearchOpenTime" type="time" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="SearchCloseTime">To Close Time</label>
-        <input asp-for="SearchCloseTime" type="time" class="form-control" />
+    <div class="form-container">
+        <div class="form-column full-width">
+            <div class="form-group">
+                <label asp-for="SearchClinicName">Clinic Name</label>
+                <input asp-for="SearchClinicName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="SearchAddress">Address</label>
+                <input asp-for="SearchAddress" class="form-control" />
+            </div>
+        </div>
+        <div class="form-column half-width" style="margin-left : 100px">
+            <div class="form-group">
+                <label asp-for="SearchOpenTime">From Open Time</label>
+                <input asp-for="SearchOpenTime" type="time" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="SearchCloseTime">To Close Time</label>
+                <input asp-for="SearchCloseTime" type="time" class="form-control" />
+            </div>
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
@@ -37,78 +87,81 @@
 
 @if (Model.Clinic != null && Model.Clinic.Any())
 {
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].ClinicName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].ClinicImage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].ClinicDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].OpenTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].CloseTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].IsActive)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Clinic) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClinicName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clinic[0].ClinicName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clinic[0].Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clinic[0].Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clinic[0].Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clinic[0].ClinicImage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clinic[0].ClinicDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clinic[0].OpenTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clinic[0].CloseTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Clinic[0].IsActive)
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Clinic)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClinicName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
                     <td>
                         <img src="@item.ClinicImage" alt="Clinic Image" style="width:100px;height:100px;">
                     </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClinicDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OpenTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CloseTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ClinicId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ClinicId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ClinicId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClinicDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OpenTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CloseTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.ClinicId" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-page="./Details" asp-route-id="@item.ClinicId" class="btn btn-sm btn-info">Details</a>
+                        <a asp-page="./Delete" asp-route-id="@item.ClinicId" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 else
 {
