@@ -10,7 +10,7 @@
     <title>@ViewData["Title"]</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, sans-serif;           
             background-color: #ffffff;
             margin: 20px;
             padding: 20px;
@@ -18,6 +18,9 @@
 
         h1 {
             text-align: center;
+            margin-top: 40px; /* Thêm khoảng cách phía trên tiêu đề */
+            color: black; /* Màu chữ cho tiêu đề */
+            text-shadow: 2px 2px 4px #ffffff; /* Đổ bóng cho chữ */
         }
 
         .form-container {
@@ -132,12 +135,55 @@
         .table-custom tbody tr:nth-child(even) {
             background-color: #ffffff;
         }
+
+        /* Định dạng cho phần tìm kiếm */
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 600px; /* Đặt giới hạn chiều rộng cho form */
+            width: 100%; /* Chiếm toàn bộ chiều rộng của container */
+            justify-content: center; /* Căn giữa nội dung của search container */
+        }
+
+            .search-container label {
+                margin-right: 10px;
+            }
+
+            .search-container input[type="text"],
+            .search-container select {
+                padding: 5px;
+                border-radius: 3px;
+                border: 1px solid #ccc;
+            }
+
+            .search-container button {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                padding: 5px 10px;
+                cursor: pointer;
+            }
     </style>
 </head>
 <body>
+<div class="header-container">
 <h1>User Management Page</h1>
 
-<div style="display: flex; justify-content: center; margin-bottom: 20px;">
+    <div class="search-container">
     <form method="get" style="display: flex; align-items: center; gap: 10px;">
         <div>
             <label for="search">Search:</label>
@@ -157,15 +203,17 @@
             </select>
         </div>
         <div>
-            <button type="submit" style="background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 5px;">Search</button>
+                <button type="submit" style="background-color: #ff8c00; color: white; padding: 10px; border: none; border-radius: 5px;">Search</button>
         </div>
     </form>
+</div>
 </div>
 
 <p>
     <a asp-page="Create" style="background-color: #006400; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">Create New</a>
 </p>
-    <table class="table table-custom">
+    
+<table class="table table-custom">
     <thead>
         <tr>
             <th>

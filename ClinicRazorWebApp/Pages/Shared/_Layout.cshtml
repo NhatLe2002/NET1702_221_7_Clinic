@@ -13,15 +13,15 @@
     <link rel="stylesheet" href="~/ClinicRazorWebApp.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/nav_bar.css" asp-append-version="true" />
 </head>
-<body style="background: #C0C0C0;">
+<body style="background: #C0C0C0;  margin: 0; padding: 0;">
     @if (@* user != null *@ true)
     {
-        <header>
-            <div class="containerNav">
+        <header style="margin: 0; padding: 0;">
+            <div class="containerNav" style="margin: 0; padding: 0;">
                 <img src="https://cdn-icons-png.flaticon.com/512/6525/6525366.png"
                 style="width: 60px;" alt="logo" class="logo">
                 <nav>
-                    <ul>
+                    <ul style="list-style: none; padding: 0; margin: 0; display: flex;">
                         <li><a asp-page="/Customerpage/Index">Customer</a></li>
                         <li><a asp-page="/ClinicUpdatePage/Index">Clinic</a></li>
                         <li><a asp-page="/AppoinmentPage/Index">Appoinment</a></li>
@@ -37,8 +37,8 @@
 
 
     @* BODY NHÚNG VÔ *@
-    <div class="container" style="margin-left: 0px; margin-right: 0px">
-        <main role="main" class="pb-3 mt-5" >
+    <div class="container" style="margin-left: 0px; margin-right: 0px; padding-top: 0;">
+        <main role="main" class="pb-3" >
             @RenderBody()
         </main>
     </div>

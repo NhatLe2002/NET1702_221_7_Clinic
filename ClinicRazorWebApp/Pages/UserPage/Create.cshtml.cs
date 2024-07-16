@@ -117,6 +117,44 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 return Page();
             }
 
+            if (!Validation.IsValidEmail(User.Email))
+            {
+                ModelState.AddModelError(string.Empty, "Invalid email format.");
+                var roles = await _UserBusiness.GetRoles();
+                if (roles != null)
+                {
+                    ViewData["Roles"] = roles.Select(u => new SelectListItem
+                    {
+                        Value = u.RoleId.ToString(),
+                        Text = u.RoleName
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Users"] = new List<SelectListItem>();
+                }
+                return Page();
+            }
+
+            if (!Validation.IsValidPhoneNumber(User.Phone))
+            {
+                ModelState.AddModelError(string.Empty, "Invalid phone number format. Phone number must be between 10 to 15 digits.");
+                var roles = await _UserBusiness.GetRoles();
+                if (roles != null)
+                {
+                    ViewData["Roles"] = roles.Select(u => new SelectListItem
+                    {
+                        Value = u.RoleId.ToString(),
+                        Text = u.RoleName
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Users"] = new List<SelectListItem>();
+                }
+                return Page();
+            }
+
             //_context.Users.Add(User);
             //await _context.SaveChangesAsync();
             var userResult = await _UserBusiness.Save(User);
