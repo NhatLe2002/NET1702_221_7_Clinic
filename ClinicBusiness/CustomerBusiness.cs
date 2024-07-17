@@ -166,12 +166,14 @@ namespace ClinicBusiness
             try
             {
                 //var currency = await _currencyRepository.GetByIdAsync(code);
+ 
                 var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(code);
+                customer.IsActive = false;
                 if (customer != null)
                 {
                     //var result = await _currencyRepository.RemoveAsync(currency);
-                    var result = await _unitOfWork.CustomerRepository.RemoveAsync(customer);
-                    if (result)
+                    var result = await _unitOfWork.CustomerRepository.UpdateAsync(customer);
+                    if (result>0)
                     {
                         return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG, customer);
                     }
@@ -201,7 +203,7 @@ namespace ClinicBusiness
                 {
                     foreach (var customer in customers)
                     {
-                        await _unitOfWork.CustomerRepository.RemoveAsync(customer);
+                        await this.DeleteById(customer.CustomerId.ToString());
                     }
                         return new BusinessResult(Const.SUCCESS_DELETE_CODE, Const.SUCCESS_DELETE_MSG, null);
                 }
