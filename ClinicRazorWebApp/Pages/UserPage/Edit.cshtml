@@ -5,79 +5,110 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="d-flex justify-content-center align-items-center full-screen-background">
+    <div class="form-container">
+        <div class="card-body p-4">
+            <h1 class="text-center">Edit User</h1>
+            <hr />
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <input type="hidden" asp-for="User.UserId" />
 
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="User.UserId" />
-            <div class="form-group">
-                @* <label asp-for="User.Role.RoleName" class="control-label"></label>
-                <select asp-for="User.Role.RoleName" class="form-control" asp-items="ViewBag.RoleId"></select>
-                <span asp-validation-for="User.RoleId" class="text-danger"></span> *@
-                <span asp-validation-for="User.RoleId" class="text-danger"></span> 
-                <select asp-for="User.RoleId" class="input" required>
-                    <option value="" required>Select a role</option>
-                    @foreach (var role in (List<SelectListItem>)ViewData["Roles"])
-                    {
-                        <option value="@role.Value">@role.Text</option>
-                    }
-                </select>
+                <div class="form-group">
+                    <span asp-validation-for="User.RoleId" class="text-danger"></span>
+                    <select asp-for="User.RoleId" class="input form-control" required>
+                        <option value="" required>Select a role</option>
+                        @foreach (var role in (List<SelectListItem>)ViewData["Roles"])
+                        {
+                            <option value="@role.Value">@role.Text</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="User.Username" class="control-label"></label>
+                    <input asp-for="User.Username" class="form-control" />
+                    <span asp-validation-for="User.Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="User.Password" class="control-label"></label>
+                    <input asp-for="User.Password" class="form-control" />
+                    <span asp-validation-for="User.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="User.Fullname" class="control-label"></label>
+                    <input asp-for="User.Fullname" class="form-control" />
+                    <span asp-validation-for="User.Fullname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="User.Email" class="control-label"></label>
+                    <input asp-for="User.Email" class="form-control" />
+                    <span asp-validation-for="User.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="User.Phone" class="control-label"></label>
+                    <input asp-for="User.Phone" class="form-control" />
+                    <span asp-validation-for="User.Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="User.Address" class="control-label"></label>
+                    <input asp-for="User.Address" class="form-control" />
+                    <span asp-validation-for="User.Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="User.Birthday" class="control-label"></label>
+                    <input asp-for="User.Birthday" class="form-control" type="date" />
+                    <span asp-validation-for="User.Birthday" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="User.IsActive" /> @Html.DisplayNameFor(model => model.User.IsActive)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-success w-100" />
+                </div>
+            </form>
+            <div class="text-center mt-3">
+                <a asp-page="Index" class="btn btn-secondary w-100">Back to List</a>
             </div>
-            <div class="form-group">
-                <label asp-for="User.Username" class="control-label"></label>
-                <input asp-for="User.Username" class="form-control" />
-                <span asp-validation-for="User.Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Password" class="control-label"></label>
-                <input asp-for="User.Password" class="form-control" />
-                <span asp-validation-for="User.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Fullname" class="control-label"></label>
-                <input asp-for="User.Fullname" class="form-control" />
-                <span asp-validation-for="User.Fullname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Email" class="control-label"></label>
-                <input asp-for="User.Email" class="form-control" />
-                <span asp-validation-for="User.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Phone" class="control-label"></label>
-                <input asp-for="User.Phone" class="form-control" />
-                <span asp-validation-for="User.Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Address" class="control-label"></label>
-                <input asp-for="User.Address" class="form-control" />
-                <span asp-validation-for="User.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Birthday" class="control-label"></label>
-                <input asp-for="User.Birthday" class="form-control" type="date" />
-                <span asp-validation-for="User.Birthday" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="User.IsActive" /> @Html.DisplayNameFor(model => model.User.IsActive)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn" style="background-color: #007bff; color: white; padding: 5px; text-decoration: none; border-radius: 5px;" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index" class="btn" style="background-color: #6c757d; color: white; padding: 5px; text-decoration: none; border-radius: 5px;" >Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+
+<style>
+    .full-screen-background {
+        position: fixed;
+        left: 0;
+        height: 90vh;
+        width: 100%;
+        background: url('https://penviet.com/wp-content/uploads/2023/06/thiet-ke-phong-kham-nha-khoa-smile-center-11-768x576.jpg') no-repeat center center fixed;
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+        z-index: -1; /* Đảm bảo ảnh nền nằm phía sau nội dung */
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 600px;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-y: auto; /* Đảm bảo có thanh cuộn dọc cho nội dung trang */
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+</style>

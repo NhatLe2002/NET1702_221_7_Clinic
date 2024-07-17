@@ -1,5 +1,5 @@
 ﻿@page
-@model ClinicRazorWebApp.Pages.DentistPage.EditModel
+@model ClinicRazorWebApp.Pages.Dentists.EditDentistModel
 
 @{
     ViewData["Title"] = "Edit Dentist";
@@ -29,13 +29,14 @@
 
                 <div class="form-group">
                     <label for="dateOfBirth">Date of Birth:</label>
-                    <input id="dateOfBirth" asp-for="Dentist.DateOfBirth" class="form-control" type="date" />
+                    <input id="dateOfBirth" asp-for="Dentist.DateOfBirth" class="form-control" type="date" max="@Model.MaxDate" />
                     <span asp-validation-for="Dentist.DateOfBirth" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="gender">Gender:</label>
                     <select id="gender" asp-for="Dentist.Gender" class="form-control">
+                        <option value="">-- Select Gender --</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
@@ -66,12 +67,6 @@
                     <input id="email" asp-for="Dentist.Email" class="form-control" />
                     <span asp-validation-for="Dentist.Email" class="text-danger"></span>
                 </div>
-
-                @* <div class="form-group">
-                    <label for="image">Current Image URL:</label>
-                    <input id="image" asp-for="Dentist.Image" class="form-control" />
-                    <span asp-validation-for="Dentist.Image" class="text-danger"></span>
-                </div> *@
 
                 <div class="form-group">
                     <label for="imageFile">New Image:</label>

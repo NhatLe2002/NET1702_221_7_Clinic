@@ -9,6 +9,7 @@ using ClinicData.Models;
 using ClinicBusiness;
 using ClinicCommon;
 using CloudinaryDotNet.Actions;
+using System.Text.RegularExpressions;
 
 namespace ClinicRazorWebApp.Pages.UserPage
 {
@@ -51,7 +52,26 @@ namespace ClinicRazorWebApp.Pages.UserPage
 
         private bool ValidatePassword(string password)
         {
-            return !string.IsNullOrEmpty(password) && password.Length >= 6;
+            if (string.IsNullOrEmpty(password) || password.Length < 12)
+                return false;
+
+            // Check for at least one uppercase letter
+            if (!password.Any(char.IsUpper))
+                return false;
+
+            // Check for at least one lowercase letter
+            if (!password.Any(char.IsLower))
+                return false;
+
+            // Check for at least one digit
+            if (!password.Any(char.IsDigit))
+                return false;
+
+            // Check for at least one special character
+            if (!Regex.IsMatch(password, @"[\W_]"))
+                return false;
+
+            return true;
         }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
@@ -80,7 +100,45 @@ namespace ClinicRazorWebApp.Pages.UserPage
 
             if (!ValidatePassword(User.Password))
             {
-                ModelState.AddModelError(string.Empty, "Password must be at least 6 characters long.");
+                ModelState.AddModelError(string.Empty, "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");
+                var roles = await _UserBusiness.GetRoles();
+                if (roles != null)
+                {
+                    ViewData["Roles"] = roles.Select(u => new SelectListItem
+                    {
+                        Value = u.RoleId.ToString(),
+                        Text = u.RoleName
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Users"] = new List<SelectListItem>();
+                }
+                return Page();
+            }
+
+            if (!Validation.IsValidEmail(User.Email))
+            {
+                ModelState.AddModelError(string.Empty, "Invalid email format.");
+                var roles = await _UserBusiness.GetRoles();
+                if (roles != null)
+                {
+                    ViewData["Roles"] = roles.Select(u => new SelectListItem
+                    {
+                        Value = u.RoleId.ToString(),
+                        Text = u.RoleName
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Users"] = new List<SelectListItem>();
+                }
+                return Page();
+            }
+
+            if (!Validation.IsValidPhoneNumber(User.Phone))
+            {
+                ModelState.AddModelError(string.Empty, "Invalid phone number format. Phone number must be between 10 to 15 digits.");
                 var roles = await _UserBusiness.GetRoles();
                 if (roles != null)
                 {

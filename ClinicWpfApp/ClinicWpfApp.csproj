@@ -9,32 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ClinicPage\**" />
-    <EmbeddedResource Remove="ClinicPage\**" />
-    <None Remove="ClinicPage\**" />
-    <Page Remove="ClinicPage\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="appsettings.Development.json" />
-    <None Remove="appsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="appsettings.Development.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ClinicBusiness\ClinicBusiness.csproj" />
+    <ProjectReference Include="..\ClinicCommon\ClinicCommon.csproj" />
     <ProjectReference Include="..\ClinicData\ClinicData.csproj" />
   </ItemGroup>
 

@@ -5,14 +5,13 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="d-flex justify-content-center align-items-center full-screen-background">
+    <div class="form-container">
+        <div class="card-body p-4">
+            <h1 class="text-center">Create User</h1>
+            <hr />
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
             
             <div class="form-group">
                @*  <label asp-for="User.Role.RoleName" class="control-label"></label>
@@ -67,16 +66,44 @@
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn" style="background-color: #28a745; color: white; padding: 5px; border-radius: 5px;" />
+                <input type="submit" value="Create" class="btn btn-success w-100" />
             </div>
         </form>
+        <div class="text-center mt-3">
+            <a asp-page="Index" class="btn btn-secondary w-100">Back to List</a>
+        </div>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-page="Index" class="btn" style="background-color: #6c757d; color: white; padding: 5px; text-decoration: none; border-radius: 5px;">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<style>
+    .full-screen-background {
+        position: fixed;
+        left: 0;
+        height: 90vh;
+        width: 100%;
+        background: url('https://penviet.com/wp-content/uploads/2023/06/thiet-ke-phong-kham-nha-khoa-smile-center-11-768x576.jpg') no-repeat center center fixed;
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+        z-index: -1; /* Đảm bảo ảnh nền nằm phía sau nội dung */
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 600px;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-y: auto; /* Đảm bảo có thanh cuộn dọc cho nội dung trang */
+    }
+</style>
