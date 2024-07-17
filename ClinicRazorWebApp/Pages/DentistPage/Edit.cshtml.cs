@@ -10,25 +10,32 @@ using ClinicBusiness;
 using ClinicCommon;
 using Microsoft.AspNetCore.Http;
 
-namespace ClinicRazorWebApp.Pages.DentistPage
+namespace ClinicRazorWebApp.Pages.Dentists
 {
-    public class EditModel : PageModel
+    public class EditDentistModel : PageModel
     {
         private readonly IDentistBusiness _dentistBusiness;
         private readonly IClinicBusinessClass _clinicBusiness;
+        private readonly IUserBusiness _userBusiness;
         private readonly ICommonService _commonService;
 
         [BindProperty]
         public Dentist Dentist { get; set; } = default!;
+
         [BindProperty]
         public IFormFile ImageFile { get; set; }
 
-        public List<Clinic> Clinics { get; set; } = new List<Clinic>();
+        public string MaxDate { get; set; }
 
-        public EditModel(IDentistBusiness dentistBusiness, IClinicBusinessClass clinicBusiness, ICommonService commonService)
+        public EditDentistModel(
+            IDentistBusiness dentistBusiness,
+            IClinicBusinessClass clinicBusiness,
+            IUserBusiness userBusiness,
+            ICommonService commonService)
         {
             _dentistBusiness = dentistBusiness;
             _clinicBusiness = clinicBusiness;
+            _userBusiness = userBusiness;
             _commonService = commonService;
         }
 
@@ -51,53 +58,32 @@ namespace ClinicRazorWebApp.Pages.DentistPage
                 return NotFound();
             }
 
-            var result = await _clinicBusiness.GetAll();
-            if (result.Status != Const.SUCCESS_READ_CODE)
-            {
-                ModelState.AddModelError(string.Empty, "Error fetching clinics: " + result.Message);
-                return Page();
-            }
-
-            var clinics = result.Data as List<Clinic>;
-            if (clinics == null)
-            {
-                return Page();
-            }
-
-            ViewData["ClinicId"] = new SelectList(clinics.Select(clinic => new SelectListItem
-            {
-                Value = clinic.ClinicId.ToString(),
-                Text = clinic.ClinicName
-            }).ToList(), "Value", "Text");
-
+            await LoadSelectListsAsync();
+            MaxDate = DateTime.Today.AddYears(-24).ToString("yyyy-MM-dd");
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            await LoadSelectListsAsync();
+
+            bool isValid = true;
+
+            // Validating phone number
+            if (!Validation.IsValidPhoneNumber(Dentist.Phone))
             {
-                var result = await _clinicBusiness.GetAll();
-                if (result.Status != Const.SUCCESS_READ_CODE)
-                {
-                    ModelState.AddModelError(string.Empty, "Error fetching clinics: " + result.Message);
-                    return Page();
-                }
-
-                var clinics = result.Data as List<Clinic>;
-                if (clinics == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid clinic data received.");
-                    return Page();
-                }
-
-                ViewData["ClinicId"] = new SelectList(clinics.Select(clinic => new SelectListItem
-                {
-                    Value = clinic.ClinicId.ToString(),
-                    Text = clinic.ClinicName
-                }).ToList(), "Value", "Text");
-
-                //return Page();
+                ModelState.AddModelError("ERROR", "Phone is not valid");
+                isValid = false;
+            }
+            // Validating email
+            if (!Validation.IsValidEmail(Dentist.Email))
+            {
+                ModelState.AddModelError("ERROR", "Email is not valid");
+                isValid = false;
+            }
+            if (!isValid)
+            {
+                return Page();
             }
 
             try
@@ -122,6 +108,29 @@ namespace ClinicRazorWebApp.Pages.DentistPage
             }
 
             return RedirectToPage("./Index");
+        }
+
+        private async Task LoadSelectListsAsync()
+        {
+            var clinicResult = await _clinicBusiness.GetAll();
+            if (clinicResult.Status == Const.SUCCESS_READ_CODE)
+            {
+                var clinics = clinicResult.Data as List<Clinic>;
+                if (clinics != null)
+                {
+                    ViewData["ClinicId"] = new SelectList(clinics, "ClinicId", "ClinicName");
+                }
+            }
+
+            var userResult = await _userBusiness.GetAll();
+            if (userResult.Status == Const.SUCCESS_READ_CODE)
+            {
+                var users = userResult.Data as List<User>;
+                if (users != null)
+                {
+                    ViewData["UserId"] = new SelectList(users, "UserId", "Fullname");
+                }
+            }
         }
     }
 }

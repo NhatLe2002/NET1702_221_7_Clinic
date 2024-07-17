@@ -1,6 +1,5 @@
 ﻿@{
     var user = ClinicRazorWebApp.SessionExtendsions.Get<string>(Context.Session, "User");
-    // var admin = Prn221_8_HoaLan.SessionExtensions.Get<String>(Context.Session, "Admin");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -14,12 +13,12 @@
     <link rel="stylesheet" href="~/css/nav_bar.css" asp-append-version="true" />
 </head>
 <body style="background: #C0C0C0;">
-    @if (user != null )
+    @if (user != null)
     {
         <header>
             <div class="containerNav">
                 <img src="https://cdn-icons-png.flaticon.com/512/6525/6525366.png"
-                style="width: 60px;" alt="logo" class="logo">
+                     style="width: 60px;" alt="logo" class="logo">
                 <nav>
                     <ul>
                         <li><a asp-page="/Customerpage/Index">Customer</a></li>
@@ -31,23 +30,18 @@
                 </nav>
             </div>
         </header>
-    } 
+    }
 
-
-
-
-    @* BODY NHÚNG VÔ *@
-    <div class="container" style="margin-left: 0px; margin-right: 0px">
-        <main role="main" class="pb-3 mt-5" style="margin-left : 100px">
+    <div class="container" style="margin-left: 0px; margin-right: 0px;">
+        <main role="main" class="pb-3 mt-5" style="margin-left: 100px;">
             @RenderBody()
         </main>
     </div>
 
-    @* Foodter *@
-    @*     <footer class="border-top footer text-muted">
-    <div class="container">
-    &copy; 2024 - ClinicRazorWebApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
-    </div>
+    @* <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - ClinicRazorWebApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
     </footer> *@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
