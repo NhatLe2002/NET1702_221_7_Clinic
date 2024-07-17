@@ -21,7 +21,7 @@ namespace ClinicRazorWebApp.Pages.ClinicUpdatePage
 
         public IList<Clinic> Clinic { get; set; } = default!;
         public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 2; // You can adjust this as needed
+        public int PageSize { get; set; } = 3; // You can adjust this as needed
         public int TotalPages { get; set; }
 
         [BindProperty(SupportsGet = true)]
@@ -41,6 +41,10 @@ namespace ClinicRazorWebApp.Pages.ClinicUpdatePage
             {
                 var clinics = (List<Clinic>)currencyResult.Data;
 
+                // Filter by IsActive
+                clinics = clinics.Where(c => c.IsActive == true).ToList();
+
+                // Apply search filters
                 if (!string.IsNullOrEmpty(SearchClinicName))
                 {
                     clinics = clinics.Where(c => c.ClinicName.Contains(SearchClinicName, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -58,6 +62,7 @@ namespace ClinicRazorWebApp.Pages.ClinicUpdatePage
                     clinics = clinics.Where(c => c.CloseTime.HasValue && c.CloseTime.Value <= SearchCloseTime.Value).ToList();
                 }
 
+                // Pagination
                 TotalPages = (int)Math.Ceiling(clinics.Count / (double)PageSize);
                 Clinic = clinics.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToList();
             }
