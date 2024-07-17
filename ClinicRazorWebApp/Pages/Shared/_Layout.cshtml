@@ -15,12 +15,12 @@
 <body style="background: #C0C0C0;">
     @if (user != null)
     {
-        <header>
-            <div class="containerNav">
+        <header style="margin: 0; padding: 0;">
+            <div class="containerNav" style="margin: 0; padding: 0;">
                 <img src="https://cdn-icons-png.flaticon.com/512/6525/6525366.png"
                      style="width: 60px;" alt="logo" class="logo">
                 <nav>
-                    <ul>
+                    <ul style="list-style: none; padding: 0; margin: 0; display: flex;">
                         <li><a asp-page="/Customerpage/Index">Customer</a></li>
                         <li><a asp-page="/ClinicUpdatePage/Index">Clinic</a></li>
                         <li><a asp-page="/AppoinmentPage/Index">Appoinment</a></li>

@@ -199,6 +199,7 @@ namespace ClinicBusiness
             try
             {
                 var users = await _unitOfWork.UserRepository.GetAllUserAsync();
+                Console.WriteLine($"Number of users retrieved: {users?.Count}");
                 if (users != null && users.Count > 0)
                 {
                     return new BusinessResult(Const.SUCCESS_READ_CODE, Const.SUCCESS_READ_MSG, users);
