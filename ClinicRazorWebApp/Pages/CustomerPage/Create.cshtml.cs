@@ -86,6 +86,12 @@ namespace ClinicRazorWebApp.Pages.CustomerPage
                 ModelState.AddModelError("ERROR", "Email is not valid");
                 isValid = false;
             }
+            //Check Image
+            if (!Validation.IsImage(customerImageFile))
+            {
+                ModelState.AddModelError("ERROR", "Image is not valid");
+                isValid = false;
+            }
             if (!isValid)
             {
                 return Page();

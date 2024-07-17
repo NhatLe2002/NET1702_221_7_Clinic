@@ -23,6 +23,9 @@ namespace ClinicRazorWebApp
                 options.Cookie.IsEssential = true;
             });
 
+            //Addbackgroundservice
+            builder.Services.AddHostedService<BackgroundWorkerService>();
+
             // Add services to the container.
             builder.Services.AddRazorPages();
 

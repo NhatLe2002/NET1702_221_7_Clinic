@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -65,5 +66,31 @@ namespace ClinicCommon
             return openTime < closeTime;
         }
 
+
+        private static readonly string[] _permittedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+        private static readonly string[] _permittedMimeTypes = { "image/jpeg", "image/png", "image/gif", "image/bmp" };
+
+        public static bool IsImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return false;
+            }
+
+            // Kiểm tra MIME type
+            if (!_permittedMimeTypes.Contains(file.ContentType.ToLower()))
+            {
+                return false;
+            }
+
+            // Kiểm tra phần mở rộng tệp
+            var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+            if (string.IsNullOrEmpty(extension) || !_permittedExtensions.Contains(extension))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

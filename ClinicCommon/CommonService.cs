@@ -7,6 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
+using MailKit.Security;
+using MimeKit.Text;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace ClinicCommon
 {
@@ -14,7 +18,7 @@ namespace ClinicCommon
     {
         public Task<string> UploadAnImage(IFormFile file, string pathFolder, string nameOfImg);
         public Task<string> UploadAVideo(IFormFile file, string pathFolder, string nameOfImg);
-
+        public Task<bool> SendEmailWithBodyAsync(string emailRequest, string subjectEmail, string fullName, string bodyEmail);
     }
     public class CommonService : ICommonService
     {
@@ -94,6 +98,40 @@ namespace ClinicCommon
                 }
 
                 return uploadResult.SecureUrl.ToString();
+            }
+        }
+
+        public async Task<bool> SendEmailWithBodyAsync(string emailRequest, string subjectEmail, string fullName, string bodyEmail)
+        {
+            try
+            {
+                var emailBody = _configuration["EmailSetting:GeneralEmailBody"];
+                emailBody = emailBody.Replace("{PROJECT_NAME}", _configuration["Project_HairHub:PROJECT_NAME"]);
+                emailBody = emailBody.Replace("{FULL_NAME}", fullName);
+                emailBody = emailBody.Replace("{BODY_EMAIL}", bodyEmail);
+                emailBody = emailBody.Replace("{PHONE_NUMBER}", _configuration["Project_HairHub:PHONE_NUMBER"]);
+                emailBody = emailBody.Replace("{EMAIL_ADDRESS}", _configuration["Project_HairHub:EMAIL_ADDRESS"]);
+                var emailHost = _configuration["EmailSetting:EmailHost"];
+                var userName = _configuration["EmailSetting:EmailUsername"];
+                var password = _configuration["EmailSetting:EmailPassword"];
+                var email = new MimeMessage();
+                email.From.Add(MailboxAddress.Parse(emailHost));
+                email.To.Add(MailboxAddress.Parse(emailRequest));
+                email.Subject = subjectEmail;
+                email.Body = new TextPart(TextFormat.Html)
+                {
+                    Text = emailBody
+                };
+                using var smtp = new SmtpClient();
+                await smtp.ConnectAsync(emailHost, 587, SecureSocketOptions.StartTls);
+                await smtp.AuthenticateAsync(userName, password);
+                await smtp.SendAsync(email);
+                await smtp.DisconnectAsync(true);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }
