@@ -87,10 +87,7 @@ namespace ClinicRazorWebApp.Pages.ClinicUpdatePage
 
         private string GetUrlTail(string url)
         {
-            if (string.IsNullOrEmpty(url))
-            {
-                return Guid.NewGuid().ToString();
-            }
+            
 
             Uri uri = new Uri(url);
             string path = uri.AbsolutePath;
