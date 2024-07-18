@@ -25,16 +25,18 @@
                     }
                 </select>
             </div>
-            <div class="form-group">
-                <label asp-for="User.Username" class="control-label"></label>
-                <input asp-for="User.Username" class="form-control" />
-                <span asp-validation-for="User.Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Password" class="control-label"></label>
-                <input asp-for="User.Password" class="form-control" />
-                <span asp-validation-for="User.Password" class="text-danger"></span>
-            </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label asp-for="User.Username" class="control-label"></label>
+                        <input asp-for="User.Username" class="form-control" />
+                        <span asp-validation-for="User.Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="User.Password" class="control-label"></label>
+                        <input asp-for="User.Password" class="form-control" />
+                        <span asp-validation-for="User.Password" class="text-danger"></span>
+                    </div>
+                </div>
             <div class="form-group">
                 <label asp-for="User.Fullname" class="control-label"></label>
                 <input asp-for="User.Fullname" class="form-control" />
@@ -45,25 +47,31 @@
                 <input asp-for="User.Email" class="form-control" />
                 <span asp-validation-for="User.Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="User.Phone" class="control-label"></label>
-                <input asp-for="User.Phone" class="form-control" />
-                <span asp-validation-for="User.Phone" class="text-danger"></span>
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    <label asp-for="User.Phone" class="control-label"></label>
+                    <input asp-for="User.Phone" class="form-control" />
+                    <span asp-validation-for="User.Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="User.Birthday" class="control-label"></label>
+                    <input asp-for="User.Birthday" class="form-control" />
+                    <span asp-validation-for="User.Birthday" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="User.Address" class="control-label"></label>
                 <input asp-for="User.Address" class="form-control" />
                 <span asp-validation-for="User.Address" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="User.Birthday" class="control-label"></label>
-                <input asp-for="User.Birthday" class="form-control" />
-                <span asp-validation-for="User.Birthday" class="text-danger"></span>
-            </div>
             <div class="form-group form-check">
-                <label class="form-check-label">
+                    <!--label class="form-check-label">
                     <input class="form-check-input" asp-for="User.IsActive" /> @Html.DisplayNameFor(model => model.User.IsActive)
-                </label>
+                    </label-->
+                    <input type="checkbox" asp-for="User.IsActive" class="form-check-input" checked="checked" disabled="disabled" />
+                    <label asp-for="User.IsActive" class="form-check-label"></label>
+                    <!-- Hidden input to ensure the value is submitted -->
+                    <input type="hidden" asp-for="User.IsActive" value="true" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-success w-100" />
@@ -83,8 +91,9 @@
 <style>
     .full-screen-background {
         position: fixed;
+        top: 0;
         left: 0;
-        height: 90vh;
+        height: 100vh;
         width: 100%;
         background: url('https://penviet.com/wp-content/uploads/2023/06/thiet-ke-phong-kham-nha-khoa-smile-center-11-768x576.jpg') no-repeat center center fixed;
         background-size: cover;
@@ -99,11 +108,17 @@
         background-color: rgba(255, 255, 255, 0.9);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
+        margin-top: 65px; /* Added margin-top for spacing */
     }
 
     body {
         margin: 0;
         padding: 0;
         overflow-y: auto; /* Đảm bảo có thanh cuộn dọc cho nội dung trang */
+    }
+
+    .form-row .form-group {
+        display: inline-block;
+        margin-right: 20px; /* Điều chỉnh khoảng cách giữa các phần tử */
     }
 </style>

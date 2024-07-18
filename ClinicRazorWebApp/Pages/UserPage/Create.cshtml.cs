@@ -74,6 +74,21 @@ namespace ClinicRazorWebApp.Pages.UserPage
             return true;
         }
 
+        private bool ValidateUsername(string username)
+        {
+            if (string.IsNullOrEmpty(username) || username.Length < 7 || username.Contains(' '))
+                return false;
+            return true;
+        }
+
+        private bool ValidateBirthday(DateTime? birthday)
+        {
+            if (birthday == null)
+                return false;
+
+            return birthday <= DateTime.Today;
+        }
+
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
@@ -96,6 +111,25 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 {
                     ViewData["Users"] = new List<SelectListItem>();
                 }
+            }
+
+            if (!ValidateUsername(User.Username))
+            {
+                ModelState.AddModelError(string.Empty, "Username must be at least 7 characters long and cannot contain spaces.");
+                var roles = await _UserBusiness.GetRoles();
+                if (roles != null)
+                {
+                    ViewData["Roles"] = roles.Select(u => new SelectListItem
+                    {
+                        Value = u.RoleId.ToString(),
+                        Text = u.RoleName
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Users"] = new List<SelectListItem>();
+                }
+                return Page();
             }
 
             if (!ValidatePassword(User.Password))
@@ -154,6 +188,28 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 }
                 return Page();
             }
+
+            if (!ValidateBirthday(User.Birthday))
+            {
+                ModelState.AddModelError(string.Empty, "Birthday cannot be in the future.");
+                var roles = await _UserBusiness.GetRoles();
+                if (roles != null)
+                {
+                    ViewData["Roles"] = roles.Select(u => new SelectListItem
+                    {
+                        Value = u.RoleId.ToString(),
+                        Text = u.RoleName
+                    }).ToList();
+                }
+                else
+                {
+                    ViewData["Users"] = new List<SelectListItem>();
+                }
+                return Page();
+            }
+
+            // Ensure IsActive is always set to true
+            User.IsActive = true;
 
             //_context.Users.Add(User);
             //await _context.SaveChangesAsync();
