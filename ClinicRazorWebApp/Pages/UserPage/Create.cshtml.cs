@@ -208,6 +208,9 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 return Page();
             }
 
+            // Ensure IsActive is always set to true
+            User.IsActive = true;
+
             //_context.Users.Add(User);
             //await _context.SaveChangesAsync();
             var userResult = await _UserBusiness.Save(User);

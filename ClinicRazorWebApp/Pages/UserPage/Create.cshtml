@@ -65,9 +65,13 @@
                 <span asp-validation-for="User.Address" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
-                <label class="form-check-label">
+                    <!--label class="form-check-label">
                     <input class="form-check-input" asp-for="User.IsActive" /> @Html.DisplayNameFor(model => model.User.IsActive)
-                </label>
+                    </label-->
+                    <input type="checkbox" asp-for="User.IsActive" class="form-check-input" checked="checked" disabled="disabled" />
+                    <label asp-for="User.IsActive" class="form-check-label"></label>
+                    <!-- Hidden input to ensure the value is submitted -->
+                    <input type="hidden" asp-for="User.IsActive" value="true" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-success w-100" />
