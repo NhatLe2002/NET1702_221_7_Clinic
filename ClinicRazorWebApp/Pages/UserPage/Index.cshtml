@@ -59,7 +59,7 @@
         }
 
         .table-container {
-            max-width: 100%;
+            max-width: 110%;
             overflow-x: auto;
         }
 
@@ -145,7 +145,7 @@
         }
 
         .search-container {
-            background-color: #f0f0f0;
+            background-color: #4CAF50;
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 10px;
@@ -160,6 +160,7 @@
 
             .search-container label {
                 margin-right: 10px;
+                color: white; /* Màu chữ cho label */
             }
 
             .search-container input[type="text"],
@@ -177,6 +178,35 @@
                 padding: 5px 10px;
                 cursor: pointer;
             }
+
+        .password-container {
+            display: flex;
+            align-items: center;
+        }
+
+            .password-container input {
+                width: 100px; /* Set the width of the password input field */
+                flex: none;
+            }
+
+        .toggle-password {
+            cursor: pointer;
+            margin-left: 5px;
+            color: #007bff;
+            user-select: none;
+        }
+
+        .username-column {
+            width: 100px; /* Adjust the width as needed */
+        }
+
+        .email-column {
+            width: 200px; /* Adjust the width as needed */
+        }
+
+        .fullname-column {
+            width: 200px
+        }
     </style>
 </head>
 <body>
@@ -216,7 +246,7 @@
 <table class="table table-custom">
     <thead>
         <tr>
-            <th>
+            <th class="username-column">
                 @Html.DisplayNameFor(model => model.User[0].Username)
             </th>
             <th>
@@ -225,13 +255,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.User[0].IsActive)
             </th>
-            <th>
+            <th class="fullname-column">
                 @Html.DisplayNameFor(model => model.User[0].Role.RoleName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.User[0].Fullname)
             </th>
-            <th>
+            <th class="email-column">
                 @Html.DisplayNameFor(model => model.User[0].Email)
             </th>
             <th>
@@ -255,9 +285,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Username)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Password)
-                    </td>
+                        <td>
+                            <div class="password-container">
+                                <input type="password" value="@item.Password" readonly />
+                                <span class="toggle-password" onclick="togglePasswordVisibility(this)">👁️</span>
+                            </div>
+                        </td>
                     <td style="text-align: center;">
                         <div class="checkbox-custom @(item.IsActive ? "checked" : "inactive")"></div>
                     </td>
@@ -297,6 +330,19 @@
         }
     </tbody>
 </table>
+
+    <script>
+        function togglePasswordVisibility(element) {
+            var input = element.previousElementSibling;
+            if (input.type === "password") {
+                input.type = "text";
+                element.textContent = "🙈";
+            } else {
+                input.type = "password";
+                element.textContent = "👁️";
+            }
+        }
+    </script>
 </body>
 @if (Model.TotalPages > 1)
 {
