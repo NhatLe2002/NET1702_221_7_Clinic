@@ -87,6 +87,10 @@ namespace ClinicRazorWebApp.Pages.UserPage
             if (!Regex.IsMatch(password, @"[\W_]"))
                 return false;
 
+            // Check for whitespace characters
+            if (password.Any(char.IsWhiteSpace))
+                return false;
+
             return true;
         }
 
@@ -102,7 +106,24 @@ namespace ClinicRazorWebApp.Pages.UserPage
             if (birthday == null)
                 return false;
 
-            return birthday <= DateTime.Today;
+            var today = DateTime.Today;
+            var minDate = today.AddYears(-6); // Ngày nhỏ nhất được chấp nhận là 6 năm trước từ ngày hiện tại
+
+            // Ngày sinh phải trước ngày minDate và không được trong tương lai
+            return birthday.Value <= today && birthday.Value <= minDate;
+        }
+
+        private string FormatFullName(string fullName)
+        {
+            if (string.IsNullOrWhiteSpace(fullName))
+                return string.Empty;
+
+            // Tách tên đầy đủ thành các phần từ và xử lý từng phần
+            var nameParts = fullName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var formattedParts = nameParts.Select(part =>
+                char.ToUpper(part[0]) + part.Substring(1).ToLower()
+            );
+            return string.Join(" ", formattedParts);
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -128,6 +149,9 @@ namespace ClinicRazorWebApp.Pages.UserPage
                 //_UserBusiness.Update(User);                
                 //return Page();
             }
+
+            // Định dạng tên đầy đủ
+            User.Fullname = FormatFullName(User.Fullname);
 
             // Loại bỏ khoảng trắng dư thừa trong số điện thoại trước khi cập nhật
             if (!string.IsNullOrEmpty(User.Phone))
@@ -156,7 +180,7 @@ namespace ClinicRazorWebApp.Pages.UserPage
 
             if (!ValidatePassword(User.Password))
             {
-                ModelState.AddModelError(string.Empty, "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");
+                ModelState.AddModelError(string.Empty, "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one digit, one special character and no whitespace characters.");
                 var roles = await _UserBusiness.GetRoles();
                 if (roles != null)
                 {
@@ -213,7 +237,7 @@ namespace ClinicRazorWebApp.Pages.UserPage
 
             if (!ValidateBirthday(User.Birthday))
             {
-                ModelState.AddModelError(string.Empty, "Birthday cannot be in the future.");
+                ModelState.AddModelError(string.Empty, "Birthday must be at least 6 years ago and cannot be in the future.");
                 var roles = await _UserBusiness.GetRoles();
                 if (roles != null)
                 {
